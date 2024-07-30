@@ -3,6 +3,8 @@ const app = express();
 const cors = require('cors')
 const favicon = require('express-favicon');
 const logger = require('morgan');
+const userRoutes = require('./routes/userRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 
 const mainRouter = require('./routes/mainRouter.js');
 
@@ -15,6 +17,7 @@ app.use(express.static('public'))
 app.use(favicon(__dirname + '/public/favicon.ico'));
 
 // routes
-app.use('/api/v1', mainRouter);
-
+// app.use('/api/v1', mainRouter);
+app.use('/api/users', userRoutes);
+app.use('/api/admin', adminRoutes);
 module.exports = app;
