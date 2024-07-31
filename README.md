@@ -72,6 +72,9 @@ Note: In the below example, the group's front-end repository was named `bb-pract
 * created adminController to handle admin-specific operations like creating and deleting users.
 * Testing: Verified functionality using Postman, ensuring proper handling of authentication and authorization.
 
-#### Sonali's Steps Taken for branch "Sprint1Week1.3"
+#### Sonali's Steps Taken for branch "Sprint1Week2.1"
 * added resetPassword() and logoffUser(),updateUserProfile()  functionality in userController.js file.
 * created team for backend in postman
+* Created courseModel.js, courseRoutes.js, and courseController.js to create APIs for the Course.  
+* Tested all requests in Postman 
+* Added the userProfileImage.jpg image to the images folder in Firebase Storage and also added in public/images folder.
