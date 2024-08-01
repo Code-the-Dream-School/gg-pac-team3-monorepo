@@ -33,25 +33,25 @@ exports.signupUser = async (req, res) => {
         // https://console.firebase.google.com/u/0/project/learninghub-ggpacteam3/storage/learninghub-ggpacteam3.appspot.com/files
 
         // Initialize and defining user collection fields
-        const user = new UsersModel({
-            name,
-            email,
-            profilePicture: 'gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg' // Use your default image URL
-          });
-
-          await db.collection('users').doc(userRecord.uid).set(user.toFirestore());
-        // await db.collection('users').doc(userRecord.uid).set({
+        // const user = new UsersModel({
         //     name,
         //     email,
-        //     IsAdmin,
-        //     profilePicture: defaultProfilePicture1,
-        //     loginType: null,
-        //     adminCode: null,
-        //     createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        //     lastLogin: null, 
-        //     lastLogout: null
+        //     profilePicture: 'gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg' // Use your default image URL
+        //   });
+
+        //   await db.collection('users').doc(userRecord.uid).set(user.toFirestore());
+        await db.collection('users').doc(userRecord.uid).set({
+            name,
+            email,
+            IsAdmin,
+            profilePicture: defaultProfilePicture1,
+            loginType: null,
+            adminCode: null,
+            createdAt: admin.firestore.FieldValue.serverTimestamp(),
+            lastLogin: null, 
+            lastLogout: null
             
-        // });
+        });
         // console.log('User details saved in Firestore:', userRecord.uid);
 
         res.status(201).send({ message: 'User signed up successfully', user: userRecord });
