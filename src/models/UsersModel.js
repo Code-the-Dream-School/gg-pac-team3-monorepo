@@ -1,3 +1,5 @@
+const admin = require('../config/firebase'); // Import the Firebase Admin SDK
+
 class UsersModel {
     constructor({
       name,
@@ -40,6 +42,7 @@ class UsersModel {
         profilePicture: this.profilePicture,
         loginType: this.loginType,
         adminCode: this.adminCode,
+      // Use admin.firestore.FieldValue for server timestamps
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
         lastLogin: this.lastLogin ? admin.firestore.Timestamp.fromDate(this.lastLogin) : null,
         lastLogout: this.lastLogout ? admin.firestore.Timestamp.fromDate(this.lastLogout) : null
