@@ -3,7 +3,7 @@ class UsersModel {
     name,
     email,
     isTeacher,
-    profilePicture = 'http://localhost:8000/images/userProfileImage.jpg', // Default image URL
+    profilePicture = null, // Default image URL
     loginType = null,
     teacherCode = null,
     createdAt = new Date()      
