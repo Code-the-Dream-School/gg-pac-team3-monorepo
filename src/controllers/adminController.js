@@ -84,45 +84,8 @@ const deleteUser = async (req, res) => {
   }
 };
 
-// Function to get all users created by the admin
-const getUsers = async (req, res) => {
-  const adminUid = req.adminUid;
-
-  try {
-    const usersSnapshot = await db.collection('users').where('createdBy', '==', adminUid).get();
-    const users = [];
-    usersSnapshot.forEach(doc => {
-      users.push({ id: doc.id, ...doc.data() });
-    });
-    res.status(200).json(users);
-  } catch (error) {
-    console.error('Error getting users:', error);
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Function to get a specific user by UID created by the admin
-const getUserByUid = async (req, res) => {
-  const { uid } = req.params;
-  const adminUid = req.adminUid;
-
-  try {
-    const userDoc = await db.collection('users').doc(uid).get();
-    if (userDoc.exists && userDoc.data().createdBy === adminUid) {
-      res.status(200).json({ id: userDoc.id, ...userDoc.data() });
-    } else {
-      res.status(403).json({ error: 'Permission denied' });
-    }
-  } catch (error) {
-    console.error('Error getting user:', error);
-    res.status(500).json({ error: error.message });
-  }
-};
-
 module.exports = {
   verifyAdmin,
   createUser,
   deleteUser,
-  getUsers,
-  getUserByUid,
 };
