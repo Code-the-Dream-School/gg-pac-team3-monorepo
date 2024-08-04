@@ -38,9 +38,7 @@ exports.signupUser = async (req, res) => {
         // URL of the default profile picture served by your server
         const defaultProfilePicture = 'http://localhost:8000/images/userProfileImage.jpg';
         const defaultProfilePicture1 = 'gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg';
-        //gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg
-        // https://console.firebase.google.com/u/0/project/learninghub-ggpacteam3/storage/learninghub-ggpacteam3.appspot.com/files
-
+        
         // Initialize and defining user collection fields
         const user = new UsersModel({
             name,
