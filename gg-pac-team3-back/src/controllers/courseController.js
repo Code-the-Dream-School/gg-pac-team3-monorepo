@@ -10,13 +10,13 @@ exports.createCourse = async (req, res) => {
    
     try {
         const newCourse = new CourseModel(courseData);
-        const courseRef = db.collection('CoursesDetails').doc(); // Generate a new document ID
+        const courseRef = db.collection('Courses').doc(); // Generate a new document ID
         await courseRef.set(newCourse.toFirestore());
 
         res.status(201).send({ message: 'Course created successfully', courseId: courseRef.id });
     } catch (error) {
         console.error('Error creating course:', error);
-        res.status(400).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 };
 
@@ -25,7 +25,7 @@ exports.getCourse = async (req, res) => {
     const { uid } = req.params;
 
     try {
-        const courseDoc = await db.collection('CoursesDetails').doc(uid).get();
+        const courseDoc = await db.collection('Courses').doc(uid).get();
 
         if (!courseDoc.exists) {
             return res.status(404).send({ message: 'Course not found' });
@@ -35,14 +35,14 @@ exports.getCourse = async (req, res) => {
         res.status(200).send(courseData);
     } catch (error) {
         console.error('Error fetching course:', error);
-        res.status(400).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 };
 
 // Fetch all courses
 exports.getAllCourses = async (req, res) => {
     try {
-        const coursesSnapshot = await db.collection('CoursesDetails').get();
+        const coursesSnapshot = await db.collection('Courses').get();
 
         if (coursesSnapshot.empty) {
             return res.status(404).send({ message: 'No courses found' });
@@ -66,7 +66,7 @@ exports.updateCourse = async (req, res) => {
     const updates = req.body;
 
     try {
-        const courseRef = db.collection('CoursesDetails').doc(uid);
+        const courseRef = db.collection('Courses').doc(uid);
         const courseDoc = await courseRef.get();
 
         if (!courseDoc.exists) {
@@ -86,7 +86,7 @@ exports.deleteCourse = async (req, res) => {
     const { uid } = req.params;
 
     try {
-        const courseRef = db.collection('CoursesDetails').doc(uid);
+        const courseRef = db.collection('Courses').doc(uid);
         const courseDoc = await courseRef.get();
 
         if (!courseDoc.exists) {
