@@ -3,25 +3,34 @@ const admin = require('../config/firebase');
 const db = admin.firestore();
 const axios = require('axios');
 const UsersModel = require('../models/UsersModel')
-// const UsersModel = require('./models/UsersModel'); 
 
 exports.signupUser = async (req, res) => {
     // console.log(req.body)
-    const { name, email, password, IsAdmin } = req.body;
+    const { name, email, password, isTeacher } = req.body;
 
     if (!name || !email || !password) {
         return res.status(400).json({ error: 'All fields are required' });
     }
 
+    // Validate teacherCode if isTeacher is true
+    if (isTeacher) {
+        if (!teacherCode) {
+            return res.status(400).json({ error: 'Teacher code is required when isTeacher is true' });
+        }
+        if (teacherCode !== '1234') {
+            return res.status(400).json({ error: 'Invalid teacher code' });
+        }
+    }
+
     try {
         const userRecord = await admin.auth().createUser({
-            displayName: name,
+            name,
             email,
             password
         });
         // console.log('User created:', userRecord);
 
-        if (IsAdmin) {
+        if (isTeacher) {
             await admin.auth().setCustomUserClaims(userRecord.uid, { admin: true });
             // console.log('Admin claim set for user:', userRecord.uid);
         }
@@ -33,31 +42,28 @@ exports.signupUser = async (req, res) => {
         // https://console.firebase.google.com/u/0/project/learninghub-ggpacteam3/storage/learninghub-ggpacteam3.appspot.com/files
 
         // Initialize and defining user collection fields
-        // const user = new UsersModel({
-        //     name,
-        //     email,
-        //     profilePicture: 'gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg' // Use your default image URL
-        //   });
-
-        //   await db.collection('users').doc(userRecord.uid).set(user.toFirestore());
-        await db.collection('users').doc(userRecord.uid).set({
+        const user = new UsersModel({
             name,
             email,
-            IsAdmin,
-            profilePicture: defaultProfilePicture1,
-            loginType: null,
-            adminCode: null,
-            createdAt: admin.firestore.FieldValue.serverTimestamp(),
-            lastLogin: null, 
-            lastLogout: null
-            
-        });
+            profilePicture: 'gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg' // Use your default image URL
+          });
+
+          await db.collection('users').doc(userRecord.uid).set(user.toFirestore());
+        // await db.collection('users').doc(userRecord.uid).set({
+        //     name,
+        //     email,
+        //     isTeacher,
+        //     profilePicture: defaultProfilePicture1,
+        //     loginType: null,
+        //     teacherCode: isTeacher ? teacherCode : null, // Save teacherCode only if isTeacher is true
+        //     createdAt: admin.firestore.FieldValue.serverTimestamp()                       
+        // });
         // console.log('User details saved in Firestore:', userRecord.uid);
 
         res.status(201).send({ message: 'User signed up successfully', user: userRecord });
     } catch (error) {
         console.error('Error signing up user:', error);
-        res.status(400).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 };
 
@@ -74,12 +80,7 @@ exports.loginUser = async (req, res) => {
         });
 
         const idToken = response.data.idToken;
-        const userRecord = await admin.auth().getUserByEmail(email);        
-
-        // Update last login timestamp
-        await db.collection('users').doc(userRecord.uid).update({
-            lastLogin: admin.firestore.FieldValue.serverTimestamp()
-        });
+        const userRecord = await admin.auth().getUserByEmail(email);                
 
         res.status(200).send({ message: 'User logged in successfully', token: idToken, user: userRecord });
     } catch (error) {
@@ -129,12 +130,7 @@ exports.logoffUser = async (req, res) => {
             return res.status(400).send({ error: 'User ID is required' });
         }
 
-        await admin.auth().revokeRefreshTokens(uid);
-        
-        // Update last logout timestamp
-        await db.collection('users').doc(uid).update({
-            lastLogout: admin.firestore.FieldValue.serverTimestamp()
-        });
+        await admin.auth().revokeRefreshTokens(uid);        
 
         res.status(200).send({ message: 'User logged off successfully' });
     } catch (error) {
@@ -171,15 +167,15 @@ exports.resetPassword = async (req, res) => {
 
 exports.updateUserProfile = async (req, res) => {
     const { uid } = req.params; // User ID from URL params
-    const { displayName, photoURL } = req.body; // New name and profile picture URL
+    const { name, photoURL } = req.body; // New name and profile picture URL
 
-    if (!uid || (!displayName && !photoURL)) {
+    if (!uid || (!name && !photoURL)) {
         return res.status(400).json({ error: 'User ID and at least one field to update are required' });
     }
 
     try {
         const updates = {};
-        if (displayName) updates.displayName = displayName;
+        if (name) updates.name = name;
         if (photoURL) updates.photoURL = photoURL;
 
         const userRecord = await admin.auth().updateUser(uid, updates);
