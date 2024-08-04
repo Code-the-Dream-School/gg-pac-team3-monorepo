@@ -42,11 +42,7 @@ exports.getCourse = async (req, res) => {
 // Fetch all courses
 exports.getAllCourses = async (req, res) => {
     try {
-        const coursesSnapshot = await db.collection('Courses').get();
-
-        if (coursesSnapshot.empty) {
-            return res.status(404).send({ message: 'No courses found' });
-        }
+        const coursesSnapshot = await db.collection('Courses').get();  
 
         const courses = [];
         coursesSnapshot.forEach(doc => {
@@ -77,7 +73,7 @@ exports.updateCourse = async (req, res) => {
         res.status(200).send({ message: 'Course updated successfully' });
     } catch (error) {
         console.error('Error updating course:', error);
-        res.status(400).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 };
 
@@ -97,6 +93,6 @@ exports.deleteCourse = async (req, res) => {
         res.status(200).send({ message: 'Course deleted successfully' });
     } catch (error) {
         console.error('Error deleting course:', error);
-        res.status(400).send({ error: error.message });
+        res.status(500).send({ error: error.message });
     }
 };
