@@ -4,16 +4,14 @@ class UsersModel {
     email,
     isTeacher,
     profilePicture = null, // Default image URL
-    loginType = null,
-    teacherCode = null,
+    loginType = null,    
     createdAt = new Date()      
   }) {
     this.name = name;
     this.email = email;
     this.isTeacher = isTeacher,
     this.profilePicture = profilePicture;
-    this.loginType = loginType;
-    this.teacherCode = teacherCode;
+    this.loginType = loginType;   
     this.createdAt = createdAt;     
   }
 
@@ -24,8 +22,7 @@ class UsersModel {
       email: data.email,
       isTeacher: data.isTeacher,
       profilePicture: data.profilePicture,
-      loginType: data.loginType,
-      teacherCode: data.teacherCode,
+      loginType: data.loginType,      
       createdAt: data.createdAt.toDate(),        
     });
   }
@@ -36,8 +33,7 @@ class UsersModel {
       email: this.email,
       isTeacher: this.isTeacher,
       profilePicture: this.profilePicture,
-      loginType: this.loginType,
-      teacherCode: this.teacherCode,
+      loginType: this.loginType,     
       createdAt: admin.firestore.FieldValue.serverTimestamp()        
     };
   }
