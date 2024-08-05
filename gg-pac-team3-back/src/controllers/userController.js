@@ -2,6 +2,8 @@ require('dotenv').config();
 const admin = require('../config/firebase');
 const db = admin.firestore();
 const axios = require('axios');
+const UsersModel = require('../models/UsersModel')
+// const UsersModel = require('./models/UsersModel'); 
 
 exports.signupUser = async (req, res) => {
     // console.log(req.body)
@@ -24,12 +26,32 @@ exports.signupUser = async (req, res) => {
             // console.log('Admin claim set for user:', userRecord.uid);
         }
 
-        await db.collection('users').doc(userRecord.uid).set({
+        // URL of the default profile picture served by your server
+        const defaultProfilePicture = 'http://localhost:8000/images/userProfileImage.jpg';
+        const defaultProfilePicture1 = 'gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg';
+        //gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg
+        // https://console.firebase.google.com/u/0/project/learninghub-ggpacteam3/storage/learninghub-ggpacteam3.appspot.com/files
+
+        // Initialize and defining user collection fields
+        const user = new UsersModel({
             name,
             email,
-            IsAdmin,
-            createdAt: admin.firestore.FieldValue.serverTimestamp(),
-        });
+            profilePicture: 'gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg' // Use your default image URL
+          });
+
+          await db.collection('users').doc(userRecord.uid).set(user.toFirestore());
+        // await db.collection('users').doc(userRecord.uid).set({
+        //     name,
+        //     email,
+        //     IsAdmin,
+        //     profilePicture: defaultProfilePicture1,
+        //     loginType: null,
+        //     adminCode: null,
+        //     createdAt: admin.firestore.FieldValue.serverTimestamp(),
+        //     lastLogin: null, 
+        //     lastLogout: null
+            
+        // });
         // console.log('User details saved in Firestore:', userRecord.uid);
 
         res.status(201).send({ message: 'User signed up successfully', user: userRecord });
@@ -42,10 +64,8 @@ exports.signupUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
     const { email, password } = req.body;
 
-    try {
-        // console.log('Attempting to log in with email:', email);
-        const apiKey = process.env.FIREBASE_API_KEY;
-        // console.log('Firebase API Key:', apiKey);
+    try {        
+        const apiKey = process.env.FIREBASE_API_KEY;        
 
         const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`, {
             email,
@@ -54,8 +74,12 @@ exports.loginUser = async (req, res) => {
         });
 
         const idToken = response.data.idToken;
-        const userRecord = await admin.auth().getUserByEmail(email);
-        // console.log('ID token generated for user:', userRecord.uid);
+        const userRecord = await admin.auth().getUserByEmail(email);        
+
+        // Update last login timestamp
+        await db.collection('users').doc(userRecord.uid).update({
+            lastLogin: admin.firestore.FieldValue.serverTimestamp()
+        });
 
         res.status(200).send({ message: 'User logged in successfully', token: idToken, user: userRecord });
     } catch (error) {
@@ -106,6 +130,11 @@ exports.logoffUser = async (req, res) => {
         }
 
         await admin.auth().revokeRefreshTokens(uid);
+        
+        // Update last logout timestamp
+        await db.collection('users').doc(uid).update({
+            lastLogout: admin.firestore.FieldValue.serverTimestamp()
+        });
 
         res.status(200).send({ message: 'User logged off successfully' });
     } catch (error) {
@@ -161,3 +190,5 @@ exports.updateUserProfile = async (req, res) => {
         res.status(400).send({ error: error.message });
     }
 };
+
+
