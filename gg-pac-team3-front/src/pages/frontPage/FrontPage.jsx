@@ -1,10 +1,12 @@
-import NavBlue from "../../components/layout/navBlue";
+import Nav from "../../components/layout/Nav";
 import Panel from "./Panel";
 
-function FrontPage(){
+function FrontPage(props){
+    const {isLoggedIn } = props;
+    
     return(
         <>
-            <NavBlue/>
+            <Nav isLoggedIn={isLoggedIn}/>
             <Panel/>
         </>
     )
