@@ -1,7 +1,7 @@
 import panelImg from "../../assets/images/panelImage.jpg";
 import styling from "./panel.module.css";
 
-function Panel(){
+const Panel = () => {
     return(
     <div className={styling.container}>
         <img id={styling.panel} src={panelImg}/>
