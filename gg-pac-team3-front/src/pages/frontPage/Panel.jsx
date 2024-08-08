@@ -1,4 +1,4 @@
-import panelImg from "../images/panelImage.jpg";
+import panelImg from "../../assets/images/panelImage.jpg";
 import styling from "./panel.module.css";
 
 function Panel(){

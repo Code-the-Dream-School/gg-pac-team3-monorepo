@@ -1,8 +1,8 @@
-import logo from '../logos/blue.png';
+import logo from '../../assets/logos/blue.png';
 import styles from './navBlue.module.css';
 import {Link} from "react-router-dom";
 
-function NavBarBlue(){
+function NavBlue(){
     return(
         <div className={styles.nav}>
             <img src={logo}/>
@@ -16,4 +16,4 @@ function NavBarBlue(){
         </div>
     )
 }
-export default NavBarBlue;
+export default NavBlue;

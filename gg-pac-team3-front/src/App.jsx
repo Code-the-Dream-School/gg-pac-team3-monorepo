@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
-import FrontPage from './assets/pages/frontpage';
+import FrontPage from './pages/frontPage/frontpage';
 
 import './App.css'
 
