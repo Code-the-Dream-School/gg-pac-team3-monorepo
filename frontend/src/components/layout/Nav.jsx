@@ -1,27 +1,58 @@
-import logo from '../../assets/logos/blue.png';
-import styles from './nav.module.css';
-import { NavLink} from "react-router-dom";
-
+import React, { useState } from "react";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import styles from "./SignUp.module.css";
+import logo from "../../assets/logos/blue.png";
 const Nav = (props) => {
+  const [activeForm, setActiveForm] = useState(null);
 
-    const {isLoggedIn} = props;
+  const switchForm = (link) => {
+    console.log("Switch form function called with:", link); // Add logging here
+    if (link === "Register") {
+      setActiveForm("SignUp");
+    } else if (link === "Login") {
+      setActiveForm("SignIn");
+    } else {
+      setActiveForm(null);
+    }
+  };
 
-    const navLinks = isLoggedIn? ['Dashboard', 'Account', 'Logout'] : ['About', 'Login', 'Register'];
+  const { isLoggedIn } = props;
 
-    return(
-        <div className={styles.nav}>
-            <img src={logo}/>
-            <div className={styles.list}>
-                <ul>
-                    { navLinks.map((link) => (
-                        <li key={link}>
-                            <NavLink to={link.toLowerCase()}>{link}</NavLink>
-                        </li>
-                    ))
-                    }
-                </ul>
-            </div>
-        </div>
-    )    
-}
+  const navLinks = isLoggedIn
+    ? [
+        { id: 1, link: "Dashboard" },
+        { id: 2, link: "Account" },
+        { id: 3, link: "Logout" },
+      ]
+    : [
+        { id: 1, link: "About" },
+        { id: 2, link: "Login" },
+        { id: 3, link: "Register" },
+      ];
+
+  return (
+    <div className={styles.nav}>
+      <img src={logo} alt="Logo" />
+      <div className={styles.list}>
+        <ul>
+          {navLinks.map((navLink) => (
+            <li
+              key={navLink.id}
+              to={navLink.link.toLowerCase()}
+              onClick={() => switchForm(navLink.link)}
+            >
+              {navLink.link}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Conditionally render SignIn or SignUp based on activeForm */}
+      {activeForm === "SignUp" && <SignUp switchForm={switchForm} />}
+      {activeForm === "SignIn" && <SignIn switchForm={switchForm} />}
+    </div>
+  );
+};
+
 export default Nav;
