@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import FrontPage from './pages/frontPage/FrontPage';
 import './App.css'
 import { useState } from 'react';
+import Panel from './pages/frontPage/Panel';
 
 function App() {
 
@@ -10,7 +11,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<FrontPage isLoggedIn={isLoggedIn} />} />
+        <Route path="/" element={<Panel isLoggedIn={isLoggedIn}/>} />
+        <Route path="/frontpage" element={<FrontPage/>} />
 
       </Routes>
     </BrowserRouter>

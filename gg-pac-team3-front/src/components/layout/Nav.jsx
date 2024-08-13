@@ -23,11 +23,11 @@ const Nav = (props) => {
                         }
                     </ul>
                 </div>
-                </div>
-                <div>
-                    <Outlet />
-                </div>
-            </>
+            </div>
+            <div>
+                <Outlet />
+            </div>
+        </>
     )    
 }
 export default Nav;
