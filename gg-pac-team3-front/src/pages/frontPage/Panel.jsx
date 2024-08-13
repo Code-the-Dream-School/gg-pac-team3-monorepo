@@ -1,15 +1,13 @@
-import panelImg from "../../assets/images/panelImage.jpg";
-import styling from "./panel.module.css";
+import Nav from "../../components/layout/Nav";
+import { Outlet } from "react-router-dom";
 
-const Panel = () => {
+const Panel = (props) => {
+    const {isLoggedIn } = props;
     return(
-    <div className={styling.container}>
-        <img id={styling.panel} src={panelImg}/>
-        <div className={styling.panelText}>
-            <h3>Join LearningHub to manage or inspire your students effortlessly or sign up and start learning the fundamentals of coding </h3>
-        </div>
-    </div>
-
+        <>
+            <Nav isLoggedIn={isLoggedIn}/>
+            <Outlet/>
+        </>
     )
 }
 export default Panel;
