@@ -11,9 +11,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Panel isLoggedIn={isLoggedIn}/>} />
-        <Route path="/frontpage" element={<FrontPage/>} />
-
+        <Route path="/" element={<Panel isLoggedIn={isLoggedIn}/>}>
+          <Route path="/frontpage" element={<FrontPage/>} />
+        </Route>
       </Routes>
     </BrowserRouter>
   )
