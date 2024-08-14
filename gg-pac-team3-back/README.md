@@ -1,30 +1,34 @@
-# Back-End Repo for Node/React Practicum
+# Learning Hub Backend
 
-This will be the API for the front-end React app part of your practicum project.
+This is the backend for **Learning Hub**, a learning app developed by Code the Dream Team 3 Practicum Group.
 
-These instructions are for the **front-end team** so they can setup their local development environment to run 
-both the back-end server and their front-end app. You can go through these steps during your first group meeting 
-in case you need assistance from your mentors.
+## Project Overview
 
->The back-end server will be running on port 8000. The front-end app will be running on port 3000. You will need to run both the back-end server and the front-end app at the same time to test your app.
+Learning Hub is an educational platform designed to support students and teachers. The backend is built using Firebase services to manage data and authentication securely.
 
-### Setting up local development environment
+## Technologies Used
 
-1. Create a folder to contain both the front-end and back-end repos 
-2. Clone this repository to that folder
-3. Run `npm install` to install dependencies
-4. Pull the latest version of the `main` branch (when needed)
-5. Run `npm run dev` to start the development server
-6. Open http://localhost:8000/api/v1/ with your browser to test.
-7. Your back-end server is now running. You can now run the front-end app.
+  - **Firebase**: A platform for building mobile and web applications.
+  - **Firestore Database**: For storing and syncing data.
+  - **Firebase Authentication**: For managing user authentication.
 
-#### Running the back-end server in Visual Studio Code
+## Environment Setup
 
-Note: In the below example, the group's front-end repository was named `bb-practicum-team1-front` and the back-end repository was named `bb-practicum-team-1-back`. Your repository will have a different name, but the rest should look the same.
-![vsc running](images/back-end-running-vsc.png)
+To run this application, you must have a `.env` file with the necessary private keys and a Firebase Admin SDK file in the backend folder.
 
-#### Testing the back-end server API in the browser
+To obtain the `.env` file with the necessary environment variables and Firebase Admin SDK file: learninghub-ggpacteam3-firebase-adminsdk-zexw0-e7cfeb2116.json, 
+please send a message to Edith on Slack.
 
-![browser server](images/back-end-running-browser.png)
+## Running the Application
 
->Update the .node-version file to match the version of Node.js the **team** is using. This is used by Render.com to [deploy the app](https://render.com/docs/node-version).
+Install the required packages and start the application, follow these steps:
+
+1. Navigate to the backend directory:
+
+   ```bash
+   cd gg-pac-team3-back
+   npm install
+   npm run dev
+
+This will start the application connecting to Firebase services and allow you to test the backend functionality.
+>>>>>>> ffc5d87 (User Authentication and Basic Routes)

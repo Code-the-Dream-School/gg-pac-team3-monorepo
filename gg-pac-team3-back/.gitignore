@@ -17,3 +17,13 @@ node_modules/
 
 # other
 .DS_Store
+
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+
+#service Account Key firebase
+learninghub-ggpacteam3-firebase-adminsdk-zexw0-e7cfeb2116.json
