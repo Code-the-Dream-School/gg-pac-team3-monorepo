@@ -1,5 +1,15 @@
 import admin from '../config/firebase.mjs'; 
 
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
+
 export const verifyToken = async (req, res, next) => {
     const idToken = req.headers.authorization && req.headers.authorization.split('Bearer ')[1];
     
@@ -17,6 +27,18 @@ export const verifyToken = async (req, res, next) => {
     }
 };
 
+/**
+ * @swagger
+ * components:
+ *   responses:
+ *     UnauthorizedError:
+ *       description: Access token is missing or invalid
+ *   securitySchemes:
+ *     BearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
 
 // Middleware to check if the user is a teacher
 export const isTeacher = async (req, res, next) => {
