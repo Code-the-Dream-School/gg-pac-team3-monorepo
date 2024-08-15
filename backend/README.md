@@ -31,4 +31,8 @@ Install the required packages and start the application, follow these steps:
    npm run dev
 
 This will start the application connecting to Firebase services and allow you to test the backend functionality.
->>>>>>> ffc5d87 (User Authentication and Basic Routes)
+
+### API Documentation
+
+This project includes comprehensive API documentation generated with [Swagger](https://swagger.io/). You can explore and test the API endpoints using the Swagger UI available at: `http://localhost:8000/api-docs`. Ensure that you have the server running before accessing the documentation.
+

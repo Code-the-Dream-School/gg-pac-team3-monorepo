@@ -2,6 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import favicon from 'express-favicon';
 import logger from 'morgan';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+
 import userRoutes from './routes/userRoutes.mjs';
 import courseRoutes from './routes/courseRoutes.mjs';
 import mainRouter from './routes/mainRouter.mjs';
@@ -18,6 +21,43 @@ app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
 app.use(express.static('public'));
 app.use(favicon(new URL('./public/favicon.ico', import.meta.url).pathname));
+
+// Swagger Setup
+const swaggerOptions = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Learning Hub API',
+            version: '1.0.0',
+            description: 'API documentation for the Learning Hub application',
+        },
+        servers: [
+            {
+                url: 'http://localhost:8000',
+            },
+        ],
+        components: {
+            securitySchemes: {
+                BearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT',
+                },
+            },
+        },
+        security: [
+            {
+                BearerAuth: [],
+            },
+        ],
+    },
+    
+    apis: ['./src/routes/*.mjs'], 
+};
+
+const swaggerSpec = swaggerJsdoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 
 // Routes
 app.use('/', mainRouter);
