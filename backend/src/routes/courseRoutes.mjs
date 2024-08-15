@@ -4,6 +4,9 @@ import { verifyToken, isTeacher } from '../middlewares/verifyToken.mjs';
 
 const router = express.Router();
 
+// Route to get all courses in frontpage- No token required for public access
+router.get('/public', getAllCourses);
+
 // Route to get all courses
 router.get('/', verifyToken, getAllCourses);
 
