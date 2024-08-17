@@ -6,8 +6,8 @@ const Panel = (props) => {
   const { isLoggedIn } = props;
   return (
     <>
-      <SignUp />
       <Nav isLoggedIn={isLoggedIn} />
+      <SignUp isLoggedIn={isLoggedIn} />
       <Outlet />
     </>
   );

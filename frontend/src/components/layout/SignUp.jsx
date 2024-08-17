@@ -4,24 +4,37 @@ const SignUp = () => {
   return (
     <div className={styles.container}>
       <section className={styles.Headings}>
-        <h1 className={styles.Header}>SignUp</h1>
-        <p id={styles.Name}>Start learning the fundamentals of Coding</p>
+        <h1 className={styles.Header}>Sign Up</h1>
+        <p id={styles.Name}>Getting started with LearnHub</p>
       </section>
 
       <div className={styles.Forms}>
-        <label className={styles.FormName}>Full Name</label>
-        <input className={styles.Input}></input>
-        <label className={styles.FormName}>Email</label>
-        <input className={styles.Input}></input>
-        <label className={styles.FormName}>Password</label>
-        <input className={styles.Input}></input>
+        <label className={styles.FormName} htmlFor="email">
+          Email
+        </label>
+        <input className={styles.Input} id="email" placeholder="Email"></input>
+
+        <label className={styles.FormName} htmlFor="password">
+          Password
+        </label>
+        <input
+          className={styles.Input}
+          id="password"
+          placeholder="Password"
+          type="password"
+        ></input>
+        <button className={styles.Forms} id={styles.button}>
+          Register
+        </button>
       </div>
+
       <section className={styles.closingSection}>
-        <button id={styles.button}>Join as a student</button>
-        <p id={styles.Content}>Already on Learning Hub?</p>
-        <a className={styles.Join}> Join Up</a>
+        <p id={styles.Content}>
+          Already have an account? <a className={styles.Join}>Login now</a>
+        </p>
       </section>
     </div>
   );
 };
+
 export default SignUp;

@@ -1,101 +1,106 @@
 .container {
     position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    width: 22%;
-    height: 60%;
+    width: 400px;
+    padding: 40px;
     background-color: rgb(255, 255, 255);
-    border-radius: 2%;
-    box-shadow: 0px 2px 20px 0px rgb(0, 0, 0);
-    align-content: stretch;
-    flex-direction: column;
-    flex-wrap: nowrap;
-}
-
-.Headings {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    position: relative;
-    top: -20%;
+    border-radius: 8px;
+    box-shadow: 1px 0px 20px rgb(0 0 0);
+    z-index: 1;
 }
 
 .Header {
-    font-family: Georgia, "Times New Roman", Times, serif;
-    position: relative;
-    font-size: 90%;
-    top: 9px;
-    color: black;
-    font-size: 25px;
-}
-
-.Forms {
-    position: absolute;
-    top: 30%;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.closingSection {
-    position: relative;
-    top: 19%;
-}
-
-#button {
-    background: #122a50;
-    border-radius: 20px;
-    width: 70%;
-    height: 47%;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    color: white;
-    font-size: 20px;
-}
-
-#Content {
-    font-family: Georgia, "Times New Roman", Times, serif;
-    position: relative;
-    top: -10px;
-    color: black;
-    font-size: 25px;
-}
-
-.Join {
-    font-family: Georgia, "Times New Roman", Times, serif;
-    position: relative;
-    top: -20px;
-    color: black;
-    font-size: 25px;
-    line-height: 36px;
-}
-
-.FormName {
-    display: flex;
-    font-weight: bold;
-    font-family: Georgia, "Times New Roman", Times, serif;
-    position: relative;
-    color: black;
-    font-size: 20px;
-}
-
-.Input {
-    position: relative;
-    height: 35px;
-    width: 300px;
-    border-radius: 9px;
-    fill: none;
-    box-shadow: 90px;
-    border: 1px solid #4f4b4b;
-    /* Thinner, lighter border */
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1.2;
+    text-align: center;
+    color: #F35C3C;
+    margin-bottom: 10px;
 }
 
 #Name {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    position: relative;
-    color: #4f4b4b;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+    color: #122A50;
+    margin-bottom: 30px;
+}
+
+.Forms {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 2px solid #122A50;
+    padding: 25px;
+    border-radius: 3%;
+}
+
+.FormName {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: -14px;
+    margin-right: 90%;
+    white-space: nowrap;
+}
+
+.Input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: white;
+}
+
+.closingSection {
+    margin-top: 30px;
+    width: 100%;
+    text-align: center;
+}
+
+#button {
+    width: 100%;
+    /* Button takes full width of its container */
+    padding: 10px;
+    /* Padding inside the button */
+    background-color: #122A50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 0 auto;
+    display: flex;
+
+    align-items: center;
+}
+
+
+#button:hover {
+    background-color: #0f2240;
+}
+
+#Content {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: underline;
+}
+
+.Join {
+    color: #F35C3C;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
 }

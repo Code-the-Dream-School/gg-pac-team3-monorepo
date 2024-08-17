@@ -1,27 +1,31 @@
-import logo from '../../assets/logos/blue.png';
-import styles from './nav.module.css';
-import { NavLink} from "react-router-dom";
+import React, { useState } from "react";
+import logo from "../../assets/logos/blue.png";
+import styles from "./nav.module.css";
+import { NavLink } from "react-router-dom";
 
+const Testing = (link) => {
+  console.log("Hi there this was the link", link);
+};
 const Nav = (props) => {
+  const { isLoggedIn } = props;
 
-    const {isLoggedIn} = props;
+  const navLinks = isLoggedIn
+    ? ["Dashboard", "Account", "Logout"]
+    : ["About", "Login", "Register"];
 
-    const navLinks = isLoggedIn? ['Dashboard', 'Account', 'Logout'] : ['About', 'Login', 'Register'];
-
-    return(
-        <div className={styles.nav}>
-            <img src={logo}/>
-            <div className={styles.list}>
-                <ul>
-                    { navLinks.map((link) => (
-                        <li key={link}>
-                            <NavLink to={link.toLowerCase()}>{link}</NavLink>
-                        </li>
-                    ))
-                    }
-                </ul>
-            </div>
-        </div>
-    )    
-}
+  return (
+    <div className={styles.nav}>
+      <img src={logo} />
+      <div className={styles.list}>
+        <ul>
+          {navLinks.map((link) => (
+            <li key={link}>
+              <NavLink to={link.toLowerCase()}>{link}</NavLink>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
 export default Nav;
