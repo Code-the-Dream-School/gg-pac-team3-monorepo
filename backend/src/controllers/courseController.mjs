@@ -2,7 +2,9 @@ import dotenv from 'dotenv';
 import admin from '../config/firebase.mjs';
 import axios from 'axios';
 import CourseModel from '../models/CourseModel.mjs';
-import { COURSES, USERS  } from './constants.mjs';
+import LessonModel from '../models/LessonModel.mjs';
+import UserCourseModel from '../models/UserCourseModel.mjs';
+import {COURSES, LESSONS, USER_COURSES, USERS} from './constants.mjs';
 
 dotenv.config();
 const db = admin.firestore();
@@ -61,17 +63,62 @@ export const getCourse = async (req, res) => {
 // Fetch all courses
 export const getAllCourses = async (req, res) => {
     try {
-        const coursesSnapshot = await db.collection(COURSES).get();  
+        const coursesRef = db.collection(COURSES);
+        const coursesSnapshot = await coursesRef.get();
 
-        const courses = [];
-        coursesSnapshot.forEach(doc => {
-            courses.push({ id: doc.id, ...CourseModel.fromFirestore(doc.data()) });
-        });
-
+        const courses = await Promise.all(coursesSnapshot.docs.map(async (doc) => {
+            const courseModel = CourseModel.fromFirestore(doc.data());
+            const lessons = await getCourseLessons(doc.id, coursesRef);
+            const userCourses = await getUserCourses(courseModel.courseId);
+            return {
+                id: doc.id,
+                lessons: lessons,
+                user_courses: userCourses,
+                ...courseModel
+            };
+        }));
         res.status(200).send(courses);
     } catch (error) {
         console.error('Error fetching courses:', error);
         res.status(500).send({ error: error.message });
+    }
+};
+
+const getCourseLessons = async (courseId, coursesRef) => {
+    try {
+        const lessonsSnapshot = await coursesRef.doc(courseId).collection(LESSONS).get();
+
+        const lessons = [];
+        lessonsSnapshot.forEach(doc => {
+            lessons.push({ id: doc.id, ...LessonModel.fromFirestore(doc.data()) });
+        });
+
+        return lessons;
+    } catch (error) {
+        console.error('Error fetching lessons:', error);
+        return [];
+    }
+};
+
+const getUserCourses = async (courseId) => {
+    try {
+        const userCoursesSnapshot = await db.collection(USER_COURSES)
+            .where('courseId', '==', courseId)
+            .get();
+
+        if (userCoursesSnapshot.empty) {
+            return [];
+        }
+
+        const users = [];
+        userCoursesSnapshot.docs.forEach(doc => {
+            users.push({ id: doc.id, ...UserCourseModel.fromFirestore(doc.data()) });
+        });
+
+        return users;
+    } catch (error) {
+        console.error('Error fetching user courses:', error);
+        return [];
     }
 };
 
