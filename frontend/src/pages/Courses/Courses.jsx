@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import SideBar from "../../components/SideBar/SideBar.jsx";
+import styles from './CoursesStyles.module.css';
 
 const Courses = () => {
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
@@ -25,9 +26,9 @@ const Courses = () => {
     }, []);
 
     return (
-        <div>
+        <div className={styles.courseContainer}>
             <SideBar />
-            <ul>
+            <ul className={styles.courseItems}>
                 {
                     courses.map((course, index) => {
                         return <li key={index}>{course.courseName}</li>

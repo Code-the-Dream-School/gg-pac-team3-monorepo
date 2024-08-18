@@ -1,4 +1,4 @@
-.navBarContainer {
+.sideBarContainer {
     height: 100%;
     width: 5rem;
     position: fixed;
@@ -8,4 +8,9 @@
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+}
+
+.sideBarItems {
+    display: flex;
+    flex-direction: column;
 }

@@ -16,8 +16,8 @@ const SideBar = () => {
     ]
 
     return (
-        <nav className={styles.navBarContainer}>
-            <ul>
+        <nav className={styles.sideBarContainer}>
+            <ul className={styles.sideBarItems}>
                 {
                      sideBarItems.map((item, index) => {
                         return <SideBarItem key={index} item={item}/>
