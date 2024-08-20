@@ -98,27 +98,27 @@
     max-width: 100%; 
   }
 
-  h1 {
+  .h1 {
     font-size: 2rem;
   }
 
-  p {
+  .p {
     font-size: 1rem;
   }
 
-  h2 {
+  .h2 {
     font-size: 1.5rem;
   }
 
-  li {
+  .li {
     padding: 10px;
   }
 
-  li h3 {
+  .li .h3 {
     font-size: 1.2rem;
   }
 
-  li p {
+  .li .p {
     font-size: 0.9rem;
   }
 
@@ -135,27 +135,27 @@
     margin: 10px;
   }
 
-  h1 {
+  .h1 {
     font-size: 1.5rem;
   }
 
-  p {
+  .p {
     font-size: 0.9rem;
   }
 
-  h2 {
+  .h2 {
     font-size: 1.2rem;
   }
 
-  li {
+  .li {
     padding: 8px;
   }
 
-  li h3 {
+  .li .h3 {
     font-size: 1rem;
   }
 
-  li p {
+  .li .p {
     font-size: 0.8rem;
   }
 
