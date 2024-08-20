@@ -1,5 +1,5 @@
 import express from 'express';
-import { enrollInCourse, getUserCourses } from '../controllers/userCourseController.mjs';
+import { enrollInCourse,getNotEnrolledInCourseByUser, getUserCourses, getUserCoursesWithDetails } from '../controllers/userCourseController.mjs';
 import { verifyToken } from '../middlewares/verifyToken.mjs';
 
 const router = express.Router();
@@ -71,4 +71,6 @@ router.get('/user/:userId/course', verifyToken, getUserCourses);
  */
 router.post('/user/:userId/course/:courseId/enrollment', verifyToken, enrollInCourse);
 
+router.get('/user/:userId/course/UserCourses', verifyToken, getUserCoursesWithDetails);
+router.get('/user/:userId/course/notEnrolledCourses', verifyToken, getNotEnrolledInCourseByUser);
 export default router;

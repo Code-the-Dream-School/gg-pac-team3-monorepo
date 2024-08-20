@@ -22,7 +22,8 @@ export const signupUser = async (req, res) => {
             userType
         });
        
-        const defaultprofilePictureUrl = 'gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg';
+        const defaultprofilePictureUrl = 'https://firebasestorage.googleapis.com/v0/b/learninghub-ggpacteam3.appspot.com/o/images%2FuserProfileImage.jpg?alt=media';
+
         
         const user = new UsersModel({
             name,

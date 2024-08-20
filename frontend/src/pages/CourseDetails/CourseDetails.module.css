@@ -1,0 +1,167 @@
+.courseDetailsContainer {
+  background-color: #fff;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+li h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+li p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.enrollButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 20px;
+  display: inline-block;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.enrollButton:hover {
+  background-color: #0056b3;
+}
+
+.enrollSuccess {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #e0f9ff;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  color: #333;
+}
+
+.goToCourseButton {
+  background-color: #0b2056;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.goToCourseButton:hover {
+  background-color: #80d4ec;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .courseDetailsContainer {
+    padding: 15px;
+    margin: 15px;
+    max-width: 100%; 
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  li {
+    padding: 10px;
+  }
+
+  li h3 {
+    font-size: 1.2rem;
+  }
+
+  li p {
+    font-size: 0.9rem;
+  }
+
+  .enrollButton,
+  .goToCourseButton {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .courseDetailsContainer {
+    padding: 10px;
+    margin: 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  li {
+    padding: 8px;
+  }
+
+  li h3 {
+    font-size: 1rem;
+  }
+
+  li p {
+    font-size: 0.8rem;
+  }
+
+  .enrollButton,
+  .goToCourseButton {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+}

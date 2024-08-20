@@ -1,0 +1,197 @@
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: #09245a;
+  padding: 10px;
+}
+
+.tabButton {
+  background: none;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 10px;
+}
+
+.activeTab {
+  font-weight: bold;
+  border-bottom: 2px solid #007bff;
+}
+
+.introText {
+  text-align: center;
+  padding: 20px;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid #ddd;
+}
+
+.introText h1 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.content {
+  padding: 20px;
+  overflow-y: auto;
+  
+}
+.parentContainer {
+  display: flex;
+  justify-content: center; 
+  padding: 20px; 
+}
+.coursesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+}
+
+.courseCard {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 100%;
+  max-width: 300px;
+  cursor: pointer;
+  color: black;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.courseCard:hover {
+  transform: scale(1.05); /* Slightly enlarges the card */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds shadow effect */
+}
+
+.courseImage {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.courseInfo {
+  padding: 10px;
+}
+
+.courseName {
+  font-size: 18px;
+  margin: 0;
+}
+
+.courseType,
+.courseDuration,
+.courseRating,
+.courseDescription {
+  margin: 5px 0;
+}
+
+.lessonsContainer {
+  padding: 20px;
+}
+
+.starFilled {
+  color: gold;
+}
+
+.starEmpty {
+  color: #ddd;
+}
+
+/* Profile section styles */
+.profileContainer {
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-align: center; 
+}
+
+.profileDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+}
+
+.profileDetails h2 {
+  margin: 0 0 10px;
+  font-size: 22px;
+}
+
+.profileDetails p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.profileImage {
+  width: 30vw; 
+  height: 30vw;
+  max-width: 150px;
+  max-height: 150px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  border: 2px solid #ddd; 
+  display: block; 
+  margin: 0 auto; 
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    padding: 5px;
+  }
+
+  .tabButton {
+    font-size: 14px;
+    padding: 8px 15px;
+    margin: 5px;
+  }
+
+  .introText h1 {
+    font-size: 20px;
+  }
+
+  .content {
+    padding: 10px;
+  }
+
+  .courseCard {
+    max-width: 100%; 
+  }
+
+  .profileImage {
+    width: 40vw; /* Larger width on smaller screens */
+    height: 40vw; /* Matches width for aspect ratio */
+  }
+}
+
+@media (max-width: 480px) {
+  .tabButton {
+    font-size: 12px;
+    padding: 6px 10px;
+    margin: 3px;
+  }
+
+  .introText h1 {
+    font-size: 18px;
+  }
+
+  .courseCard {
+    max-width: 100%; 
+  }
+
+  .profileImage {
+    width: 50vw; /* Adjust width for very small screens */
+    height: 50vw; /* Matches width for aspect ratio */
+  }
+}
