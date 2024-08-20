@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import SignIn from "./SignIn";
+import SignIn from "./signIn";
 import SignUp from "./SignUp";
-import styles from "./SignUp.module.css";
+import styles from "./nav.module.css";
 import logo from "../../assets/logos/blue.png";
 const Nav = (props) => {
   const [activeForm, setActiveForm] = useState(null);
@@ -47,8 +47,6 @@ const Nav = (props) => {
           ))}
         </ul>
       </div>
-
-      {/* Conditionally render SignIn or SignUp based on activeForm */}
       {activeForm === "SignUp" && <SignUp switchForm={switchForm} />}
       {activeForm === "SignIn" && <SignIn switchForm={switchForm} />}
     </div>

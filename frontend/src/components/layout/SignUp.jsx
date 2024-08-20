@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./SignUp.module.css";
+import styles from "./Signup.module.css";
 
 const SignUp = ({ switchForm }) => {
   console.log("This is the switch form", switchForm);
