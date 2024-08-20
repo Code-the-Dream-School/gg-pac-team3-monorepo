@@ -41,14 +41,14 @@ const handleGotoCourse = () => {
   };
   return (
     <div className={styles.courseDetailsContainer}>
-      <h1>{course.courseName}</h1>
-      <p>{course.description}</p>
-      <h2>Lessons</h2>
-      <ul>
+      <h1 className={styles.h1}>{course.courseName}</h1>
+      <p className={styles.p}>{course.description}</p>
+      <h2 className={styles.h2}>Lessons</h2>
+      <ul className={styles.ul}>
         {lessons.map(lesson => (
-          <li key={lesson.id}>
-            <h3>{lesson.title}</h3>
-            <p>{lesson.materials}</p>
+          <li className={styles.li} key={lesson.id}>
+            <h3 className={styles.h3}>{lesson.title}</h3>
+            <p className={styles.p}>{lesson.materials}</p>
             <p>Points: {lesson.points}</p>
           </li>
         ))}
@@ -57,7 +57,7 @@ const handleGotoCourse = () => {
         <button className={styles.enrollButton} onClick={handleEnroll}>Enroll</button>
       ) : (
         <div className={styles.enrollSuccess}>
-          <p>{message}</p>
+          <p className={styles.p}>{message}</p>
           <button className={styles.goToCourseButton} onClick={handleGotoCourse}>Go to Course</button>
         </div>
       )}

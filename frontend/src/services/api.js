@@ -18,7 +18,7 @@ export const fetchCourses = async () => {
     return response.data;
   } catch (error) {
     console.error('Error fetching courses:', error);
-    throw error; // Re-throw error if needed for further handling
+    throw error; 
   }
 };
 export const fetchNotEnrolledCourses = async (userId) => {
