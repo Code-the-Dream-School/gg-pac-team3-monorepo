@@ -5,11 +5,11 @@
     justify-content: space-between;
 }
 
-.list{
+.listContainer{
     padding-top: 4%;
 }
 
-ul{
+.list{
     list-style-type:none;
     display: flex;
     flex-direction: row;
@@ -17,18 +17,18 @@ ul{
     right: 5%;
 }
 
-ul > li {
+.listItem {
     white-space:nowrap;
     padding: 2%;
 }
 
-ul > li > a {
+a {
     font-weight: bold;
     text-decoration: none;
     color: #ffff;
 }
 
-img{
+.logo{
     width: 15%;
     height: 15%;
 }

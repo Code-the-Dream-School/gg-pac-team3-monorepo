@@ -10,11 +10,11 @@ const Nav = (props) => {
 
     return(
         <div className={styles.nav}>
-            <img src={logo}/>
-            <div className={styles.list}>
-                <ul>
+            <img className={styles.logo} src={logo}/>
+            <div className={styles.listContainer}>
+                <ul className={styles.list}>
                     { navLinks.map((link) => (
-                        <li key={link}>
+                        <li className={styles.listItem} key={link}>
                             <NavLink to={link.toLowerCase()}>{link}</NavLink>
                         </li>
                     ))
