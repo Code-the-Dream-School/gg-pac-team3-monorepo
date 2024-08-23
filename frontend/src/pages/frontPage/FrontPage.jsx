@@ -15,7 +15,7 @@ const FrontPage = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            try{
+            try {
                 const data = await getCourses();
                 if(data.success === false){
                     setState({
@@ -61,8 +61,8 @@ const FrontPage = () => {
                             <img className={styling.courseLogo} src={course.imageUrl} alt="Course Image"/>
                             <div className={styling.courseDescription}>
                                 <h1>{course.courseName}</h1>
-                                <p>Description:{course.description}</p>
-                                <p>Rating:{course.rating}</p>
+                                <p>Description: {course.description}</p>
+                                <p>Rating: {course.rating}</p>
                             </div>
                         </div>
                     ))}
@@ -78,7 +78,7 @@ const Error = () =>{
     return(
         <div className={styling.errorContainer}>
             <img src={pencil} className={styling.pencilImg}/>
-            <h1>Opps, something went wrong!</h1>
+            <h1>Oops, something went wrong!</h1>
             <p>We've encountered an error while trying to display our current available courses. Please wait a moment and try again.</p>
         </div>
     )

@@ -36,9 +36,7 @@
     flex-direction: row;
     padding: 1em;
     margin: 1em;
-    border-style: solid;
-    border-color:#122a50 ;
-    border-width: .15em;
+    border:#122a50 .15em solid;
     border-radius: 1em;
     align-content: center;
     box-shadow: #122a50 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
@@ -71,8 +69,8 @@
 }
 
 .pencilImg{
-    width:25%;
-    height:25%;
+    width:20em;
+    height:25em;
 }
 
 .errorContainer > h1 {
