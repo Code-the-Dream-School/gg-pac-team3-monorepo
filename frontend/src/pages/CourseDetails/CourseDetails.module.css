@@ -1,50 +1,56 @@
 .courseDetailsContainer {
   background-color: #fff;
-  padding: 20px;
-  margin: 20px auto;
-  max-width: 800px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.25rem;
+  margin: 1.25rem auto;
+  max-width: 50rem;
+  border-radius: 0.625rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
-.h1 {
+.courseTitle {
   font-size: 2.5rem;
   color: #333;
-  margin-bottom: 10px;
+  margin-bottom: 0.625rem;
 }
 
-.p {
+.courseDescription {
   font-size: 1.2rem;
   color: #666;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
-.h2 {
+.enrollSuccessMessage {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 1.25rem;
+}
+
+.lessonsHeading {
   font-size: 2rem;
   color: #333;
-  margin-bottom: 15px;
+  margin-bottom: 0.9375rem;
 }
 
-.ul {
+.lessonsListUl {
   list-style-type: none;
   padding: 0;
 }
 
-.li {
+.lessonsItem {
   background-color: #f9f9f9;
   border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 15px;
-  margin-bottom: 10px;
+  border-radius: 0.3125rem;
+  padding: 0.9375rem;
+  margin-bottom: 0.625rem;
 }
 
-.li .h3 {
+.lessonTitle {
   font-size: 1.5rem;
   color: #333;
-  margin-bottom: 5px;
+  margin-bottom: 0.3125rem;
 }
 
-.li .p {
+.lesson_materials {
   font-size: 1rem;
   color: #555;
 }
@@ -53,11 +59,11 @@
   background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
+  border-radius: 0.3125rem;
+  padding: 0.625rem 1.25rem;
   font-size: 1rem;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 1.25rem;
   display: inline-block;
   text-align: center;
   transition: background-color 0.3s ease;
@@ -68,22 +74,22 @@
 }
 
 .enrollSuccess {
-  margin-top: 20px;
-  padding: 10px;
+  margin-top: 1.25rem;
+  padding: 0.625rem;
   background-color: #e0f9ff;
   border: 1px solid #007bff;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   color: #333;
 }
 
 .goToCourseButton {
   background-color: #0b2056;
   color: white;
-  padding: 10px 20px;
+  padding: 0.625rem 1.25rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 0.625rem;
 }
 
 .goToCourseButton:hover {
@@ -93,75 +99,81 @@
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
   .courseDetailsContainer {
-    padding: 15px;
-    margin: 15px;
-    max-width: 100%; 
+    padding: 0.9375rem;
+    margin: 0.9375rem;
+    max-width: 100%;
   }
 
-  .h1 {
+  .courseTitle {
     font-size: 2rem;
   }
 
-  .p {
+  .courseDescription {
     font-size: 1rem;
   }
 
-  .h2 {
+  .enrollSuccessMessage {
+    font-size: 1rem;
+  }
+  .lessonsHeading {
     font-size: 1.5rem;
   }
 
-  .li {
-    padding: 10px;
+  .lessonsItem {
+    padding: 0.5rem;
   }
 
-  .li .h3 {
+  .lessonTitle {
     font-size: 1.2rem;
   }
 
-  .li .p {
+  .lesson_materials {
     font-size: 0.9rem;
   }
 
   .enrollButton,
   .goToCourseButton {
-    padding: 8px 15px;
+    padding: 0.5rem 0.9375rem;
     font-size: 0.9rem;
   }
 }
 
 @media (max-width: 480px) {
   .courseDetailsContainer {
-    padding: 10px;
-    margin: 10px;
+    padding: 0.625rem;
+    margin: 0.625rem;
   }
 
-  .h1 {
+  .courseTitle {
     font-size: 1.5rem;
   }
 
-  .p {
+  .courseDescription {
+    font-size: 0.9rem;
+  }
+  .enrollSuccessMessage {
     font-size: 0.9rem;
   }
 
-  .h2 {
+  .lessonsHeading {
     font-size: 1.2rem;
   }
 
-  .li {
-    padding: 8px;
+  .lessonsItem {
+    padding: 0.5rem;
   }
 
-  .li .h3 {
+  .lessonTitle {
     font-size: 1rem;
   }
 
-  .li .p {
+  .lesson_materials {
     font-size: 0.8rem;
   }
 
   .enrollButton,
   .goToCourseButton {
-    padding: 6px 12px;
+    padding: 0.375rem 0.75rem;
     font-size: 0.8rem;
   }
 }
