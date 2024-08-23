@@ -5,30 +5,30 @@
     justify-content: space-between;
 }
 
-.list{
-    padding-top: 4%;
+.listContainer{
+    padding-top: 4em;
 }
 
-ul{
+.list{
     list-style-type:none;
     display: flex;
     flex-direction: row;
     position: absolute;
-    right: 5%;
+    right: 2em;
 }
 
-ul > li {
+.listItem {
     white-space:nowrap;
-    padding: 2%;
+    padding: .5em;
 }
 
-ul > li > a {
+a {
     font-weight: bold;
     text-decoration: none;
     color: #ffff;
 }
 
-img{
-    width: 15%;
-    height: 15%;
+.logo{
+    width: 10em;
+    height: 10em;
 }
