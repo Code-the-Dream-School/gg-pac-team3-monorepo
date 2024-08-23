@@ -42,6 +42,9 @@
         height: 5rem;
         border-bottom: black solid 0.0625rem;
     }
+    img {
+        margin: auto;
+    }
 }
 
 .courseLogo {

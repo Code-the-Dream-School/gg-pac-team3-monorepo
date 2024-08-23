@@ -18,10 +18,10 @@ const SideBarItem = () => {
 
     return (
         <ul className={styles.sideBarItems}>
-            {sideBarItems.map((item, index) => {
+            {sideBarItems.map((item) => {
                 const isActive = location.pathname === item.href;
                 return (
-                    <li key={index} className={`${styles.sideBarItem} ${isActive ? styles.active : ''}`}>
+                    <li key={item.name} className={`${styles.sideBarItem} ${isActive ? styles.active : ''}`}>
                         <Link to={item.href} className={styles.sideBarLink}>
                             {item.name}
                         </Link>
