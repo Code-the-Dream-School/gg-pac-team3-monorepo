@@ -1,5 +1,11 @@
 import express from 'express';
-import { createCourse, getAllCourses, getCourse, updateCourse, deleteCourse } from '../controllers/courseController.mjs';
+import {
+  createCourse,
+  getAllCourses,
+  getCourse,
+  updateCourse,
+  deleteCourse,
+} from '../controllers/courseController.mjs';
 import { verifyToken, isTeacher } from '../middlewares/verifyToken.mjs';
 
 const router = express.Router();

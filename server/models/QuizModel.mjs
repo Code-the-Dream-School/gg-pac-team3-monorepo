@@ -5,7 +5,7 @@ class QuizModel {
     quizId,
     title,
     questions = [], // Array of questions
-    createdAt = new Date() // Default to current date if not provided
+    createdAt = new Date(), // Default to current date if not provided
   }) {
     // Validate types
     if (typeof quizId !== 'string') throw new Error('Invalid quizId');
@@ -25,7 +25,7 @@ class QuizModel {
       quizId: this.quizId,
       title: this.title,
       questions: this.questions,
-      createdAt: admin.firestore.Timestamp.fromDate(this.createdAt) // Convert JavaScript Date to Firestore Timestamp
+      createdAt: admin.firestore.Timestamp.fromDate(this.createdAt), // Convert JavaScript Date to Firestore Timestamp
     };
   }
 
@@ -35,7 +35,7 @@ class QuizModel {
       quizId: data.quizId,
       title: data.title,
       questions: data.questions || [], // Ensure default to empty array if not present
-      createdAt: data.createdAt.toDate() // Convert Firestore Timestamp to JavaScript Date object
+      createdAt: data.createdAt.toDate(), // Convert Firestore Timestamp to JavaScript Date object
     });
   }
 }

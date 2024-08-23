@@ -1,180 +1,182 @@
 .panel {
-    width: 100%;
-    height: 20em;
+  width: 100%;
+  height: 20em;
 }
 
-.panelContainer{
-    position: relative;
+.panelContainer {
+  position: relative;
 }
-.panelText{
-    position:absolute;
-    top: 5em;
-    right: 2em;
-    left: 20em;
-}
-
-.mainContainer{
-    display: flex;
-    flex-direction: column;
+.panelText {
+  position: absolute;
+  top: 5em;
+  right: 2em;
+  left: 20em;
 }
 
-.mainContainer > h3{
-    font-size: 1.5em;
-    padding: 1em;
-    letter-spacing: .1em;
-}
-.coursesContainer{
-    display:flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+.mainContainer {
+  display: flex;
+  flex-direction: column;
 }
 
-.courseContainer{
-    display: flex;
-    flex-direction: row;
-    padding: 1em;
-    margin: 1em;
-    border:#122a50 .15em solid;
-    border-radius: 1em;
-    align-content: center;
-    box-shadow: #122a50 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+.mainContainer > h3 {
+  font-size: 1.5em;
+  padding: 1em;
+  letter-spacing: 0.1em;
+}
+.coursesContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 
-.courseLogo{
-    padding: 1em;
-}
-.courseDescritpion{
-    display: flex;
-    flex-direction: column;
-}
-
-.courseDescription > h1{
-    color:#f35c3c;
-    font-weight: bolder;
-    text-align: left;
-}
-
-.courseDescription > p{
-    text-align: left;
+.courseContainer {
+  display: flex;
+  flex-direction: row;
+  padding: 1em;
+  margin: 1em;
+  border: #122a50 0.15em solid;
+  border-radius: 1em;
+  align-content: center;
+  box-shadow:
+    #122a50 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
-.errorContainer{
-    display:flex;
-    flex-direction:column;
-    align-items: center;
-    background-color: #f6f6f6;
-    padding: 2em;
+.courseLogo {
+  padding: 1em;
+}
+.courseDescritpion {
+  display: flex;
+  flex-direction: column;
 }
 
-.pencilImg{
-    width:20em;
-    height:25em;
+.courseDescription > h1 {
+  color: #f35c3c;
+  font-weight: bolder;
+  text-align: left;
+}
+
+.courseDescription > p {
+  text-align: left;
+}
+
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f6f6f6;
+  padding: 2em;
+}
+
+.pencilImg {
+  width: 20em;
+  height: 25em;
 }
 
 .errorContainer > h1 {
-    color:#f35c3c;
-    font-size: 3em;
+  color: #f35c3c;
+  font-size: 3em;
 }
 
 .ldsspinner,
 .ldsspinner div,
 .ldsspinner div:after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .ldsspinner {
-    color: black;
-    display: inline-block;
-    position: relative;
-    width: 80px;
-    height: 80px;
+  color: black;
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
 }
 
 .ldsspinner div {
-    transform-origin: 40px 40px;
-    animation: lds-spinner 1.2s linear infinite;
+  transform-origin: 40px 40px;
+  animation: lds-spinner 1.2s linear infinite;
 }
 
 .ldsspinner div:after {
-    content: " ";
-    display: block;
-    position: absolute;
-    top: 3.2px;
-    left: 36.8px;
-    width: 6.4px;
-    height: 17.6px;
-    border-radius: 20%;
-    background: currentColor;
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 3.2px;
+  left: 36.8px;
+  width: 6.4px;
+  height: 17.6px;
+  border-radius: 20%;
+  background: currentColor;
 }
 
 .ldsspinner div:nth-child(1) {
-    transform: rotate(0deg);
-    animation-delay: -1.1s;
+  transform: rotate(0deg);
+  animation-delay: -1.1s;
 }
 
 .ldsspinner div:nth-child(2) {
-    transform: rotate(30deg);
-    animation-delay: -1s;
+  transform: rotate(30deg);
+  animation-delay: -1s;
 }
 
 .ldsspinner div:nth-child(3) {
-    transform: rotate(60deg);
-    animation-delay: -0.9s;
+  transform: rotate(60deg);
+  animation-delay: -0.9s;
 }
 
 .ldsspinner div:nth-child(4) {
-    transform: rotate(90deg);
-    animation-delay: -0.8s;
+  transform: rotate(90deg);
+  animation-delay: -0.8s;
 }
 
 .ldsspinner div:nth-child(5) {
-    transform: rotate(120deg);
-    animation-delay: -0.7s;
+  transform: rotate(120deg);
+  animation-delay: -0.7s;
 }
 
 .ldsspinner div:nth-child(6) {
-    transform: rotate(150deg);
-    animation-delay: -0.6s;
+  transform: rotate(150deg);
+  animation-delay: -0.6s;
 }
 
 .ldsspinner div:nth-child(7) {
-    transform: rotate(180deg);
-    animation-delay: -0.5s;
+  transform: rotate(180deg);
+  animation-delay: -0.5s;
 }
 
 .ldsspinner div:nth-child(8) {
-    transform: rotate(210deg);
-    animation-delay: -0.4s;
+  transform: rotate(210deg);
+  animation-delay: -0.4s;
 }
 
 .ldsspinner div:nth-child(9) {
-    transform: rotate(240deg);
-    animation-delay: -0.3s;
+  transform: rotate(240deg);
+  animation-delay: -0.3s;
 }
 
 .ldsspinner div:nth-child(10) {
-    transform: rotate(270deg);
-    animation-delay: -0.2s;
+  transform: rotate(270deg);
+  animation-delay: -0.2s;
 }
 
 .ldsspinner div:nth-child(11) {
-    transform: rotate(300deg);
-    animation-delay: -0.1s;
+  transform: rotate(300deg);
+  animation-delay: -0.1s;
 }
 
 .ldsspinner div:nth-child(12) {
-    transform: rotate(330deg);
-    animation-delay: 0s;
+  transform: rotate(330deg);
+  animation-delay: 0s;
 }
 
 @keyframes lds-spinner {
-    0% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 1;
+  }
 
-    100% {
-        opacity: 0;
-    }
+  100% {
+    opacity: 0;
+  }
 }

@@ -5,14 +5,14 @@ class UsersModel {
     name,
     email,
     userType,
-    profilePictureUrl = null, // Default image URL    
-    createdAt = new Date()      
+    profilePictureUrl = null, // Default image URL
+    createdAt = new Date(),
   }) {
     this.name = name;
     this.email = email;
     this.userType = userType;
-    this.profilePictureUrl = profilePictureUrl;    
-    this.createdAt = createdAt;     
+    this.profilePictureUrl = profilePictureUrl;
+    this.createdAt = createdAt;
   }
 
   static fromFirestore(doc) {
@@ -21,8 +21,8 @@ class UsersModel {
       name: data.name,
       email: data.email,
       userType: data.userType,
-      profilePictureUrl: data.profilePictureUrl,      
-      createdAt: data.createdAt.toDate(),        
+      profilePictureUrl: data.profilePictureUrl,
+      createdAt: data.createdAt.toDate(),
     });
   }
 
@@ -31,8 +31,8 @@ class UsersModel {
       name: this.name,
       email: this.email,
       userType: this.userType,
-      profilePictureUrl: this.profilePictureUrl,      
-      createdAt: admin.firestore.FieldValue.serverTimestamp()        
+      profilePictureUrl: this.profilePictureUrl,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
     };
   }
 }
