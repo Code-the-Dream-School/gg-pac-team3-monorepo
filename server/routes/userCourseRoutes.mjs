@@ -1,5 +1,8 @@
 import express from 'express';
-import { enrollInCourse, getUserCourses } from '../controllers/userCourseController.mjs';
+import {
+  enrollInCourse,
+  getUserCourses,
+} from '../controllers/userCourseController.mjs';
 import { verifyToken } from '../middlewares/verifyToken.mjs';
 
 const router = express.Router();
@@ -69,6 +72,10 @@ router.get('/user/:userId/course', verifyToken, getUserCourses);
  *       500:
  *         description: Internal server error.
  */
-router.post('/user/:userId/course/:courseId/enrollment', verifyToken, enrollInCourse);
+router.post(
+  '/user/:userId/course/:courseId/enrollment',
+  verifyToken,
+  enrollInCourse,
+);
 
 export default router;

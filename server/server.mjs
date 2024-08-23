@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
-import app from "./app.mjs";
+import dotenv from 'dotenv';
+import app from './app.mjs';
 
 dotenv.config();
 

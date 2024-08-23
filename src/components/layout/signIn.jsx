@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./SignIn.module.css";
+import React from 'react';
+import styles from './SignIn.module.css';
 
 const SignIn = ({ switchForm }) => {
   return (
@@ -10,32 +10,32 @@ const SignIn = ({ switchForm }) => {
       </section>
 
       <div className={styles.forms}>
-        <label className={styles.formName} htmlFor="email">
+        <label className={styles.formName} htmlFor='email'>
           Email
         </label>
-        <input className={styles.input} id="email" placeholder="Email"></input>
+        <input className={styles.input} id='email' placeholder='Email'></input>
 
-        <label className={styles.formName} htmlFor="password">
+        <label className={styles.formName} htmlFor='password'>
           Password
         </label>
         <input
           className={styles.input}
-          id="password"
-          placeholder="Password"
-          type="password"
+          id='password'
+          placeholder='Password'
+          type='password'
         ></input>
         <button className={styles.button}>Log In</button>
       </div>
 
       <section className={styles.closingSection}>
         <p className={styles.content}>
-          Don’t have an account?{" "}
+          Don’t have an account?{' '}
           <a
             className={styles.join}
             onClick={(e) => {
               e.preventDefault();
-              console.log("Sign up now clicked"); // Add logging here
-              switchForm("Register"); // Switch to SignUp form
+              console.log('Sign up now clicked'); // Add logging here
+              switchForm('Register'); // Switch to SignUp form
             }}
           >
             Sign up now

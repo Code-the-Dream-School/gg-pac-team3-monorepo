@@ -1,14 +1,14 @@
 div > #panel {
-    width: 100%;
-    height: 60%;
+  width: 100%;
+  height: 60%;
 }
 
-.container{
-    position: relative;
+.container {
+  position: relative;
 }
-.panelText{
-    position:absolute;
-    top: 5%;
-    right: 5%;
-    left: 50%;
+.panelText {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  left: 50%;
 }

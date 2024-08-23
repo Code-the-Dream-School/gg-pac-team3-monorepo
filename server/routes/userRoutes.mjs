@@ -1,5 +1,14 @@
 import express from 'express';
-import { getUser, signupUser, getUserDashboard, loginUser, logoffUser, getAllUsers, resetPassword, updateUserProfile } from '../controllers/userController.mjs';
+import {
+  getUser,
+  signupUser,
+  getUserDashboard,
+  loginUser,
+  logoffUser,
+  getAllUsers,
+  resetPassword,
+  updateUserProfile,
+} from '../controllers/userController.mjs';
 import { verifyToken } from '../middlewares/verifyToken.mjs';
 
 const router = express.Router();

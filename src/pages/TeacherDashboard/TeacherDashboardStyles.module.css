@@ -1,6 +1,5 @@
 .courseContainer {
-    display: flex;
-    margin-top: 1.25rem;
-    margin-left: 5rem;
-    ;
+  display: flex;
+  margin-top: 1.25rem;
+  margin-left: 5rem;
 }

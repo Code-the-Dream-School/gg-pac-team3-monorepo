@@ -1,5 +1,11 @@
 import express from 'express';
-import { createLesson, getLesson, getAllLessons, updateLesson, deleteLesson } from '../controllers/lessonController.mjs';
+import {
+  createLesson,
+  getLesson,
+  getAllLessons,
+  updateLesson,
+  deleteLesson,
+} from '../controllers/lessonController.mjs';
 import { verifyToken, isTeacher } from '../middlewares/verifyToken.mjs';
 
 const router = express.Router();
@@ -189,7 +195,12 @@ router.post('/:courseId', verifyToken, isTeacher, createLesson);
  *       500:
  *         description: Internal server error.
  */
-router.patch('/:courseId/lesson/:lessonId', verifyToken, isTeacher, updateLesson);
+router.patch(
+  '/:courseId/lesson/:lessonId',
+  verifyToken,
+  isTeacher,
+  updateLesson,
+);
 
 /**
  * @swagger
@@ -222,6 +233,11 @@ router.patch('/:courseId/lesson/:lessonId', verifyToken, isTeacher, updateLesson
  *       500:
  *         description: Internal server error.
  */
-router.delete('/:courseId/lesson/:lessonId', verifyToken, isTeacher, deleteLesson);
+router.delete(
+  '/:courseId/lesson/:lessonId',
+  verifyToken,
+  isTeacher,
+  deleteLesson,
+);
 
 export default router;
