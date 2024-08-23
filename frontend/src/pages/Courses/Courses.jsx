@@ -30,8 +30,8 @@ const Courses = () => {
             <SideBar />
             <ul className={styles.courseItems}>
                 {
-                    courses.map((course, index) => {
-                        return <li key={index}>{course.courseName}</li>
+                    courses.map((course) => {
+                        return <li key={course.id}>{course.courseName}</li>
                     })
                 }
             </ul>

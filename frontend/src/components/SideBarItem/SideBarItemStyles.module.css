@@ -1,0 +1,29 @@
+.sideBarItems {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    gap: 2rem;
+    margin: 2rem 0;
+    padding: 0;
+}
+
+.sideBarItem {
+    background-color: #fceeb9;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+    width: 12rem;
+    padding: 0.8rem;
+    border-radius: 0.625rem;
+}
+
+.sideBarItem.active {
+    background-color: #F3C414;
+}
+
+.sideBarLink {
+    display: flex;
+    text-decoration: none;
+    color: black;
+}

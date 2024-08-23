@@ -15,9 +15,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Panel isLoggedIn={isLoggedIn}/>}>
           <Route path="/frontpage" element={<FrontPage/>} />
+          <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+          <Route path="/teacher/courses" element={<Courses />} />
         </Route>
-        <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
-        <Route path="/teacher/courses" element={<Courses />} />
       </Routes>
     </BrowserRouter>
   )

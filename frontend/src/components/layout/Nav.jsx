@@ -31,26 +31,25 @@ const Nav = (props) => {
         { id: 3, link: "Register" },
       ];
 
-  return (
-    <div className={styles.nav}>
-      <img src={logo} alt="Logo" />
-      <div className={styles.list}>
-        <ul>
-          {navLinks.map((navLink) => (
-            <li
-              key={navLink.id}
-              to={navLink.link.toLowerCase()}
-              onClick={() => switchForm(navLink.link)}
-            >
-              {navLink.link}
-            </li>
-          ))}
-        </ul>
-      </div>
-      {activeForm === "SignUp" && <SignUp switchForm={switchForm} />}
-      {activeForm === "SignIn" && <SignIn switchForm={switchForm} />}
-    </div>
-  );
-};
-
+    return(
+        <div className={styles.nav}>
+            <img className={styles.logo} src={logo} alt="Logo"/>
+            <div className={styles.list}>
+                <ul className={styles.ul}>
+                    { navLinks.map((navLink) => (
+                        <li
+                            key={navLink.id}
+                            to={navLink.link.toLowerCase()}
+                            onClick={() => switchForm(navLink.link)}>
+                            {navLink.link}
+                        </li>
+                    ))
+                    }
+                </ul>
+            </div>
+            {activeForm === "SignUp" && <SignUp switchForm={switchForm} />}
+            {activeForm === "SignIn" && <SignIn switchForm={switchForm} />}
+        </div>
+    )    
+}
 export default Nav;
