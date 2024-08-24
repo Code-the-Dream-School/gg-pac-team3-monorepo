@@ -1,6 +1,15 @@
-import express from 'express';
-import { getUser, signupUser, getUserDashboard, loginUser, logoffUser, getAllUsers, resetPassword, updateUserProfile } from '../controllers/userController.mjs';
-import { verifyToken } from '../middlewares/verifyToken.mjs';
+import express from "express";
+import {
+  getUser,
+  signupUser,
+  getUserDashboard,
+  loginUser,
+  logoffUser,
+  getAllUsers,
+  resetPassword,
+  updateUserProfile,
+} from "../controllers/userController.mjs";
+import { verifyToken } from "../middlewares/verifyToken.mjs";
 
 const router = express.Router();
 
@@ -27,7 +36,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error.
  */
-router.get('/', verifyToken, getAllUsers);
+router.get("/", verifyToken, getAllUsers);
 
 /**
  * @swagger
@@ -54,7 +63,7 @@ router.get('/', verifyToken, getAllUsers);
  *       500:
  *         description: Internal server error.
  */
-router.get('/:uid', verifyToken, getUser);
+router.get("/:uid", verifyToken, getUser);
 
 /**
  * @swagger
@@ -85,7 +94,7 @@ router.get('/:uid', verifyToken, getUser);
  *       500:
  *         description: Internal server error.
  */
-router.post('/', signupUser);
+router.post("/", signupUser);
 
 /**
  * @swagger
@@ -114,7 +123,7 @@ router.post('/', signupUser);
  *       500:
  *         description: Internal server error.
  */
-router.post('/login', loginUser);
+router.post("/login", loginUser);
 
 /**
  * @swagger
@@ -139,7 +148,7 @@ router.post('/login', loginUser);
  *       500:
  *         description: Internal server error.
  */
-router.post('/logoff/:uid', verifyToken, logoffUser);
+router.post("/logoff/:uid", verifyToken, logoffUser);
 
 /**
  * @swagger
@@ -164,7 +173,7 @@ router.post('/logoff/:uid', verifyToken, logoffUser);
  *       500:
  *         description: Internal server error.
  */
-router.post('/resetpassword', resetPassword);
+router.post("/resetpassword", resetPassword);
 
 /**
  * @swagger
@@ -191,7 +200,7 @@ router.post('/resetpassword', resetPassword);
  *       500:
  *         description: Internal server error.
  */
-router.get('/:uid/dashboard', verifyToken, getUserDashboard);
+router.get("/:uid/dashboard", verifyToken, getUserDashboard);
 
 /**
  * @swagger
@@ -229,6 +238,6 @@ router.get('/:uid/dashboard', verifyToken, getUserDashboard);
  *       500:
  *         description: Internal server error.
  */
-router.patch('/:uid', verifyToken, updateUserProfile);
+router.patch("/:uid", verifyToken, updateUserProfile);
 
 export default router;

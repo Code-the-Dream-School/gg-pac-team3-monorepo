@@ -25,12 +25,10 @@ export const enrollInCourse = async (req, res) => {
     const userCourseRef = db.collection(USER_COURSES).doc();
     await userCourseRef.set(userCourse.toFirestore());
 
-    res
-      .status(201)
-      .send({
-        message: "Enrolled in course successfully",
-        id: userCourseRef.id,
-      });
+    res.status(201).send({
+      message: "Enrolled in course successfully",
+      id: userCourseRef.id,
+    });
   } catch (error) {
     console.error("Error enrolling in course:", error);
     res.status(500).send({ error: error.message });

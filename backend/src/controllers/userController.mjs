@@ -66,13 +66,11 @@ export const loginUser = async (req, res) => {
     const userSnapshot = await db.collection("users").doc(userRecord.uid).get();
     const userData = userSnapshot.exists ? userSnapshot.data() : {};
 
-    res
-      .status(200)
-      .send({
-        message: "User logged in successfully",
-        token: idToken,
-        user: { ...userRecord, ...userData },
-      });
+    res.status(200).send({
+      message: "User logged in successfully",
+      token: idToken,
+      user: { ...userRecord, ...userData },
+    });
   } catch (error) {
     if (error.response) {
       const { error: errorDetails } = error.response.data;
@@ -89,11 +87,9 @@ export const loginUser = async (req, res) => {
             .send({ error: "Incorrect password. Please try again." });
           break;
         case "INVALID_EMAIL":
-          res
-            .status(400)
-            .send({
-              error: "Invalid email address. Please check and try again.",
-            });
+          res.status(400).send({
+            error: "Invalid email address. Please check and try again.",
+          });
           break;
         case "EMAIL_NOT_FOUND":
           res
@@ -109,11 +105,9 @@ export const loginUser = async (req, res) => {
             .send({ error: "Incorrect email or password. Please try again." });
       }
     } else {
-      res
-        .status(500)
-        .send({
-          error: "An unexpected error occurred. Please try again later.",
-        });
+      res.status(500).send({
+        error: "An unexpected error occurred. Please try again later.",
+      });
     }
   }
 };

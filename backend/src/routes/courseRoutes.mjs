@@ -1,6 +1,12 @@
-import express from 'express';
-import { createCourse, getAllCourses, getCourse, updateCourse, deleteCourse } from '../controllers/courseController.mjs';
-import { verifyToken, isTeacher } from '../middlewares/verifyToken.mjs';
+import express from "express";
+import {
+  createCourse,
+  getAllCourses,
+  getCourse,
+  updateCourse,
+  deleteCourse,
+} from "../controllers/courseController.mjs";
+import { verifyToken, isTeacher } from "../middlewares/verifyToken.mjs";
 
 const router = express.Router();
 
@@ -23,7 +29,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error.
  */
-router.get('/public', getAllCourses);
+router.get("/public", getAllCourses);
 
 /**
  * @swagger
@@ -41,7 +47,7 @@ router.get('/public', getAllCourses);
  *       500:
  *         description: Internal server error.
  */
-router.get('/', verifyToken, getAllCourses);
+router.get("/", verifyToken, getAllCourses);
 
 /**
  * @swagger
@@ -68,7 +74,7 @@ router.get('/', verifyToken, getAllCourses);
  *       500:
  *         description: Internal server error.
  */
-router.get('/:uid', verifyToken, getCourse);
+router.get("/:uid", verifyToken, getCourse);
 
 /**
  * @swagger
@@ -117,7 +123,7 @@ router.get('/:uid', verifyToken, getCourse);
  *       500:
  *         description: Internal server error.
  */
-router.post('/', verifyToken, isTeacher, createCourse);
+router.post("/", verifyToken, isTeacher, createCourse);
 
 /**
  * @swagger
@@ -175,7 +181,7 @@ router.post('/', verifyToken, isTeacher, createCourse);
  *       500:
  *         description: Internal server error.
  */
-router.patch('/:uid', verifyToken, isTeacher, updateCourse);
+router.patch("/:uid", verifyToken, isTeacher, updateCourse);
 
 /**
  * @swagger
@@ -202,6 +208,6 @@ router.patch('/:uid', verifyToken, isTeacher, updateCourse);
  *       500:
  *         description: Internal server error.
  */
-router.delete('/:uid', verifyToken, isTeacher, deleteCourse);
+router.delete("/:uid", verifyToken, isTeacher, deleteCourse);
 
 export default router;

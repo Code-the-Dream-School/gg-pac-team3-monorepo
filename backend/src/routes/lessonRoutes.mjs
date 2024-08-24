@@ -1,6 +1,12 @@
-import express from 'express';
-import { createLesson, getLesson, getAllLessons, updateLesson, deleteLesson } from '../controllers/lessonController.mjs';
-import { verifyToken, isTeacher } from '../middlewares/verifyToken.mjs';
+import express from "express";
+import {
+  createLesson,
+  getLesson,
+  getAllLessons,
+  updateLesson,
+  deleteLesson,
+} from "../controllers/lessonController.mjs";
+import { verifyToken, isTeacher } from "../middlewares/verifyToken.mjs";
 
 const router = express.Router();
 
@@ -36,7 +42,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error.
  */
-router.get('/:courseId/lessons', verifyToken, getAllLessons);
+router.get("/:courseId/lessons", verifyToken, getAllLessons);
 
 /**
  * @swagger
@@ -69,7 +75,7 @@ router.get('/:courseId/lessons', verifyToken, getAllLessons);
  *       500:
  *         description: Internal server error.
  */
-router.get('/:courseId/lesson/:lessonId', verifyToken, getLesson);
+router.get("/:courseId/lesson/:lessonId", verifyToken, getLesson);
 
 /**
  * @swagger
@@ -126,7 +132,7 @@ router.get('/:courseId/lesson/:lessonId', verifyToken, getLesson);
  *       500:
  *         description: Internal server error.
  */
-router.post('/:courseId', verifyToken, isTeacher, createLesson);
+router.post("/:courseId", verifyToken, isTeacher, createLesson);
 
 /**
  * @swagger
@@ -189,7 +195,12 @@ router.post('/:courseId', verifyToken, isTeacher, createLesson);
  *       500:
  *         description: Internal server error.
  */
-router.patch('/:courseId/lesson/:lessonId', verifyToken, isTeacher, updateLesson);
+router.patch(
+  "/:courseId/lesson/:lessonId",
+  verifyToken,
+  isTeacher,
+  updateLesson
+);
 
 /**
  * @swagger
@@ -222,6 +233,11 @@ router.patch('/:courseId/lesson/:lessonId', verifyToken, isTeacher, updateLesson
  *       500:
  *         description: Internal server error.
  */
-router.delete('/:courseId/lesson/:lessonId', verifyToken, isTeacher, deleteLesson);
+router.delete(
+  "/:courseId/lesson/:lessonId",
+  verifyToken,
+  isTeacher,
+  deleteLesson
+);
 
 export default router;
