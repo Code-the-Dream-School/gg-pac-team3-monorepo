@@ -23,7 +23,7 @@
   font-weight: 700;
   font-size: 36px;
   line-height: 1.2;
-  text-align: center;
+  text-align: start;
   color: #f35c3c;
   margin-bottom: 10px;
 }
@@ -33,7 +33,7 @@
   font-weight: 400;
   font-size: 18px;
   line-height: 1.5;
-  text-align: center;
+  text-align: start;
   color: #122a50;
   margin-bottom: 30px;
 }
@@ -104,4 +104,24 @@
   text-decoration: none;
   font-weight: bold;
   cursor: pointer;
+}
+
+.closeFormButton {
+  color: red;
+  font-weight: bold;
+  background: none;
+  border: none;
+  position: relative;
+}
+
+.closeFormButton:hover {
+  cursor: pointer;
+}
+
+.headings {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: start;
 }
