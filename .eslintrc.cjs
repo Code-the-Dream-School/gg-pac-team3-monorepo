@@ -17,6 +17,6 @@ module.exports = {
 			"warn",
 			{ allowConstantExport: true },
 		],
-		"eslintreact/no-unescaped-entities": false,
+		"eslintreact/no-unescaped-entities": 0,
 	},
 };
