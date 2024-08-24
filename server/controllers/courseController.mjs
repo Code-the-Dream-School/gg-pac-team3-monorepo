@@ -60,7 +60,6 @@ export const getCourse = async (req, res) => {
     }
 };
 
-// Fetch teachers courses
 export const getTeacherCourses = async (req, res) => {
     const teacherEmail = req.user.email;
 
@@ -96,7 +95,6 @@ export const getAllCourses = async (req, res) => {
     try {
         const coursesRef = db.collection(COURSES);
         const coursesSnapshot = await coursesRef.get();
-
         const courses = await Promise.all(coursesSnapshot.docs.map(async (doc) => {
             const courseModel = CourseModel.fromFirestore(doc.data());
             const lessons = await getCourseLessons(doc.id, coursesRef);

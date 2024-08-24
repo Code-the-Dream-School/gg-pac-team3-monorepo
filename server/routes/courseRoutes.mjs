@@ -27,7 +27,7 @@ router.get('/public', getAllCourses);
 
 /**
  * @swagger
- * /api/teacher_courses:
+ * /api/course/teacher_courses:
  *   get:
  *     summary: Retrieve a list of courses created by teacher (requires authentication)
  *     tags: [Courses]

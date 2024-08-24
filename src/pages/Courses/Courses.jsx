@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import SideBar from "../../components/SideBar/SideBar.jsx";
 import styles from './CoursesStyles.module.css';
 
@@ -21,7 +21,7 @@ const Courses = () => {
         }).then(data => {
             setCourses(data);
         }).catch(error => {
-            console.log(error);
+            console.error(error);
         });
     }, []);
 

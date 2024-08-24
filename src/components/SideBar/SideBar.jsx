@@ -1,4 +1,3 @@
-import React from 'react';
 import SideBarItems from "../SideBarItems/SideBarItems.jsx";
 import styles from './SideBarStyles.module.css';
 

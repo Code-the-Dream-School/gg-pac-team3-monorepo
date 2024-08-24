@@ -7,13 +7,9 @@
 * {
   margin: 0;
   padding: 0;
-  /*font: inherit;*/
-  /* Get rid of all font sizes and heights */
 }
 
 html {
-  /*color-scheme: dark light;*/
-  /* Default dark */
   hanging-punctuation: first last;
   /* Not supported in Chrome */
 }
