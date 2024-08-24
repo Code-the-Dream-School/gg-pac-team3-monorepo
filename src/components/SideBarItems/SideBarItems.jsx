@@ -2,7 +2,7 @@ import React from 'react';
 import {Link, useLocation} from "react-router-dom";
 import styles from './SideBarItemStyles.module.css';
 
-const SideBarItem = () => {
+const SideBarItems = () => {
     const location = useLocation();
 
     const sideBarItems = [
@@ -32,4 +32,4 @@ const SideBarItem = () => {
     );
 };
 
-export default SideBarItem;
+export default SideBarItems;
