@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import SideBar from '../../components/SideBar/SideBar.jsx';
-import styles from './CoursesStyles.module.css';
+import styles from './Courses.module.css';
 
 const Courses = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;

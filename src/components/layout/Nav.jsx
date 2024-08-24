@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import SignIn from './signIn';
+import { useState } from 'react';
+import SignIn from './SignIn';
 import SignUp from './SignUp';
-import styles from './nav.module.css';
+import styles from './Nav.module.css';
 import logo from '../../assets/logos/blue.png';
+
 const Nav = (props) => {
   const [activeForm, setActiveForm] = useState(null);
 
   const switchForm = (link) => {
-    console.log('Switch form function called with:', link); // Add logging here
     if (link === 'Register') {
       setActiveForm('SignUp');
     } else if (link === 'Login') {
@@ -33,19 +33,17 @@ const Nav = (props) => {
 
   return (
     <div className={styles.nav}>
-      <img src={logo} alt='Logo' />
-      <div className={styles.list}>
-        <ul>
-          {navLinks.map((navLink) => (
-            <li
-              key={navLink.id}
-              to={navLink.link.toLowerCase()}
-              onClick={() => switchForm(navLink.link)}
-            >
-              {navLink.link}
-            </li>
-          ))}
-        </ul>
+      <img src={logo} alt='Logo' className={styles.logo} />
+      <div className={styles.navLinks}>
+        {navLinks.map((navLink) => (
+          <span
+            key={navLink.id}
+            className={styles.navLink}
+            onClick={() => switchForm(navLink.link)}
+          >
+            {navLink.link}
+          </span>
+        ))}
       </div>
       {activeForm === 'SignUp' && <SignUp switchForm={switchForm} />}
       {activeForm === 'SignIn' && <SignIn switchForm={switchForm} />}

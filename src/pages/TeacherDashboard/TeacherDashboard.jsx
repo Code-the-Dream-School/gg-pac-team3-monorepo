@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import styles from './TeacherDashboardStyles.module.css';
+import { useState, useEffect } from 'react';
+import styles from './TeacherDashboard.module.css';
 import SideBar from '../../components/SideBar/SideBar';
 
 const TeacherDashboard = () => {

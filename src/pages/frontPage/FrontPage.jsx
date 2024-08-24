@@ -1,9 +1,8 @@
-import styling from './frontpage.module.css';
+import styling from './FrontPage.module.css';
 import panelImg from '../../assets/images/panelImage.jpg';
 import pencil from '../../assets/images/brokenPencil.png';
-import { useEffect } from 'react';
 import { getCourses } from '../../services/api';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const FrontPage = () => {
   const [courseDescriptions, setCoursesDescriptions] = useState([]);

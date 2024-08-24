@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './SignIn.module.css';
 
 const SignIn = ({ switchForm }) => {
@@ -34,8 +33,7 @@ const SignIn = ({ switchForm }) => {
             className={styles.join}
             onClick={(e) => {
               e.preventDefault();
-              console.log('Sign up now clicked'); // Add logging here
-              switchForm('Register'); // Switch to SignUp form
+              switchForm('Register');
             }}
           >
             Sign up now
