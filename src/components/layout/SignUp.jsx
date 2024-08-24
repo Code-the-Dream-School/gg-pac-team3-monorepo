@@ -1,12 +1,20 @@
+import CloseIcon from '../icons/CloseIcon';
 import styles from './SignUp.module.css';
 
 const SignUp = ({ switchForm }) => {
-  console.log('This is the switch form', switchForm);
   return (
     <div className={styles.container}>
       <section className={styles.headings}>
-        <h1 className={styles.header}>Sign Up</h1>
-        <p className={styles.name}>Getting started with LearnHub</p>
+        <div className={styles.headingsContainer}>
+          <h1 className={styles.header}>Sign Up</h1>
+          <p className={styles.name}>Getting started with LearnHub</p>
+        </div>
+        <button
+          className={styles.closeFormButton}
+          onClick={() => switchForm(null)}
+        >
+          <CloseIcon width={30} height={30} />
+        </button>
       </section>
 
       <div className={styles.forms}>

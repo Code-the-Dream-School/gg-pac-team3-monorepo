@@ -1,8 +1,10 @@
 import styling from './FrontPage.module.css';
 import panelImg from '../../assets/images/panelImage.jpg';
 import pencil from '../../assets/images/brokenPencil.png';
-import { getCourses } from '../../services/api';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const FrontPage = () => {
   const [courseDescriptions, setCoursesDescriptions] = useState([]);
@@ -12,29 +14,22 @@ const FrontPage = () => {
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getCourses();
-        if (data.success === false) {
-          setState({
-            loading: false,
-            error: true,
-          });
-        } else {
-          setCoursesDescriptions(data);
-          setState({
-            loading: false,
-            error: false,
-          });
-        }
-      } catch (error) {
+    axios
+      .get(`${baseUrl}/course/public`)
+      .then((res) => {
+        setCoursesDescriptions(res.data);
+        setState({
+          loading: false,
+          error: false,
+        });
+      })
+      .catch((err) => {
+        console.error(err);
         setState({
           loading: false,
           error: true,
         });
-      }
-    };
-    fetchData();
+      });
   }, []);
 
   if (state.error) {
@@ -79,6 +74,7 @@ const FrontPage = () => {
     </>
   );
 };
+
 export default FrontPage;
 
 const Error = () => {

@@ -4,20 +4,21 @@ import SignUp from './SignUp';
 import styles from './Nav.module.css';
 import logo from '../../assets/logos/blue.png';
 
-const Nav = (props) => {
+const Nav = ({ isLoggedIn }) => {
   const [activeForm, setActiveForm] = useState(null);
 
   const switchForm = (link) => {
-    if (link === 'Register') {
-      setActiveForm('SignUp');
-    } else if (link === 'Login') {
-      setActiveForm('SignIn');
-    } else {
-      setActiveForm(null);
+    switch (link) {
+      case 'Register':
+        setActiveForm('SignUp');
+        break;
+      case 'Login':
+        setActiveForm('SignIn');
+        break;
+      default:
+        setActiveForm(null);
     }
   };
-
-  const { isLoggedIn } = props;
 
   const navLinks = isLoggedIn
     ? [
@@ -26,9 +27,8 @@ const Nav = (props) => {
         { id: 3, link: 'Logout' },
       ]
     : [
-        { id: 1, link: 'About' },
-        { id: 2, link: 'Login' },
-        { id: 3, link: 'Register' },
+        { id: 1, link: 'Login' },
+        { id: 2, link: 'Register' },
       ];
 
   return (

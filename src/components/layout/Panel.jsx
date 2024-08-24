@@ -1,4 +1,4 @@
-import Nav from '../../components/layout/Nav';
+import Nav from './Nav';
 import { Outlet } from 'react-router-dom';
 
 const Panel = (props) => {
