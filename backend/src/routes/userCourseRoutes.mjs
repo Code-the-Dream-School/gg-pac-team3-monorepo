@@ -1,6 +1,11 @@
-import express from 'express';
-import { enrollInCourse,getNotEnrolledInCourseByUser, getUserCourses, getUserCoursesWithDetails } from '../controllers/userCourseController.mjs';
-import { verifyToken } from '../middlewares/verifyToken.mjs';
+import express from "express";
+import {
+  enrollInCourse,
+  getSuggestedCoursesForUser,
+  getUserCourses,
+  getUserCoursesWithDetails,
+} from "../controllers/userCourseController.mjs";
+import { verifyToken } from "../middlewares/verifyToken.mjs";
 
 const router = express.Router();
 
@@ -36,7 +41,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error.
  */
-router.get('/user/:userId/course', verifyToken, getUserCourses);
+router.get("/user/:userId/course", verifyToken, getUserCourses);
 
 /**
  * @swagger
@@ -69,8 +74,20 @@ router.get('/user/:userId/course', verifyToken, getUserCourses);
  *       500:
  *         description: Internal server error.
  */
-router.post('/user/:userId/course/:courseId/enrollment', verifyToken, enrollInCourse);
+router.post(
+  "/user/:userId/course/:courseId/enrollment",
+  verifyToken,
+  enrollInCourse
+);
 
-router.get('/user/:userId/course/UserCourses', verifyToken, getUserCoursesWithDetails);
-router.get('/user/:userId/course/notEnrolledCourses', verifyToken, getNotEnrolledInCourseByUser);
+router.get(
+  "/user/:userId/course/UserCourses",
+  verifyToken,
+  getUserCoursesWithDetails
+);
+router.get(
+  "/user/:userId/course/SuggestedCourses",
+  verifyToken,
+  getSuggestedCoursesForUser
+);
 export default router;

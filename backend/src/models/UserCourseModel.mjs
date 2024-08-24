@@ -4,6 +4,7 @@ class UserCourseModel {
   constructor({
     userId,
     courseId,
+    role,
     enrolledAt = new Date(), // Default to current date if not provided
     progress = 0, // Default to 0 if not provided
     completed = false, // Default to false if not provided
@@ -12,6 +13,7 @@ class UserCourseModel {
     // Validate types
     if (typeof userId !== 'string') throw new Error('Invalid userId');
     if (typeof courseId !== 'string') throw new Error('Invalid courseId');
+    if (typeof role !== 'string') throw new Error('Invalid role');
     if (!(enrolledAt instanceof Date)) throw new Error('Invalid enrolledAt');
     if (typeof progress !== 'number') throw new Error('Invalid progress');
     if (typeof completed !== 'boolean') throw new Error('Invalid completed');
@@ -19,6 +21,7 @@ class UserCourseModel {
 
     this.userId = userId;
     this.courseId = courseId;
+    this.role = role;
     this.enrolledAt = enrolledAt;
     this.progress = progress;
     this.completed = completed;
@@ -30,6 +33,7 @@ class UserCourseModel {
     return {
       userId: this.userId,
       courseId: this.courseId,
+      role: this.role,
       enrolledAt: admin.firestore.Timestamp.fromDate(this.enrolledAt), // Convert JavaScript Date to Firestore Timestamp
       progress: this.progress,
       completed: this.completed,
@@ -42,6 +46,7 @@ class UserCourseModel {
     return new UserCourseModel({
       userId: data.userId,
       courseId: data.courseId,
+      role: data.role,
       enrolledAt: data.enrolledAt.toDate(), // Convert Firestore Timestamp to JavaScript Date object
       progress: data.progress,
       completed: data.completed,
