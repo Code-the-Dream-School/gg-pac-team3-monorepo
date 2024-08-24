@@ -1,14 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import styles from "./TeacherDashboardStyles.module.css"
 import SideBar from "../../components/SideBar/SideBar";
+import {useNavigate} from "react-router-dom";
 
 const TeacherDashboard = () => {
     const apiUrl = import.meta.env.VITE_API_BASE_URL;
     const [courses, setCourses] = useState([]);
     const token = localStorage.getItem('token');
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (!token) return;
+        if (!token) {
+            navigate('/');
+            return
+        }
 
         fetch(`${apiUrl}/course/teacher_courses`,
             {
@@ -20,12 +25,16 @@ const TeacherDashboard = () => {
                 }
             })
             .then(response => {
-            return response.json();
-        }).then(data => {
-            setCourses(data);
-        }).catch(error => {
-            console.log(error);
-        });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }).then(data => {
+                setCourses(data);
+            }).catch(error => {
+                console.log(error);
+                navigate('/');
+            });
     }, []);
 
     const totalPoints = (lessons) => {
