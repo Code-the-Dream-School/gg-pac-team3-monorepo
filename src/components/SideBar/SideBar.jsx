@@ -1,6 +1,5 @@
-import React from 'react';
 import SideBarItem from '../SideBarItem/SideBarItem.jsx';
-import styles from './SideBarStyles.module.css';
+import styles from './SideBar.module.css';
 
 const SideBar = () => {
   const sideBarItems = [

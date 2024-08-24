@@ -1,5 +1,4 @@
-import React from 'react';
-import styles from './Signup.module.css';
+import styles from './SignUp.module.css';
 
 const SignUp = ({ switchForm }) => {
   console.log('This is the switch form', switchForm);
@@ -30,13 +29,12 @@ const SignUp = ({ switchForm }) => {
 
       <section className={styles.closingSection}>
         <p className={styles.content}>
-          Already have an account?
+          Already have an account?{' '}
           <a
             className={styles.join}
             onClick={(e) => {
               e.preventDefault();
-              console.log('Login now clicked'); // Add logging here
-              switchForm('Login'); // Switch to SignIn form
+              switchForm('Login');
             }}
           >
             Login now
