@@ -1,5 +1,5 @@
 import SideBarItems from "../SideBarItems/SideBarItems.jsx";
-import styles from './SideBarStyles.module.css';
+import styles from './SideBar.module.css';
 
 
 const SideBar = () => {

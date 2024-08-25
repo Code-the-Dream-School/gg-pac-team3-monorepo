@@ -10,9 +10,9 @@ class CourseModel {
     logoUrl,
     duration,
     rating,
-    otherInfo,    
+    otherInfo,
     createdBy,
-    createdAt = new Date() // Default to current date if not provided
+    createdAt = new Date(), // Default to current date if not provided
   }) {
     // Validate types
     if (typeof courseId !== 'string') throw new Error('Invalid courseId');
@@ -23,7 +23,7 @@ class CourseModel {
     if (typeof logoUrl !== 'string') throw new Error('Invalid logoUrl');
     if (typeof duration !== 'string') throw new Error('Invalid duration');
     if (typeof rating !== 'number') throw new Error('Invalid rating');
-    if (typeof otherInfo !== 'string') throw new Error('Invalid otherInfo');    
+    if (typeof otherInfo !== 'string') throw new Error('Invalid otherInfo');
     if (typeof createdBy !== 'string') throw new Error('Invalid createdBy');
     if (!(createdAt instanceof Date)) throw new Error('Invalid createdAt');
 
@@ -35,7 +35,7 @@ class CourseModel {
     this.logoUrl = logoUrl;
     this.duration = duration;
     this.rating = rating;
-    this.otherInfo = otherInfo;    
+    this.otherInfo = otherInfo;
     this.createdBy = createdBy;
     this.createdAt = createdAt;
   }
@@ -51,9 +51,9 @@ class CourseModel {
       logoUrl: this.logoUrl,
       duration: this.duration,
       rating: this.rating,
-      otherInfo: this.otherInfo,      
+      otherInfo: this.otherInfo,
       createdBy: this.createdBy,
-      createdAt: admin.firestore.Timestamp.fromDate(this.createdAt) // Convert JavaScript Date to Firestore Timestamp
+      createdAt: admin.firestore.Timestamp.fromDate(this.createdAt), // Convert JavaScript Date to Firestore Timestamp
     };
   }
 
@@ -68,9 +68,9 @@ class CourseModel {
       logoUrl: data.logoUrl,
       duration: data.duration,
       rating: data.rating,
-      otherInfo: data.otherInfo,      
+      otherInfo: data.otherInfo,
       createdBy: data.createdBy,
-      createdAt: data.createdAt.toDate() // Convert Firestore Timestamp to JavaScript Date object
+      createdAt: data.createdAt.toDate(), // Convert Firestore Timestamp to JavaScript Date object
     });
   }
 }
