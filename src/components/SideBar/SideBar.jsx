@@ -1,6 +1,7 @@
 import SideBarItems from '../SideBarItems/SideBarItems.jsx';
 import styles from './SideBar.module.css';
 
+
 const SideBar = () => {
   return (
     <nav className={styles.sideBarContainer}>
