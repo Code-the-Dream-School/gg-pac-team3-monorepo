@@ -2,6 +2,7 @@ import express from 'express';
 import {
   createCourse,
   getAllCourses,
+  getTeacherCourses,
   getCourse,
   updateCourse,
   deleteCourse,
@@ -30,6 +31,24 @@ const router = express.Router();
  *         description: Internal server error.
  */
 router.get('/public', getAllCourses);
+
+/**
+ * @swagger
+ * /api/course/teacher_courses:
+ *   get:
+ *     summary: Retrieve a list of courses created by teacher (requires authentication)
+ *     tags: [Courses]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of courses.
+ *       401:
+ *         description: Unauthorized. Access token is missing or invalid.
+ *       500:
+ *         description: Internal server error.
+ */
+router.get('/teacher_courses', verifyToken, getTeacherCourses);
 
 /**
  * @swagger
