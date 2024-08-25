@@ -110,8 +110,6 @@ router.get('/:uid', verifyToken, getCourse);
  *           schema:
  *             type: object
  *             properties:
- *               courseId:
- *                 type: string
  *               courseName:
  *                 type: string
  *               courseType:
@@ -166,8 +164,6 @@ router.post('/', verifyToken, isTeacher, createCourse);
  *           schema:
  *             type: object
  *             properties:
- *               courseId:
- *                 type: string
  *               courseName:
  *                 type: string
  *               courseType:
