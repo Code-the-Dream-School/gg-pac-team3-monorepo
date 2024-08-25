@@ -103,7 +103,7 @@ export const getUserCourses = async (req, res) => {
 };
 
 //  Fetch selected  course details for user.
-export const getUserCoursesWithDetails = async (req, res) => {
+export const getCoursesForUser  = async (req, res) => {
   const { userId } = req.params;
 
   try {

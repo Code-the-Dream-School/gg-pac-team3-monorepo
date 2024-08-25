@@ -3,7 +3,7 @@ import {
   enrollInCourse,
   getSuggestedCoursesForUser,
   getUserCourses,
-  getUserCoursesWithDetails,
+  getCoursesForUser ,
 } from "../controllers/userCourseController.mjs";
 import { verifyToken } from "../middlewares/verifyToken.mjs";
 
@@ -83,7 +83,7 @@ router.post(
 router.get(
   "/user/:userId/course/UserCourses",
   verifyToken,
-  getUserCoursesWithDetails
+  getCoursesForUser 
 );
 router.get(
   "/user/:userId/course/SuggestedCourses",

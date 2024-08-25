@@ -5,16 +5,20 @@ import MyCourses from "./MyCourses";
 import Profile from "./Profile";
 import styles from "./UserDashboard.module.css";
 
+const HOME_TAB = "Home";
+const MY_COURSES_TAB = "My Courses";
+const PROFILE_TAB = "Profile";
+
 const UserDashboard = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(
-    location.state?.activeTab || "Home"
+    location.state?.activeTab || HOME_TAB
   );
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
 
   const handleCourseClick = (course) => {
-    const isEnrolled = activeTab === "My Courses";
+    const isEnrolled = activeTab === MY_COURSES_TAB;
     navigate(`/course/${course.courseName}`, {
       state: { course, isEnrolled, activeTab },
     });
@@ -22,14 +26,14 @@ const UserDashboard = () => {
 
   useEffect(() => {
     // Update the URL based on the active tab
-    if (activeTab === "Home") {
+    if (activeTab === HOME_TAB) {
       navigate("/UserDashboard/home", { replace: true, state: { activeTab } });
-    } else if (activeTab === "My Courses") {
+    } else if (activeTab === MY_COURSES_TAB) {
       navigate("/UserDashboard/my-courses", {
         replace: true,
         state: { activeTab },
       });
-    } else if (activeTab === "Profile") {
+    } else if (activeTab === PROFILE_TAB) {
       navigate("/UserDashboard/profile", {
         replace: true,
         state: { activeTab },
@@ -42,40 +46,40 @@ const UserDashboard = () => {
       <header className={styles.header}>
         <button
           className={`${styles.tabButton} ${
-            activeTab === "Home" ? styles.activeTab : ""
+            activeTab === HOME_TAB ? styles.activeTab : ""
           }`}
-          onClick={() => setActiveTab("Home")}
+          onClick={() => setActiveTab(HOME_TAB)}
         >
-          Home
+          {HOME_TAB}
         </button>
         <button
           className={`${styles.tabButton} ${
-            activeTab === "My Courses" ? styles.activeTab : ""
+            activeTab === MY_COURSES_TAB ? styles.activeTab : ""
           }`}
-          onClick={() => setActiveTab("My Courses")}
+          onClick={() => setActiveTab(MY_COURSES_TAB)}
         >
-          My Courses
+          {MY_COURSES_TAB}
         </button>
         <button
           className={`${styles.tabButton} ${
-            activeTab === "Profile" ? styles.activeTab : ""
+            activeTab === PROFILE_TAB ? styles.activeTab : ""
           }`}
-          onClick={() => setActiveTab("Profile")}
+          onClick={() => setActiveTab(PROFILE_TAB)}
         >
-          Profile
+          {PROFILE_TAB}
         </button>
       </header>
       <div className={styles.introText}>
         <h1>Get Started with These Free Courses</h1>
       </div>
       <main className={styles.content}>
-        {activeTab === "Home" && (
+        {activeTab === HOME_TAB && (
           <Home userId={userId} onCourseClick={handleCourseClick} />
         )}
-        {activeTab === "My Courses" && (
+        {activeTab === MY_COURSES_TAB && (
           <MyCourses userId={userId} onCourseClick={handleCourseClick} />
         )}
-        {activeTab === "Profile" && <Profile userId={userId} />}
+        {activeTab === PROFILE_TAB && <Profile userId={userId} />}
       </main>
     </div>
   );
