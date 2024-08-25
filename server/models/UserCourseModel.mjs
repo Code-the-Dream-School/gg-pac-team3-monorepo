@@ -1,3 +1,4 @@
+
 import admin from 'firebase-admin';
 
 class UserCourseModel {

@@ -1,7 +1,9 @@
 import express from 'express';
 import {
   enrollInCourse,
+  getSuggestedCoursesForUser,
   getUserCourses,
+  getCoursesForUser,
 } from '../controllers/userCourseController.mjs';
 import { verifyToken } from '../middlewares/verifyToken.mjs';
 
@@ -78,4 +80,10 @@ router.post(
   enrollInCourse,
 );
 
+router.get('/user/:userId/course/UserCourses', verifyToken, getCoursesForUser);
+router.get(
+  '/user/:userId/course/SuggestedCourses',
+  verifyToken,
+  getSuggestedCoursesForUser,
+);
 export default router;

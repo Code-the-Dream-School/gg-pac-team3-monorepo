@@ -1,4 +1,4 @@
-import admin from '../config/firebase.mjs';
+import admin from "../config/firebase.mjs";
 
 class QuizModel {
   constructor({
@@ -8,10 +8,10 @@ class QuizModel {
     createdAt = new Date(), // Default to current date if not provided
   }) {
     // Validate types
-    if (typeof quizId !== 'string') throw new Error('Invalid quizId');
-    if (typeof title !== 'string') throw new Error('Invalid title');
-    if (!Array.isArray(questions)) throw new Error('Invalid questions');
-    if (!(createdAt instanceof Date)) throw new Error('Invalid createdAt');
+    if (typeof quizId !== "string") throw new Error("Invalid quizId");
+    if (typeof title !== "string") throw new Error("Invalid title");
+    if (!Array.isArray(questions)) throw new Error("Invalid questions");
+    if (!(createdAt instanceof Date)) throw new Error("Invalid createdAt");
 
     this.quizId = quizId;
     this.title = title;
