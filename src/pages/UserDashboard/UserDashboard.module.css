@@ -8,7 +8,8 @@
 .header {
   display: flex;
   justify-content: center;
-  background-color: #09245a;
+  /* background-color: #041531; */
+  background: linear-gradient(rgb(21, 38, 135), #2810df, #0484ce);
   padding: 0.625rem;
 }
 
@@ -19,7 +20,7 @@
   cursor: pointer;
   font-size: 1rem;
   margin: 0 0.625rem;
-  color: white;
+  color: rgb(250, 250, 250);
 }
 
 .activeTab {

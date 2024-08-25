@@ -1,9 +1,72 @@
-import axios from "axios";
+import axios from 'axios';
 
-const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = 'http://localhost:8000/api';
 
 const getAuthToken = () => {
-  return localStorage.getItem("authToken");
+  return localStorage.getItem('authToken');
+};
+
+//Function for user to login
+export const LoginUser = async (email, password) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/login`, {
+      email,
+      password,
+    });
+    const { token, user } = response.data;
+
+    if (user) {
+      localStorage.setItem('userId', user.uid);
+    }
+    if (token) {
+      localStorage.setItem('authToken', token);
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Error logging in user:', error);
+    throw error;
+  }
+};
+
+//Function to create a account / register
+export const registerUser = async (name, email, password, userType) => {
+  try {
+    const token = getAuthToken();
+    const response = await axios.post(
+      `${API_BASE_URL}/user`,
+      { name, email, password, userType },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Error registering user:', error);
+    throw error;
+  }
+};
+
+//fetchQuizByLessonId
+export const fetchQuizByLessonId = async (lessonId, courseId) => {
+  try {
+    const token = getAuthToken();    
+    const response = await axios.get(
+      `${API_BASE_URL}/course/${courseId}/${lessonId}/quizzes`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
 };
 
 // Function to fetch a list of courses to display on the front page
@@ -17,7 +80,7 @@ export const fetchCourses = async () => {
     });
     return response.data;
   } catch (error) {
-    console.error("Error fetching courses:", error);
+    console.error('Error fetching courses:', error);
     throw error;
   }
 };
@@ -32,11 +95,11 @@ export const FetchSuggestedCoursesForUser = async (userId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching not enrolled courses by user:", error);
+    console.error('Error fetching not enrolled courses by user:', error);
     throw error;
   }
 };
@@ -51,11 +114,27 @@ export const fetchUserEnrolledCourses = async (userId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching enrolled courses:", error);
+    console.error('Error fetching enrolled courses:', error);
+    throw error;
+  }
+};
+
+//Function to fetch course data by course ID
+export const fetchCourseByCourseId = async (courseId) => {
+  try {
+    const token = getAuthToken();
+    const response = await axios.get(`${API_BASE_URL}/course/${courseId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching enrolled courses:', error);
     throw error;
   }
 };
@@ -70,11 +149,11 @@ export const fetchCourseLessons = async (courseId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching course lessons:", error);
+    console.error('Error fetching course lessons:', error);
     throw error;
   }
 };
@@ -89,17 +168,17 @@ export const fetchUserProfile = async (userId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
-    console.error("Error fetching user profile:", error);
+    console.error('Error fetching user profile:', error);
     throw error;
   }
 };
 
 //Function to assing selected course to user using userId and courseId
-export const AddUserCourse = async (userId, courseId , role) => {
+export const AddUserCourse = async (userId, courseId, role) => {
   try {
     const token = getAuthToken();
     const response = await axios.post(
@@ -109,11 +188,11 @@ export const AddUserCourse = async (userId, courseId , role) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data;
   } catch (error) {
-    console.error("Error adding user courses:", error);
+    console.error('Error adding user courses:', error);
     throw error;
   }
 };
