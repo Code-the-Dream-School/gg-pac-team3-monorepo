@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { FetchSuggestedCoursesForUser } from "../../services/api";
-import styles from "./Courses.module.css";
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { FetchSuggestedCoursesForUser } from '../../services/api';
+import styles from './Courses.module.css';
 
 const Home = ({ userId, onCourseClick }) => {
   const [coursesData, setCoursesData] = useState([]);
@@ -14,7 +14,7 @@ const Home = ({ userId, onCourseClick }) => {
           setCoursesData(courses);
         }
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       }
     };
 
