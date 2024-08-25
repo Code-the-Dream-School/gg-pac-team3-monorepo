@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import styles from './Nav.module.css';
+import { useAuth } from '../../AuthContext';
 import logo from '../../assets/logos/blue.png';
+import { useNavigate } from 'react-router-dom';
 
-const Nav = ({ isLoggedIn }) => {
+const Nav = ({ isLoggedIn, onLogout }) => {
   const [activeForm, setActiveForm] = useState(null);
+  const navigate = useNavigate();
+  const { userName, handleLogin } = useAuth();
+  const [userType, setUserType] = useState('');
 
   const switchForm = (link) => {
     switch (link) {
@@ -15,15 +21,30 @@ const Nav = ({ isLoggedIn }) => {
       case 'Login':
         setActiveForm('SignIn');
         break;
+      case 'Logout':
+        onLogout();
+        setActiveForm(null); // Close the form after logout
+        navigate('/');
+        break;
+      case 'Dashboard':
+        if (userType === 'Student') {
+          navigate('/UserDashboard/home'); // Navigate to Student Dashboard
+        } else if (userType === 'Teacher') {
+          navigate('/teacher/dashboard'); // Navigate to Teacher Dashboard
+        }
+        break;
       default:
         setActiveForm(null);
     }
   };
 
+  useEffect(() => {}, [userType]);
+  useEffect(() => {}, [isLoggedIn]);
+
   const navLinks = isLoggedIn
     ? [
-        { id: 1, link: 'Dashboard' },
-        { id: 2, link: 'Account' },
+        { id: 1, link: `Welcome ${userName}` },
+        { id: 2, link: 'Dashboard' },
         { id: 3, link: 'Logout' },
       ]
     : [
@@ -46,9 +67,23 @@ const Nav = ({ isLoggedIn }) => {
         ))}
       </div>
       {activeForm === 'SignUp' && <SignUp switchForm={switchForm} />}
-      {activeForm === 'SignIn' && <SignIn switchForm={switchForm} />}
+      {activeForm === 'SignIn' && (
+        <SignIn
+          switchForm={switchForm}
+          onLoginSuccess={(name, type) => {
+            // Set isLoggedIn to true in the parent component
+            switchForm(null); // Close the form
+            handleLogin(name);
+            setUserType(type);
+          }}
+        />
+      )}
     </div>
   );
 };
 
+Nav.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  onLogout: PropTypes.func.isRequired,
+};
 export default Nav;
