@@ -1,6 +1,6 @@
 import admin from '../config/firebase.mjs'; 
 import LessonModel from '../models/LessonModel.mjs'; 
-import { COURSES, LESSONS  } from './constants.mjs';
+import { COURSES, LESSONS } from './constants.mjs';
 
 const db = admin.firestore();
 
@@ -17,8 +17,8 @@ export const createLesson = async (req, res) => {
             return res.status(404).send({ message: 'Course not found' });
         }
 
-        const newLesson = new LessonModel(lessonData);
         const lessonRef = courseRef.collection(LESSONS).doc(); // Generate a new document ID
+        const newLesson = new LessonModel(lessonData);
         await lessonRef.set(newLesson.toFirestore());
 
         res.status(201).send({ message: 'Lesson created successfully', lessonId: lessonRef.id });
@@ -39,7 +39,7 @@ export const getLesson = async (req, res) => {
             return res.status(404).send({ message: 'Lesson not found' });
         }
 
-        const lessonData = LessonModel.fromFirestore(lessonDoc.data());
+        const lessonData = LessonModel.fromFirestore(lessonDoc.data(), lessonId);
         res.status(200).send(lessonData);
     } catch (error) {
         console.error('Error fetching lesson:', error);
@@ -56,8 +56,9 @@ export const getAllLessons = async (req, res) => {
 
         const lessons = [];
         lessonsSnapshot.forEach(doc => {
-            lessons.push({ id: doc.id, ...LessonModel.fromFirestore(doc.data()) });
-        });       
+            lessons.push(LessonModel.fromFirestore(doc.data(), doc.id));
+        });
+        
         res.status(200).send(lessons);
     } catch (error) {
         console.error('Error fetching lessons:', error);
@@ -71,7 +72,6 @@ export const updateLesson = async (req, res) => {
     const updates = req.body;
 
     try {
-        
         const lessonRef = db.collection(COURSES).doc(courseId).collection(LESSONS).doc(lessonId);
         const lessonDoc = await lessonRef.get();
 
