@@ -1,0 +1,78 @@
+import admin from 'firebase-admin';
+
+class CourseModel {
+  constructor({
+    courseId,
+    courseName,
+    courseType,
+    description,
+    imageUrl,
+    logoUrl,
+    duration,
+    rating,
+    otherInfo,
+    createdBy,
+    createdAt = new Date(), // Default to current date if not provided
+  }) {
+    // Validate types
+    if (typeof courseId !== 'string') throw new Error('Invalid courseId');
+    if (typeof courseName !== 'string') throw new Error('Invalid courseName');
+    if (typeof courseType !== 'string') throw new Error('Invalid courseType');
+    if (typeof description !== 'string') throw new Error('Invalid description');
+    if (typeof imageUrl !== 'string') throw new Error('Invalid imageUrl');
+    if (typeof logoUrl !== 'string') throw new Error('Invalid logoUrl');
+    if (typeof duration !== 'string') throw new Error('Invalid duration');
+    if (typeof rating !== 'number') throw new Error('Invalid rating');
+    if (typeof otherInfo !== 'string') throw new Error('Invalid otherInfo');
+    if (typeof createdBy !== 'string') throw new Error('Invalid createdBy');
+    if (!(createdAt instanceof Date)) throw new Error('Invalid createdAt');
+
+    this.courseId = courseId;
+    this.courseName = courseName;
+    this.courseType = courseType;
+    this.description = description;
+    this.imageUrl = imageUrl;
+    this.logoUrl = logoUrl;
+    this.duration = duration;
+    this.rating = rating;
+    this.otherInfo = otherInfo;
+    this.createdBy = createdBy;
+    this.createdAt = createdAt;
+  }
+
+  // Convert to Firestore format
+  toFirestore() {
+    return {
+      courseId: this.courseId,
+      courseName: this.courseName,
+      courseType: this.courseType,
+      description: this.description,
+      imageUrl: this.imageUrl,
+      logoUrl: this.logoUrl,
+      duration: this.duration,
+      rating: this.rating,
+      otherInfo: this.otherInfo,
+      createdBy: this.createdBy,
+      createdAt: admin.firestore.Timestamp.fromDate(this.createdAt), // Convert JavaScript Date to Firestore Timestamp
+    };
+  }
+
+  // Convert from Firestore format
+  static fromFirestore(data) {
+    return new CourseModel({
+      courseId: data.courseId,
+      courseName: data.courseName,
+      courseType: data.courseType,
+      description: data.description,
+      imageUrl: data.imageUrl,
+      logoUrl: data.logoUrl,
+      duration: data.duration,
+      rating: data.rating,
+      otherInfo: data.otherInfo,
+      createdBy: data.createdBy,
+      createdAt: data.createdAt.toDate(), // Convert Firestore Timestamp to JavaScript Date object
+    });
+  }
+}
+
+export default CourseModel;
