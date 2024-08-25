@@ -4,6 +4,8 @@ import Panel from './components/layout/Panel';
 import Courses from './pages/Courses/Courses';
 import TeacherDashboard from './pages/TeacherDashboard/TeacherDashboard';
 import FrontPage from './pages/frontPage/FrontPage';
+import CourseDetails from "./pages/CourseDetails/CourseDetails";
+import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import './App.css';
 
 function App() {
@@ -16,6 +18,10 @@ function App() {
           <Route path='/' element={<FrontPage />} />
           <Route path='/teacher/dashboard' element={<TeacherDashboard />} />
           <Route path='/teacher/courses' element={<Courses />} />
+          <Route path="/UserDashboard/home" element={<UserDashboard />} />
+          <Route path="/UserDashboard/my-courses" element={<UserDashboard />} />
+          <Route path="/UserDashboard/profile" element={<UserDashboard />} />
+          <Route path="/course/:courseName" element={<CourseDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>
