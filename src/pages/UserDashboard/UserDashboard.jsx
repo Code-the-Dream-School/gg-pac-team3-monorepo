@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import Home from "./Home";
-import MyCourses from "./MyCourses";
-import Profile from "./Profile";
-import styles from "./UserDashboard.module.css";
+import { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Home from './Home';
+import MyCourses from './MyCourses';
+import Profile from './Profile';
+import styles from './UserDashboard.module.css';
 
-const HOME_TAB = "Home";
-const MY_COURSES_TAB = "My Courses";
-const PROFILE_TAB = "Profile";
+const HOME_TAB = 'Home';
+const MY_COURSES_TAB = 'My Courses';
+const PROFILE_TAB = 'Profile';
 
 const UserDashboard = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(
-    location.state?.activeTab || HOME_TAB
+    location.state?.activeTab || HOME_TAB,
   );
-  const userId = localStorage.getItem("userId");
+  const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
 
   const handleCourseClick = (course) => {
@@ -27,14 +27,14 @@ const UserDashboard = () => {
   useEffect(() => {
     // Update the URL based on the active tab
     if (activeTab === HOME_TAB) {
-      navigate("/UserDashboard/home", { replace: true, state: { activeTab } });
+      navigate('/UserDashboard/home', { replace: true, state: { activeTab } });
     } else if (activeTab === MY_COURSES_TAB) {
-      navigate("/UserDashboard/my-courses", {
+      navigate('/UserDashboard/my-courses', {
         replace: true,
         state: { activeTab },
       });
     } else if (activeTab === PROFILE_TAB) {
-      navigate("/UserDashboard/profile", {
+      navigate('/UserDashboard/profile', {
         replace: true,
         state: { activeTab },
       });
@@ -46,7 +46,7 @@ const UserDashboard = () => {
       <header className={styles.header}>
         <button
           className={`${styles.tabButton} ${
-            activeTab === HOME_TAB ? styles.activeTab : ""
+            activeTab === HOME_TAB ? styles.activeTab : ''
           }`}
           onClick={() => setActiveTab(HOME_TAB)}
         >
@@ -54,7 +54,7 @@ const UserDashboard = () => {
         </button>
         <button
           className={`${styles.tabButton} ${
-            activeTab === MY_COURSES_TAB ? styles.activeTab : ""
+            activeTab === MY_COURSES_TAB ? styles.activeTab : ''
           }`}
           onClick={() => setActiveTab(MY_COURSES_TAB)}
         >
@@ -62,7 +62,7 @@ const UserDashboard = () => {
         </button>
         <button
           className={`${styles.tabButton} ${
-            activeTab === PROFILE_TAB ? styles.activeTab : ""
+            activeTab === PROFILE_TAB ? styles.activeTab : ''
           }`}
           onClick={() => setActiveTab(PROFILE_TAB)}
         >

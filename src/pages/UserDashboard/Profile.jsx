@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { fetchUserProfile } from "../../services/api";
-import PropTypes from "prop-types";
-import styles from "./Profile.module.css";
+import { useState, useEffect } from 'react';
+import { fetchUserProfile } from '../../services/api';
+import PropTypes from 'prop-types';
+import styles from './Profile.module.css';
 
 const Profile = ({ userId }) => {
   const [profileData, setProfileData] = useState(null);
@@ -14,7 +14,7 @@ const Profile = ({ userId }) => {
           setProfileData(profile);
         }
       } catch (error) {
-        console.error("Error fetching profile:", error);
+        console.error('Error fetching profile:', error);
       }
     };
 
@@ -29,7 +29,7 @@ const Profile = ({ userId }) => {
           <div>
             <img
               src={profileData.profilePictureUrl}
-              alt="Profile"
+              alt='Profile'
               className={styles.profileImage}
             />
           </div>

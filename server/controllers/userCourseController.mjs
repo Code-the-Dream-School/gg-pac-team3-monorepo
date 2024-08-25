@@ -1,14 +1,7 @@
-<<<<<<< HEAD:backend/src/controllers/userCourseController.mjs
 import admin from "../config/firebase.mjs";
 import UserCourseModel from "../models/userCourseModel.mjs";
 import { USER_COURSES, COURSES } from "./constants.mjs";
 import CourseModel from "../models/CourseModel.mjs";
-=======
-import admin from '../config/firebase.mjs';
-import UserCourseModel from '../models/UserCourseModel.mjs';
-import { USER_COURSES } from './constants.mjs';
-
->>>>>>> origin/main:server/controllers/userCourseController.mjs
 const db = admin.firestore();
 
 //  user enrolled in selected course .
@@ -19,10 +12,7 @@ export const enrollInCourse = async (req, res) => {
     const userCourse = new UserCourseModel({
       userId,
       courseId,
-<<<<<<< HEAD:backend/src/controllers/userCourseController.mjs
       role,
-=======
->>>>>>> origin/main:server/controllers/userCourseController.mjs
       enrolledAt: new Date(),
     });
 
@@ -36,7 +26,6 @@ export const enrollInCourse = async (req, res) => {
     await userCourseRef.set(userCourse.toFirestore());
 
     res.status(201).send({
-<<<<<<< HEAD:backend/src/controllers/userCourseController.mjs
       message: "Enrolled in course successfully",
       id: userCourseRef.id,
     });
@@ -76,11 +65,6 @@ export const getSuggestedCoursesForUser = async (req, res) => {
     );
 
     res.status(200).send(notEnrolledCourses);
-=======
-      message: 'Enrolled in course successfully',
-      id: userCourseRef.id,
-    });
->>>>>>> origin/main:server/controllers/userCourseController.mjs
   } catch (error) {
     console.error("Error fetching courses:", error);
     res.status(500).send({ error: error.message });
@@ -93,7 +77,6 @@ export const getUserCourses = async (req, res) => {
 
   try {
     const userCoursesSnapshot = await db
-<<<<<<< HEAD:backend/src/controllers/userCourseController.mjs
       .collection(USER_COURSES)
       .where("userId", "==", userId)
       .get();
@@ -128,16 +111,11 @@ export const getCoursesForUser  = async (req, res) => {
     const userCoursesSnapshot = await db
       .collection(USER_COURSES)
       .where("userId", "==", userId)
-=======
-      .collection('User_Courses')
-      .where('userId', '==', userId)
->>>>>>> origin/main:server/controllers/userCourseController.mjs
       .get();
 
     if (userCoursesSnapshot.empty) {
       return res
         .status(404)
-<<<<<<< HEAD:backend/src/controllers/userCourseController.mjs
         .send({ message: "No courses found for this user" });
     }
 
@@ -164,17 +142,6 @@ export const getCoursesForUser  = async (req, res) => {
     const courses = [];
     coursesSnapshot.forEach((doc) => {
       courses.push({ id: doc.id, ...doc.data() });
-=======
-        .send({ message: 'No courses found for this user' });
-    }
-
-    const courses = [];
-    userCoursesSnapshot.forEach((doc) => {
-      courses.push({
-        id: doc.id,
-        ...UserCourseModel.fromFirestore(doc.data()),
-      });
->>>>>>> origin/main:server/controllers/userCourseController.mjs
     });
 
     res.status(200).send(courses);

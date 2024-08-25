@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { fetchUserEnrolledCourses } from "../../services/api";
-import styles from "./Courses.module.css";
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { fetchUserEnrolledCourses } from '../../services/api';
+import styles from './Courses.module.css';
 
 const MyCourses = ({ userId, onCourseClick }) => {
   const [enrolledCoursesData, setEnrolledCoursesData] = useState([]);
@@ -14,7 +14,7 @@ const MyCourses = ({ userId, onCourseClick }) => {
           setEnrolledCoursesData(enrolledCourses);
         }
       } catch (error) {
-        console.error("Error fetching enrolled courses:", error);
+        console.error('Error fetching enrolled courses:', error);
       }
     };
 
