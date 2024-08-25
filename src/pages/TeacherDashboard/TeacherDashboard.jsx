@@ -4,14 +4,14 @@ import SideBar from "../../components/SideBar/SideBar";
 import {useNavigate} from "react-router-dom";
 
 const TeacherDashboard = () => {
-    const baseUrl = import.meta.env.VITE_BASE_URL;
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const [courses, setCourses] = useState([]);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!token) {
-            navigate('/frontpage');
+            navigate('/');
             return
         }
 
@@ -33,7 +33,7 @@ const TeacherDashboard = () => {
                 setCourses(data);
             }).catch(error => {
                 console.error(error);
-                navigate('/frontpage');
+                navigate('/');
             });
     }, []);
 

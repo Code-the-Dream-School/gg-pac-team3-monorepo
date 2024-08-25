@@ -3,11 +3,11 @@ import SideBar from "../../components/SideBar/SideBar.jsx";
 import styles from './CoursesStyles.module.css';
 
 const Courses = () => {
-    const apiUrl = import.meta.env.VITE_API_BASE_URL;
+    const baseUrl = import.meta.env.VITE_API_BASE_URL;
     const [courses, setCourses] = useState([]);
 
     useEffect(() => {
-        fetch(`${apiUrl}/course`,
+        fetch(`${baseUrl}/course`,
             {
                 method: 'GET',
                 headers: {
