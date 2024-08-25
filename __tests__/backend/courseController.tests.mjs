@@ -1,11 +1,11 @@
-import admin from '../server/config/firebase.mjs';
+import admin from '../../server/config/firebase.mjs';
 import {
   createCourse,
   getCourse,
   updateCourse,
   deleteCourse
-} from '../server/controllers/courseController.mjs';
-import { USERS, COURSES } from '../server/controllers/constants.mjs';
+} from '../../server/controllers/courseController.mjs';
+import { USERS, COURSES } from '../../server/controllers/constants.mjs';
 import supertest from 'supertest';
 import express from 'express';
 

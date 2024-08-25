@@ -51,9 +51,13 @@
 		"build:client": "vite build",
 		"preview:client": "vite preview",
 		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-		"test:user": "npm test -- __tests__/userController.tests.mjs",
-   		"test:frontpage": "npm test -- __tests__/frontpage.tests.mjs",
-    	"test:course": "npm test -- __tests__/courseController.tests.mjs",
-    	"test:lesson": "npm test -- __tests__/lessonController.tests.mjs"
+		"test:user": "npm test -- __tests__/backend/userController.tests.mjs",
+   		"test:frontpage": "npm test -- __tests__/frontend/frontpage.tests.mjs",
+    	"test:course": "npm test -- __tests__/backend/courseController.tests.mjs",
+    	"test:lesson": "npm test -- __tests__/backend/lessonController.tests.mjs",
+		"test:quiz": "npm test -- __tests__/backend/quizController.tests.mjs",
+        "test:userCourse": "npm test -- __tests__/backend/userCourseController.tests.mjs",
+		"test:main": "npm test -- __tests__/backend/mainController.tests.mjs"
+
 	}
 }

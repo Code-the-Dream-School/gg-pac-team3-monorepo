@@ -1,12 +1,12 @@
-import admin from '../server/config/firebase.mjs';
+import admin from '../../server/config/firebase.mjs';
 import {
   createLesson,
   getLesson,
   getAllLessons,
   updateLesson,
   deleteLesson,
-} from '../server/controllers/lessonController.mjs';
-import { COURSES, LESSONS } from '../server/controllers/constants.mjs';
+} from '../../server/controllers/lessonController.mjs';
+import { COURSES, LESSONS } from '../../server/controllers/constants.mjs';
 import supertest from 'supertest';
 import express from 'express';
 
