@@ -6,6 +6,7 @@ import TeacherDashboard from './pages/TeacherDashboard/TeacherDashboard';
 import FrontPage from './pages/frontPage/FrontPage';
 import CourseDetails from './pages/CourseDetails/CourseDetails';
 import UserDashboard from './pages/UserDashboard/UserDashboard';
+import Learn from './pages/Learn/Learn';
 import './App.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path='/UserDashboard/my-courses' element={<UserDashboard />} />
           <Route path='/UserDashboard/profile' element={<UserDashboard />} />
           <Route path='/course/:courseName' element={<CourseDetails />} />
+          <Route path='/learn/:courseId/lesson/:lessonId' element={<Learn />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -40,10 +40,11 @@ const CourseDetails = () => {
       console.error("Error enrolling in course:", error);
     }
   };
-
+  
   const handleGotoCourse = () => {
-    navigate("/Learn", { state: { courseId: course.id } }); // Navigate to the Learn page
+    navigate(`/learn/${course.courseName}/lesson/${lessons[0].title}`, { state: { courseId: course.id } }); // Navigate to the Learn page
   };
+  
   return (
     <div className={styles.courseDetailsContainer}>
       <h1 className={styles.courseTitle}>{course.courseName}</h1>
