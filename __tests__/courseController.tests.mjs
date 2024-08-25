@@ -12,34 +12,25 @@ import express from 'express';
 const app = express();
 app.use(express.json());
 
+// Middleware to simulate authenticated user
+const simulateAuth = (req, res, next) => {
+  req.user = { uid: 'testUserId' }; 
+  next();
+};
+
 // Route setup for course endpoints
-app.post('/course', (req, res, next) => {
-  req.user = { uid: 'GttuQ8W2RaQbHoDtIX0GYG1IBeZ2' }; // Simulating authenticated user
-  next();
-}, createCourse);
-
-app.get('/course/:uid', (req, res, next) => {
-  req.user = { uid: 'GttuQ8W2RaQbHoDtIX0GYG1IBeZ2' }; // Simulating authenticated user
-  next();
-}, getCourse);
-
-app.patch('/course/:uid', (req, res, next) => {
-  req.user = { uid: 'GttuQ8W2RaQbHoDtIX0GYG1IBeZ2' }; // Simulating authenticated user
-  next();
-}, updateCourse);
-
-app.delete('/course/:uid', (req, res, next) => {
-  req.user = { uid: 'GttuQ8W2RaQbHoDtIX0GYG1IBeZ2' }; // Simulating authenticated user
-  next();
-}, deleteCourse);
+app.post('/course', simulateAuth, createCourse);
+app.get('/course/:uid', simulateAuth, getCourse);
+app.patch('/course/:uid', simulateAuth, updateCourse);
+app.delete('/course/:uid', simulateAuth, deleteCourse);
 
 let testCourseId;
-let testUserId = 'GttuQ8W2RaQbHoDtIX0GYG1IBeZ2'; // Example test user ID
+let testUserId = 'testUserId';
 let server;
 
 // Setup before tests
 beforeAll(async () => {
-  server = app.listen(4000);
+  server = app.listen(4050); 
   // Set up a test user in Firestore (a user with 'Teacher' role)
   const userRef = admin.firestore().collection(USERS).doc(testUserId);
   await userRef.set({
@@ -84,7 +75,7 @@ describe('Course Controller', () => {
     expect(response.body.message).toBe('Course created successfully');
     expect(response.body.courseId).toBeDefined();
 
-    testCourseId = response.body.courseId; // Store the courseId for subsequent tests
+    testCourseId = response.body.courseId; 
   });
 
   // Test for fetching a specific course

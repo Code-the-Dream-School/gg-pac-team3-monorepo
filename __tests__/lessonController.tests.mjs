@@ -13,31 +13,18 @@ import express from 'express';
 const app = express();
 app.use(express.json());
 
+// Middleware to simulate authenticated user
+const simulateAuth = (req, res, next) => {
+  req.user = { uid: 'testUserId' }; 
+  next();
+};
+
 // Route setup for lesson endpoints
-app.post('/course/:courseId/lesson', (req, res, next) => {
-  req.user = { uid: 'GttuQ8W2RaQbHoDtIX0GYG1IBeZ2' }; // Simulating authenticated user
-  next();
-}, createLesson);
-
-app.get('/course/:courseId/lesson/:lessonId', (req, res, next) => {
-  req.user = { uid: 'GttuQ8W2RaQbHoDtIX0GYG1IBeZ2' }; // Simulating authenticated user
-  next();
-}, getLesson);
-
-app.get('/course/:courseId/lessons', (req, res, next) => {
-  req.user = { uid: 'GttuQ8W2RaQbHoDtIX0GYG1IBeZ2' }; // Simulating authenticated user
-  next();
-}, getAllLessons);
-
-app.patch('/course/:courseId/lesson/:lessonId', (req, res, next) => {
-  req.user = { uid: 'GttuQ8W2RaQbHoDtIX0GYG1IBeZ2' }; // Simulating authenticated user
-  next();
-}, updateLesson);
-
-app.delete('/course/:courseId/lesson/:lessonId', (req, res, next) => {
-  req.user = { uid: 'GttuQ8W2RaQbHoDtIX0GYG1IBeZ2' }; // Simulating authenticated user
-  next();
-}, deleteLesson);
+app.post('/course/:courseId/lesson', simulateAuth, createLesson);
+app.get('/course/:courseId/lesson/:lessonId', simulateAuth, getLesson);
+app.get('/course/:courseId/lessons', simulateAuth, getAllLessons);
+app.patch('/course/:courseId/lesson/:lessonId', simulateAuth, updateLesson);
+app.delete('/course/:courseId/lesson/:lessonId', simulateAuth, deleteLesson);
 
 let testCourseId;
 let testLessonId;
@@ -45,7 +32,7 @@ let server;
 
 // Setup before tests
 beforeAll(async () => {
-  server = app.listen(4001);
+  server = app.listen(4051);
   // Set up a test course in Firestore
   const courseRef = admin.firestore().collection(COURSES).doc();
   await courseRef.set({
