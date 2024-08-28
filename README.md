@@ -6,6 +6,8 @@ This repository holds the source for the GG Practicum Team 3's application
 feedback says to put this in italics _Some changes that I wanna make. Here are
 Some more changes_
 
+final changes for pr2
+
 ## Project Overview
 
 Learning Hub is an educational platform designed to support students and
