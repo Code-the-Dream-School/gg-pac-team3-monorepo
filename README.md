@@ -3,6 +3,8 @@
 This repository holds the source for the GG Practicum Team 3's application
 "Learning Hub", which is combined into a monorepo.
 
+Some changes that I wanna make. Here are Some more changes
+
 ## Project Overview
 
 Learning Hub is an educational platform designed to support students and
