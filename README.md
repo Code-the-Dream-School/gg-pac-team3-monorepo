@@ -8,6 +8,8 @@ Some more changes_
 
 final changes for pr2
 
+More changes - this would be PR 2
+
 ## Project Overview
 
 Learning Hub is an educational platform designed to support students and
