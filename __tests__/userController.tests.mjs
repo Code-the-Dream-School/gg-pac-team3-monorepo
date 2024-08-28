@@ -8,9 +8,9 @@ describe('User Controller', () => {
     let testEmail;
     const TEST_PASSWORD = 'password123';
 
-    // Helper function to create mock request and response objects
-    const createMockRequestResponse = (body) => {
-        const req = mockRequest({ body });
+    // Updated helper function to create mock request and response objects
+    const createMockRequestResponse = (body = {}, additionalProps = {}) => {
+        const req = mockRequest({ body, ...additionalProps });
         const res = mockResponse();
         return { req, res };
     };
@@ -46,9 +46,8 @@ describe('User Controller', () => {
                 console.error(`Failed to delete user or Firestore document with UID: ${userId}`, error);
             }
         }
-    }, 30000); 
+    }, 30000);
 
-    // Test user signup functionality
     describe('signupUser', () => {
         it('should sign up a new user successfully', async () => {
             expect(createdUserIds[createdUserIds.length - 1]).toBeDefined();
@@ -77,15 +76,15 @@ describe('User Controller', () => {
     // Test user logoff functionality
     describe('logoffUser', () => {
         it('should log off a user successfully', async () => {
-            const reqLogoff = mockRequest({
-                user: { uid: createdUserIds[createdUserIds.length - 1] },
+            const { req, res } = createMockRequestResponse({}, {
+                user: { uid: createdUserIds[createdUserIds.length - 1] }
             });
-            const resLogoff = mockResponse();
 
-            await logoffUser(reqLogoff, resLogoff);
+            await logoffUser(req, res);
 
-            expect(resLogoff.status).toHaveBeenCalledWith(200);
-            expect(resLogoff.send).toHaveBeenCalledWith(expect.objectContaining({
+            expect(res.status).toHaveBeenCalled();
+            expect(res.status).toHaveBeenCalledWith(200);
+            expect(res.send).toHaveBeenCalledWith(expect.objectContaining({
                 message: 'User logged off successfully',
             }));
         });

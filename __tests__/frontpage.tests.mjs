@@ -6,22 +6,35 @@ describe('Frontend Page Loading', () => {
 
   // Start the browser before all tests
   beforeAll(async () => {
-    browser = await puppeteer.launch({
-      headless: false, 
-      slowMo: 100, 
-    });
-    page = await browser.newPage();
+    try {
+      browser = await puppeteer.launch({
+        headless: false, 
+        slowMo: 100, 
+      });
+      page = await browser.newPage();
+    } catch (error) {
+      console.error('Error setting up the browser:', error);
+      throw error;
+    }
   });
 
   // Close the browser after all tests
   afterAll(async () => {
-    await browser.close();
+    try {
+      await browser.close();
+    } catch (error) {
+      console.error('Error closing the browser:', error);
+    }
   });
 
   it('should load the homepage', async () => {
-    await page.goto('http://localhost:5173/', { waitUntil: 'networkidle2' });
-    const pageTitle = await page.title();
-    expect(pageTitle).toBe('Vite + React'); 
+    try {
+      await page.goto('http://localhost:5173/', { waitUntil: 'networkidle2' });
+      const pageTitle = await page.title();
+      expect(pageTitle).toBe('Vite + React'); 
+    } catch (error) {
+      console.error('Error during test:', error);
+      throw error;
+    }
   });
-
 });
