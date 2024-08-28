@@ -65,75 +65,100 @@ describe('Lesson Controller', () => {
 
   // Test for creating a lesson
   test('should create a new lesson successfully', async () => {
-    const lessonData = {
-      title: 'Test Lesson',
-      description: { content: 'This is a test lesson' },
-      points: 10,
-      order: 1,
-      videoLinks: ['http://example.com/video'],
-      materials: 'Test materials',
-    };
+    try {
+      const lessonData = {
+        title: 'Test Lesson',
+        description: { content: 'This is a test lesson' },
+        points: 10,
+        order: 1,
+        videoLinks: ['http://example.com/video'],
+        materials: 'Test materials',
+      };
 
-    const response = await supertest(app)
-      .post(`/course/${testCourseId}/lesson`)
-      .send(lessonData)
-      .expect(201);
+      const response = await supertest(app)
+        .post(`/course/${testCourseId}/lesson`)
+        .send(lessonData)
+        .expect(201);
 
-    expect(response.body.message).toBe('Lesson created successfully');
-    expect(response.body.lessonId).toBeDefined();
+      expect(response.body.message).toBe('Lesson created successfully');
+      expect(response.body.lessonId).toBeDefined();
 
-    testLessonId = response.body.lessonId; // Store the lessonId for subsequent tests
+      testLessonId = response.body.lessonId; // Store the lessonId for subsequent tests
+    } catch (error) {
+      console.error('Error in create lesson test:', error);
+      throw error;
+    }
   });
 
   // Test for fetching a specific lesson
   test('should fetch a specific lesson successfully', async () => {
-    const response = await supertest(app)
-      .get(`/course/${testCourseId}/lesson/${testLessonId}`)
-      .expect(200);
+    try {
+      const response = await supertest(app)
+        .get(`/course/${testCourseId}/lesson/${testLessonId}`)
+        .expect(200);
 
-    expect(response.body.title).toBe('Test Lesson');
+      expect(response.body.title).toBe('Test Lesson');
+    } catch (error) {
+      console.error('Error in fetch specific lesson test:', error);
+      throw error;
+    }
   });
 
   // Test for fetching all lessons in a course
   test('should fetch all lessons in a course successfully', async () => {
-    const response = await supertest(app)
-      .get(`/course/${testCourseId}/lessons`)
-      .expect(200);
+    try {
+      const response = await supertest(app)
+        .get(`/course/${testCourseId}/lessons`)
+        .expect(200);
 
-    expect(response.body.length).toBeGreaterThan(0);
-    expect(response.body[0].title).toBe('Test Lesson');
+      expect(response.body.length).toBeGreaterThan(0);
+      expect(response.body[0].title).toBe('Test Lesson');
+    } catch (error) {
+      console.error('Error in fetch all lessons test:', error);
+      throw error;
+    }
   });
 
   // Test for updating a lesson
   test('should update a lesson successfully', async () => {
-    const updates = { title: 'Updated Test Lesson' };
+    try {
+      const updates = { title: 'Updated Test Lesson' };
 
-    const response = await supertest(app)
-      .patch(`/course/${testCourseId}/lesson/${testLessonId}`)
-      .send(updates)
-      .expect(200);
+      const response = await supertest(app)
+        .patch(`/course/${testCourseId}/lesson/${testLessonId}`)
+        .send(updates)
+        .expect(200);
 
-    expect(response.body.message).toBe('Lesson updated successfully');
+      expect(response.body.message).toBe('Lesson updated successfully');
 
-    // Verify the update
-    const fetchResponse = await supertest(app)
-      .get(`/course/${testCourseId}/lesson/${testLessonId}`)
-      .expect(200);
+      // Verify the update
+      const fetchResponse = await supertest(app)
+        .get(`/course/${testCourseId}/lesson/${testLessonId}`)
+        .expect(200);
 
-    expect(fetchResponse.body.title).toBe('Updated Test Lesson');
+      expect(fetchResponse.body.title).toBe('Updated Test Lesson');
+    } catch (error) {
+      console.error('Error in update lesson test:', error);
+      throw error;
+    }
   });
 
   // Test for deleting a lesson
   test('should delete a lesson successfully', async () => {
-    const response = await supertest(app)
-      .delete(`/course/${testCourseId}/lesson/${testLessonId}`)
-      .expect(200);
+    try {
+      const response = await supertest(app)
+        .delete(`/course/${testCourseId}/lesson/${testLessonId}`)
+        .expect(200);
 
-    expect(response.body.message).toBe('Lesson deleted successfully');
+      expect(response.body.message).toBe('Lesson deleted successfully');
 
-    // Verify the deletion
-    await supertest(app)
-      .get(`/course/${testCourseId}/lesson/${testLessonId}`)
-      .expect(404);
+      // Verify the deletion
+      await supertest(app)
+        .get(`/course/${testCourseId}/lesson/${testLessonId}`)
+        .expect(404);
+    } catch (error) {
+      console.error('Error in delete lesson test:', error);
+      throw error;
+    }
   });
 });
