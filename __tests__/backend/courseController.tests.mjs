@@ -30,7 +30,7 @@ let server;
 
 // Setup before tests
 beforeAll(async () => {
-  server = app.listen(4050); 
+  server = app.listen(4500); 
   // Set up a test user in Firestore (a user with 'Teacher' role)
   const userRef = admin.firestore().collection(USERS).doc(testUserId);
   await userRef.set({
