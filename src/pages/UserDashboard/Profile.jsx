@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { fetchUserProfile } from '../../services/api';
+import { fetchUserProfile, updateProfileInfo } from '../../services/api';
 import PropTypes from 'prop-types';
 import styles from './Profile.module.css';
 
 const Profile = ({ userId }) => {
   const [profileData, setProfileData] = useState(null);
+  const [updatedProfile, setUpdatedProfile] = useState([]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -12,6 +13,11 @@ const Profile = ({ userId }) => {
         if (userId) {
           const profile = await fetchUserProfile(userId);
           setProfileData(profile);
+          setUpdatedProfile({
+            name: profile.name,
+            email: profile.email,
+            role: profile.userType,
+          });
         }
       } catch (error) {
         console.error('Error fetching profile:', error);
@@ -21,9 +27,37 @@ const Profile = ({ userId }) => {
     fetchProfile();
   }, [userId]);
 
+  const handleName = (event) => {
+    const newName = event.target.value;
+    setUpdatedProfile({
+      ...updatedProfile,
+      name: newName,
+    });
+  };
+
+  const handleEmail = (event) => {
+    const newEmail = event.target.value;
+    setUpdatedProfile({
+      ...updatedProfile,
+      email: newEmail,
+    });
+  };
+
+  const handleForm = (event) => {
+    event.preventDefault();
+    const updateProfile = async () => {
+      try {
+        const update = await updateProfileInfo(userId, updatedProfile.name);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    updateProfile();
+  };
+
   return (
     <div className={styles.profileContainer}>
-      <h2>Profile Information</h2>
+      <h2>Profile</h2>
       {profileData && (
         <>
           <div>
@@ -33,14 +67,38 @@ const Profile = ({ userId }) => {
               className={styles.profileImage}
             />
           </div>
-          <div className={styles.profileDetails}>
-            <p>
-              <strong>Name:</strong> {profileData.name}
-            </p>
-            <p>
-              <strong>Email:</strong> {profileData.email}
-            </p>
-          </div>
+          <form
+            id='updateProfileForm'
+            className={styles.form}
+            onSubmit={handleForm}
+          >
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>
+                Role: {updatedProfile.role}
+              </label>
+            </div>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Name:</label>
+              <input
+                className={styles.input}
+                type='text'
+                value={updatedProfile.name}
+                onChange={handleName}
+              />
+            </div>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Email:</label>
+              <input
+                className={styles.input}
+                type='text'
+                value={updatedProfile.email}
+                readOnly={true}
+              />
+            </div>
+            <button className={styles.submit} type='submit'>
+              Submit
+            </button>
+          </form>
         </>
       )}
     </div>

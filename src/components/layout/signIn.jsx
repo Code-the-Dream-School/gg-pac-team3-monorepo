@@ -1,13 +1,13 @@
 import CloseIcon from '../icons/CloseIcon';
-import styles from './SignIn.module.css';
+import styles from './SignUp.module.css';
 
-const SignIn = ({ switchForm }) => {
+const SignUp = ({ switchForm }) => {
   return (
     <div className={styles.container}>
       <section className={styles.headings}>
         <div className={styles.headingsContainer}>
-          <h1 className={styles.header}>Log In</h1>
-          <p className={styles.name}>Welcome Back to LearnHub</p>{' '}
+          <h1 className={styles.header}>Sign Up</h1>
+          <p className={styles.name}>Getting started with LearnHub</p>
         </div>
         <button
           className={styles.closeFormButton}
@@ -32,20 +32,20 @@ const SignIn = ({ switchForm }) => {
           placeholder='Password'
           type='password'
         ></input>
-        <button className={styles.button}>Log In</button>
+        <button className={styles.button}>Register</button>
       </div>
 
       <section className={styles.closingSection}>
         <p className={styles.content}>
-          Don’t have an account?{' '}
+          Already have an account?{' '}
           <a
             className={styles.join}
             onClick={(e) => {
               e.preventDefault();
-              switchForm('Register');
+              switchForm('Login');
             }}
           >
-            Sign up now
+            Login now
           </a>
         </p>
       </section>
@@ -53,4 +53,4 @@ const SignIn = ({ switchForm }) => {
   );
 };
 
-export default SignIn;
+export default SignUp;

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route} from 'react-router-dom';
 import { useState } from 'react';
 import Panel from './components/layout/Panel';
 import Courses from './pages/Courses/Courses';

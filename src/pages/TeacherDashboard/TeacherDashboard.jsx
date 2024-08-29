@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import styles from "./TeacherDashboard.module.css"
+import styles from "./TeacherDashboard.module.css";
 import SideBar from "../../components/SideBar/SideBar";
 import {useNavigate} from "react-router-dom";
 

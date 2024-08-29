@@ -5,7 +5,30 @@
   padding: 1.25rem;
   background-color: #eef2f3;
 }
+.searchContainer{
+  display: flex;
+  flex-direction: column;
+  background-color: #eef2f3;
+}
+.form > h2{
+  color:#f35c3c;
+  padding: 1em;
+}
 
+.searchInput{
+  padding: 1em;
+  background-color: #ffffff;
+  border-style:none;
+  border-radius: 0px 0px 2px 2px;
+  border-bottom: 3px solid #f35c3c; 
+  width: 30em;
+  margin: 1em;
+
+}
+
+.submit{
+  padding:1em;
+}
 .courseCard {
   display: flex;
   flex-direction: column;
