@@ -5,7 +5,11 @@ import styles from './Profile.module.css';
 
 const Profile = ({ userId }) => {
   const [profileData, setProfileData] = useState(null);
-  const [updatedProfile, setUpdatedProfile] = useState([]);
+  const [updatedProfile, setUpdatedProfile] = useState({
+    name: '',
+    email: '',
+    profilePictureUrl: '',
+  });
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -16,7 +20,7 @@ const Profile = ({ userId }) => {
           setUpdatedProfile({
             name: profile.name,
             email: profile.email,
-            role: profile.userType,
+            profilePictureUrl: profile.profilePictureUrl,
           });
         }
       } catch (error) {
@@ -27,29 +31,23 @@ const Profile = ({ userId }) => {
     fetchProfile();
   }, [userId]);
 
-  const handleName = (event) => {
-    const newName = event.target.value;
-    setUpdatedProfile({
-      ...updatedProfile,
-      name: newName,
-    });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUpdatedProfile((prevProfile) => ({
+      ...prevProfile,
+      [name]: value,
+    }));
   };
 
-  const handleEmail = (event) => {
-    const newEmail = event.target.value;
-    setUpdatedProfile({
-      ...updatedProfile,
-      email: newEmail,
-    });
-  };
-
-  const handleForm = (event) => {
+  const handleFormSubmit = (event) => {
     event.preventDefault();
     const updateProfile = async () => {
       try {
-        const update = await updateProfileInfo(userId, updatedProfile.name);
+        await updateProfileInfo(userId, updatedProfile);
+        const updatedData = await fetchUserProfile(userId); // Fetch the updated profile data
+        setProfileData(updatedData);
       } catch (error) {
-        console.log(error);
+        console.error('Error updating profile:', error);
       }
     };
     updateProfile();
@@ -63,39 +61,49 @@ const Profile = ({ userId }) => {
           <div>
             <img
               src={profileData.profilePictureUrl}
-              alt='Profile'
+              alt="Profile"
               className={styles.profileImage}
             />
           </div>
           <form
-            id='updateProfileForm'
+            id="updateProfileForm"
             className={styles.form}
-            onSubmit={handleForm}
+            onSubmit={handleFormSubmit}
           >
             <div className={styles.inputContainer}>
-              <label className={styles.label}>
-                Role: {updatedProfile.role}
-              </label>
+              <label className={styles.label}>Role: {profileData.userType}</label>
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Name:</label>
               <input
                 className={styles.input}
-                type='text'
+                type="text"
+                name="name"
                 value={updatedProfile.name}
-                onChange={handleName}
+                onChange={handleChange}
               />
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Email:</label>
               <input
                 className={styles.input}
-                type='text'
+                type="text"
+                name="email"
                 value={updatedProfile.email}
                 readOnly={true}
               />
             </div>
-            <button className={styles.submit} type='submit'>
+            <div className={styles.inputContainer}>
+              <label className={styles.label}>Profile Picture URL:</label>
+              <input
+                className={styles.input}
+                type="text"
+                name="profilePictureUrl"
+                value={updatedProfile.profilePictureUrl}
+                onChange={handleChange}
+              />
+            </div>
+            <button className={styles.submit} type="submit">
               Submit
             </button>
           </form>
@@ -105,7 +113,6 @@ const Profile = ({ userId }) => {
   );
 };
 
-// Prop validation
 Profile.propTypes = {
   userId: PropTypes.string.isRequired, // userId is required and must be a string
 };

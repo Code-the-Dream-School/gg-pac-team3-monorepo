@@ -118,21 +118,26 @@ export const AddUserCourse = async (userId, courseId, role) => {
   }
 };
 
-//function to update user information
-export const updateProfileInfo = async (userId, userName) => {
+// Function to update user profile information
+export const updateProfileInfo = async (userId, updatedProfile) => {
   try {
     const token = getAuthToken();
     const response = await axios.patch(
       `${API_BASE_URL}/user/${userId}`,
-      { name: userName },
+      {
+        name: updatedProfile.name,
+        email: updatedProfile.email,
+        profilePictureUrl: updatedProfile.profilePictureUrl,
+      },
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
+      }
     );
-    return response.status;
+    return response.data; // Return the updated profile data
   } catch (error) {
-    console.log(error);
+    console.error('Error updating profile:', error);
+    throw error;
   }
 };

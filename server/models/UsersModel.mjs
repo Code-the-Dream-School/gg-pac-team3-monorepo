@@ -1,4 +1,4 @@
-import admin from "../config/firebase.mjs";
+import admin from '../config/firebase.mjs';
 
 class UsersModel {
   constructor({
@@ -34,6 +34,16 @@ class UsersModel {
       profilePictureUrl: this.profilePictureUrl,
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     };
+  }
+
+  static async update(uid, updates) {
+    const db = admin.firestore();
+    try {
+      await db.collection('users').doc(uid).update(updates);
+    } catch (error) {
+      console.error('Error updating user:', error);
+      throw error;
+    }
   }
 }
 
