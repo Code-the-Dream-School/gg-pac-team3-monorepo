@@ -46,7 +46,7 @@ const CourseDetails = () => {
       setMessage('Enrollment failed, please try again.');
     }
   };
-
+  
   const handleGotoCourse = () => {
     if (lessons.length > 0) {
       // const courseUrl = `/learn/${course.courseName.trim()}/lesson/${lessons[0].title.trim()}`;

@@ -87,4 +87,8 @@ Nav.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> a43107d (Merged LessonPage Branch)
 export default Nav;

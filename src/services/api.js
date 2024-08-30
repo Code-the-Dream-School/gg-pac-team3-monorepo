@@ -53,7 +53,7 @@ export const registerUser = async (name, email, password, userType) => {
 //fetchQuizByLessonId
 export const fetchQuizByLessonId = async (lessonId, courseId) => {
   try {
-    const token = getAuthToken();    
+    const token = getAuthToken();
     const response = await axios.get(
       `${API_BASE_URL}/course/${courseId}/${lessonId}/quizzes`,
       {
@@ -68,6 +68,7 @@ export const fetchQuizByLessonId = async (lessonId, courseId) => {
     throw error;
   }
 };
+
 
 // Function to fetch a list of courses to display on the front page
 export const fetchCourses = async () => {
