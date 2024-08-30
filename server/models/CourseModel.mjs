@@ -17,15 +17,17 @@ class CourseModel {
     // Validate types
     if (typeof courseId !== 'string') throw new Error('Invalid courseId');
     if (typeof courseName !== 'string') throw new Error('Invalid courseName');
-    if (typeof courseType !== 'string') throw new Error('Invalid courseType');
     if (typeof description !== 'string') throw new Error('Invalid description');
     if (typeof imageUrl !== 'string') throw new Error('Invalid imageUrl');
-    if (typeof logoUrl !== 'string') throw new Error('Invalid logoUrl');
-    if (typeof duration !== 'string') throw new Error('Invalid duration');
-    if (typeof rating !== 'number') throw new Error('Invalid rating');
-    if (typeof otherInfo !== 'string') throw new Error('Invalid otherInfo');
     if (typeof createdBy !== 'string') throw new Error('Invalid createdBy');
     if (!(createdAt instanceof Date)) throw new Error('Invalid createdAt');
+
+    // Optional fields
+    if (courseType && typeof courseType !== 'string') throw new Error('Invalid courseType');
+    if (logoUrl && typeof logoUrl !== 'string') throw new Error('Invalid logoUrl');
+    if (duration && typeof duration !== 'string') throw new Error('Invalid duration');
+    if (rating && typeof rating !== 'number') throw new Error('Invalid rating');
+    if (otherInfo && typeof otherInfo !== 'string') throw new Error('Invalid otherInfo');
 
     this.courseId = courseId;
     this.courseName = courseName;

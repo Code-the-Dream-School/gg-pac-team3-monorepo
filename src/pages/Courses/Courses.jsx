@@ -27,14 +27,22 @@ const Courses = () => {
   }, []);
 
   return (
+  <>
     <div className={styles.courseContainer}>
-      <SideBar />
-      <ul className={styles.courseItems}>
-        {courses.map((course, index) => {
-          return <li key={index}>{course.courseName}</li>;
+    <SideBar />
+      <ul className={styles.courseItemsList}>
+        {courses.map((course) => {
+          return (
+          <li key={course.id} className={styles.courseItem}>
+              <img className={styles.courseLogo} src={course.imageUrl}/>
+              <div><h3>{course.courseName}</h3>
+              <p>{course.description}</p></div>
+          </li>
+          )
         })}
       </ul>
     </div>
+  </>
   );
 };
 
