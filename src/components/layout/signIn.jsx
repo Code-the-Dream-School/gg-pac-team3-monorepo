@@ -80,7 +80,16 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
           Password?
         </a>
         <p className={styles.content}>
-          Don't Have An Account?{' '}
+          Don't Have An Account? Forgot Your{' '}
+          <a
+            className={styles.join}
+            onClick={() => switchForm('ForgotPassword')}
+          >
+            Password?
+          </a>
+        </p>
+        <p className={styles.content}>
+          Don’t have an account?{' '}
           <a
             className={styles.join}
             onClick={(e) => {
