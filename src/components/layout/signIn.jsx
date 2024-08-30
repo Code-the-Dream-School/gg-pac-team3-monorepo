@@ -1,5 +1,6 @@
 import CloseIcon from '../icons/CloseIcon';
 import styles from './SignIn.module.css';
+import { useState } from 'react';
 
 const SignIn = ({ switchForm }) => {
   return (
@@ -7,7 +8,7 @@ const SignIn = ({ switchForm }) => {
       <section className={styles.headings}>
         <div className={styles.headingsContainer}>
           <h1 className={styles.header}>Log In</h1>
-          <p className={styles.name}>Welcome Back to LearnHub</p>{' '}
+          <p className={styles.name}>Welcome Back to LearnHub</p>
         </div>
         <button
           className={styles.closeFormButton}
@@ -36,6 +37,15 @@ const SignIn = ({ switchForm }) => {
       </div>
 
       <section className={styles.closingSection}>
+        <p className={styles.content}>
+          Forgot Your{' '}
+          <a
+            className={styles.join}
+            onClick={() => switchForm('ForgotPassword')}
+          >
+            Password?
+          </a>
+        </p>
         <p className={styles.content}>
           Don’t have an account?{' '}
           <a
