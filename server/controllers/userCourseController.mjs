@@ -4,7 +4,7 @@ import { USER_COURSES, COURSES } from "./constants.mjs";
 import CourseModel from "../models/CourseModel.mjs";
 const db = admin.firestore();
 
-//  user enrolled in selected course .
+//  User enrolled in selected course
 export const enrollInCourse = async (req, res) => {
   const { userId, courseId } = req.params;
   const { role } = req.body;
@@ -15,12 +15,6 @@ export const enrollInCourse = async (req, res) => {
       role,
       enrolledAt: new Date(),
     });
-
-    //for later use
-
-    // if (!['admin', 'student', 'instructor', 'teacher'].includes(role)) {
-    //   throw new Error('Invalid role');
-    // }
 
     const userCourseRef = db.collection(USER_COURSES).doc();
     await userCourseRef.set(userCourse.toFirestore());
@@ -35,8 +29,7 @@ export const enrollInCourse = async (req, res) => {
   }
 };
 
-//  Fetch all courses that a user is not enrolled in.
-//  This is useful, for example, in recommending courses to a user
+//  Fetch all courses that a user is not enrolled in
 export const getSuggestedCoursesForUser = async (req, res) => {
   const { userId } = req.params;
 
@@ -44,8 +37,17 @@ export const getSuggestedCoursesForUser = async (req, res) => {
     // Step 1: Fetch all courses
     const allCoursesSnapshot = await db.collection(COURSES).get();
     const allCourses = [];
+
     allCoursesSnapshot.forEach((doc) => {
-      allCourses.push({ id: doc.id, ...CourseModel.fromFirestore(doc.data()) });
+      const data = doc.data();
+
+      // Validate the course data (minimal validation)
+      if (!data.courseType || typeof data.courseType !== 'string') {
+        console.warn(`Skipping document with ID ${doc.id} due to invalid courseType.`);
+        return; // Skip this course if it has invalid data
+      }
+
+      allCourses.push({ id: doc.id, ...CourseModel.fromFirestore(data) });
     });
 
     // Step 2: Fetch user's enrolled courses
@@ -71,7 +73,7 @@ export const getSuggestedCoursesForUser = async (req, res) => {
   }
 };
 
-//  Fetch all courses that a user is  enrolled in.
+//  Fetch all courses that a user is enrolled in
 export const getUserCourses = async (req, res) => {
   const { userId } = req.params;
 
@@ -89,9 +91,17 @@ export const getUserCourses = async (req, res) => {
 
     const courses = [];
     userCoursesSnapshot.forEach((doc) => {
+      const courseData = doc.data();
+
+      // Validate course data
+      if (!courseData.courseType || typeof courseData.courseType !== 'string') {
+        console.warn(`Skipping user course document with ID ${doc.id} due to invalid courseType.`);
+        return;
+      }
+
       courses.push({
         id: doc.id,
-        ...UserCourseModel.fromFirestore(doc.data()),
+        ...UserCourseModel.fromFirestore(courseData),
       });
     });
 
@@ -102,8 +112,8 @@ export const getUserCourses = async (req, res) => {
   }
 };
 
-//  Fetch selected  course details for user.
-export const getCoursesForUser  = async (req, res) => {
+//  Fetch selected course details for user
+export const getCoursesForUser = async (req, res) => {
   const { userId } = req.params;
 
   try {
@@ -141,7 +151,15 @@ export const getCoursesForUser  = async (req, res) => {
 
     const courses = [];
     coursesSnapshot.forEach((doc) => {
-      courses.push({ id: doc.id, ...doc.data() });
+      const data = doc.data();
+
+      // Validate course data
+      if (!data.courseType || typeof data.courseType !== 'string') {
+        console.warn(`Skipping course document with ID ${doc.id} due to invalid courseType.`);
+        return;
+      }
+
+      courses.push({ id: doc.id, ...data });
     });
 
     res.status(200).send(courses);
