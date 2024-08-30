@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import ForgotPassword from './ForgotPassWordForm';
 import styles from './Nav.module.css';
 import { useAuth } from '../../AuthContext';
 import logo from '../../assets/logos/blue.png';
@@ -32,6 +33,11 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         } else if (userType === 'Teacher') {
           navigate('/teacher/dashboard'); // Navigate to Teacher Dashboard
         }
+      case 'ForgotPassword': // Make sure this matches the case
+        setActiveForm('ForgotPassword');
+        break;
+      case 'SetNewPassword':
+        setActiveForm('SetNewPassword');
         break;
       default:
         setActiveForm(null);
@@ -78,7 +84,11 @@ const Nav = ({ isLoggedIn, onLogout }) => {
             setUserType(type);
           }}
         />
+      {activeForm === 'ForgotPassword' && (
+        <ForgotPassword switchForm={switchForm} />
       )}
+      {activeForm === "SetNewPassword" && (
+        <SignUp switchForm={switchForm} />)}
     </div>
   );
 };

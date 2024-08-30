@@ -76,7 +76,16 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
 
       <section className={styles.closingSection}>
         <p className={styles.content}>
-          Already have an account?{' '}
+          Forgot Your{' '}
+          <a
+            className={styles.join}
+            onClick={() => switchForm('ForgotPassword')}
+          >
+            Password?
+          </a>
+        </p>
+        <p className={styles.content}>
+          Don’t have an account?{' '}
           <a
             className={styles.join}
             onClick={(e) => {
@@ -98,4 +107,3 @@ SignIn.propTypes = {
 };
 
 export default SignIn;
-
