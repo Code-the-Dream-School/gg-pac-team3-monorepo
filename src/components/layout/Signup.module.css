@@ -131,7 +131,6 @@
 .successMessage {
   color: green;
   font-weight: bold;
-<<<<<<< HEAD
   margin-top: 1.25rem; 
   text-align: center;
 }
@@ -224,8 +223,3 @@
     margin-top: 0.875rem;
   }
 }
-=======
-  margin-top: 20px;
-  text-align: center;
-}
->>>>>>> b1eca9f (Add Learn and Lesson page to see course material)

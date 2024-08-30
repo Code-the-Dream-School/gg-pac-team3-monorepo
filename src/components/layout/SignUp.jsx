@@ -18,14 +18,9 @@ const SignUp = ({ switchForm }) => {
     }
     try {
       const response = await registerUser(name, email, password, userType);
-<<<<<<< HEAD
       setSuccessMessage(
         `You have registered successfully ${response}, please login.`,
       );
-=======
-      console.log('User registered successfully:', response);
-      setSuccessMessage('You have registered successfully, please login.');
->>>>>>> b1eca9f (Add Learn and Lesson page to see course material)
       // switch to login or dashboard after successful registration
       setTimeout(() => {
         switchForm('Login');
@@ -93,10 +88,6 @@ const SignUp = ({ switchForm }) => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         ></input>
-<<<<<<< HEAD
-=======
-
->>>>>>> a43107d (Merged LessonPage Branch)
         <label className={styles.formName} htmlFor='userType'>
           Select Role
         </label>
