@@ -4,7 +4,9 @@ import { USER_COURSES, COURSES } from "./constants.mjs";
 import CourseModel from "../models/CourseModel.mjs";
 const db = admin.firestore();
 
-//  user enrolled in selected course .
+
+//  User enrolled in selected course
+
 export const enrollInCourse = async (req, res) => {
   const { userId, courseId } = req.params;
   const { role } = req.body;
@@ -34,6 +36,10 @@ export const enrollInCourse = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
+
+//  Fetch all courses that a user is not enrolled in
+
+
 
 //  Fetch all courses that a user is not enrolled in.
 //  This is useful, for example, in recommending courses to a user
@@ -71,7 +77,8 @@ export const getSuggestedCoursesForUser = async (req, res) => {
   }
 };
 
-//  Fetch all courses that a user is  enrolled in.
+//  Fetch all courses that a user is enrolled in
+
 export const getUserCourses = async (req, res) => {
   const { userId } = req.params;
 
@@ -89,9 +96,17 @@ export const getUserCourses = async (req, res) => {
 
     const courses = [];
     userCoursesSnapshot.forEach((doc) => {
+      const courseData = doc.data();
+
+      // Validate course data
+      if (!courseData.courseType || typeof courseData.courseType !== 'string') {
+        console.warn(`Skipping user course document with ID ${doc.id} due to invalid courseType.`);
+        return;
+      }
+
       courses.push({
         id: doc.id,
-        ...UserCourseModel.fromFirestore(doc.data()),
+        ...UserCourseModel.fromFirestore(courseData),
       });
     });
 
@@ -102,8 +117,10 @@ export const getUserCourses = async (req, res) => {
   }
 };
 
-//  Fetch selected  course details for user.
-export const getCoursesForUser  = async (req, res) => {
+
+//  Fetch selected course details for user
+export const getCoursesForUser = async (req, res) => {
+
   const { userId } = req.params;
 
   try {
@@ -141,7 +158,9 @@ export const getCoursesForUser  = async (req, res) => {
 
     const courses = [];
     coursesSnapshot.forEach((doc) => {
+
       courses.push({ id: doc.id, ...doc.data() });
+
     });
 
     res.status(200).send(courses);

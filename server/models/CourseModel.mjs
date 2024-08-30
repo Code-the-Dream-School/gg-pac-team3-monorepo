@@ -24,6 +24,7 @@ class CourseModel {
     if (!(createdAt instanceof Date)) throw new Error('Invalid createdAt');
 
     // Optional fields
+
     if (courseType && typeof courseType !== 'string')
       throw new Error('Invalid courseType');
     if (logoUrl && typeof logoUrl !== 'string')
@@ -33,6 +34,7 @@ class CourseModel {
     if (rating && typeof rating !== 'number') throw new Error('Invalid rating');
     if (otherInfo && typeof otherInfo !== 'string')
       throw new Error('Invalid otherInfo');
+
     this.courseId = courseId;
     this.courseName = courseName;
     this.courseType = courseType;

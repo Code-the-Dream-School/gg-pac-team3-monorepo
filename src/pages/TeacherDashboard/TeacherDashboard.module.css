@@ -47,10 +47,12 @@
   }
 }
 
+
 .courseLogo {
   width: 3rem;
   text-align: center;
 }
+
 
 .newCourseButton {
   background-color: transparent;
@@ -60,4 +62,5 @@
   margin: 2rem 0;
   width: 10rem;
 }
+
 

@@ -8,8 +8,10 @@
 .header {
   display: flex;
   justify-content: center;
+
   /* background-color: #041531; */
   background: linear-gradient(rgb(21, 38, 135), #2810df, #0484ce);
+
   padding: 0.625rem;
 }
 

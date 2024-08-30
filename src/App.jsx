@@ -10,8 +10,10 @@ import Learn from './pages/Learn/Learn';
 import Quiz from './pages/Learn/Quiz';
 import './App.css';
 
+
 function App() {
   return (
+
     <AuthProvider>
       <BrowserRouter>
         <Routes>
@@ -38,6 +40,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
+
   );
 }
 

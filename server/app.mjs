@@ -52,7 +52,7 @@ const swaggerOptions = {
     ],
   },
 
-  apis: ['./src/routes/*.mjs'],
+  apis: ['./server/routes/*.mjs'],
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
