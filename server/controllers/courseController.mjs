@@ -5,13 +5,17 @@ import CourseModel from '../models/CourseModel.mjs';
 import LessonModel from '../models/LessonModel.mjs';
 import UserCourseModel from '../models/UserCourseModel.mjs';
 import {COURSES, LESSONS, USER_COURSES, USERS, COURSE_ID, TEACHER_ID, CREATED_BY} from './constants.mjs';
+import cloudinary from "../config/cloudinary.mjs";
 
 dotenv.config();
 const db = admin.firestore();
+db.settings({ ignoreUndefinedProperties: true });
+const storage = admin.storage();
 
 // Create a new course
 export const createCourse = async (req, res) => {
-  const courseData = req.body;
+  let courseData = req.body;
+  const file = req.file;
 
   try {
     console.log(req.user.uid);
@@ -30,6 +34,8 @@ export const createCourse = async (req, res) => {
         .status(403)
         .send({ message: 'Only teachers can create courses' });
     }
+
+    courseData = await addFileToParams(file, courseData);
 
     // Create a new course
     const newCourse = new CourseModel(courseData);
@@ -165,7 +171,8 @@ const getUserCourses = async (courseId) => {
 // Update a course by ID
 export const updateCourse = async (req, res) => {
   const { uid } = req.params;
-  const updates = req.body;
+  let updates = req.body;
+  const file = req.file;
 
   try {
     // Access the courses subcollection within the user document
@@ -175,7 +182,7 @@ export const updateCourse = async (req, res) => {
     if (!courseDoc.exists) {
       return res.status(404).send({ message: 'Course not found' });
     }
-
+    updates = await addFileToParams(file, updates);
     await courseRef.update(updates);
     res.status(200).send({ message: 'Course updated successfully' });
   } catch (error) {
@@ -183,6 +190,20 @@ export const updateCourse = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
+
+const addFileToParams = async (file, params) => {
+  if (file) {
+    const uploadResult = await cloudinary.uploader.upload(file.path).catch((error) => {
+      console.log(error);
+    });
+
+    params.imageUrl = uploadResult.secure_url;
+    params.logoUrl = uploadResult.secure_url;
+
+    return params;
+  }
+  return params;
+}
 
 // Delete a course by ID
 export const deleteCourse = async (req, res) => {
