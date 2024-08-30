@@ -1,18 +1,19 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 import styles from './SideBarItemStyles.module.css';
 
 const SIDEBAR_ITEMS = [
   {
-    name: 'Dashboard',
-    href: '/teacher/dashboard',
+    name: "Dashboard",
+    href: "/teacher/dashboard"
   },
   {
-    name: 'Courses',
-    href: '/teacher/courses',
-  },
-];
+    name: "All courses",
+    href: "/teacher/courses"
+  }
+]
 
 const SideBarItems = () => {
+  const location = useLocation();
   const location = useLocation();
 
   return (
@@ -20,16 +21,13 @@ const SideBarItems = () => {
       {SIDEBAR_ITEMS.map((item) => {
         const isActive = location.pathname === item.href;
         return (
-          <li
-            key={item.name}
-            className={`${styles.sideBarItem} ${isActive ? styles.active : ''}`}
-          >
-            <Link to={item.href} className={styles.sideBarLink}>
+          <Link key={item.name} to={item.href} className={styles.sideBarLink}>
+            <li className={`${styles.sideBarItem} ${isActive ? styles.active : ''}`}>
               {item.name}
-            </Link>
-          </li>
+            </li>
+          </Link>
         );
-      })}
+    })}
     </ul>
   );
 };

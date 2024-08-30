@@ -1,9 +1,32 @@
 .courseContainer {
   display: flex;
-  flex-direction: column;
+  flex-grow: 1;
 }
 
-.courseItems {
-  display: flex;
-  flex-direction: column;
+.courseItemsList {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 30rem);
+    grid-auto-rows: 10rem;
+    grid-auto-flow: dense;
+    grid-gap: 1.5rem;
+    justify-content: space-evenly;
+    padding: 0.625rem 1rem;
+    margin: 1rem;
+    img {
+        margin: 1rem;
+        width: 6rem;
+        height: 5rem;
+    }
+}
+
+.courseItem {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    cursor: pointer;
+    width: auto;
+    padding: 0.8rem;
+    border: #0f2240 solid 0.1rem;
+    border-radius: 0.625rem;
 }

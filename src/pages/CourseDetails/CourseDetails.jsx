@@ -49,8 +49,11 @@ const CourseDetails = () => {
   
   const handleGotoCourse = () => {
     if (lessons.length > 0) {
+      
+      //for later use
       // const courseUrl = `/learn/${course.courseName.trim()}/lesson/${lessons[0].title.trim()}`;
       // window.open(courseUrl, '_blank', 'noopener,noreferrer');
+      
       navigate(
         `/learn/${course.courseName.trim()}/lesson/${lessons[0].title.trim()}`,
         {
