@@ -44,7 +44,7 @@ const CourseForm = ({ initialData = {}, onSubmit, formTitle }) => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
-      onSubmit({courseName, description, logo});
+      onSubmit({courseName, courseType, description, logo, duration});
     };
 
     return (

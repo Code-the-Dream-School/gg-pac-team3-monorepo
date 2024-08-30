@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {jwtDecode} from "jwt-decode";
 import LessonsTable from "../../components/LessonsTable/LessonsTable.jsx";
 import styles from "../Courses/Courses.module.css";
+import SideBar from "../../components/SideBar/SideBar.jsx";
 
 const CourseLessons = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
@@ -38,6 +39,7 @@ const CourseLessons = () => {
 
   return (
     <div>
+      <SideBar />
       <div>
         <img src={course.logoUrl}/>
         <h1>{course.courseName}</h1>
