@@ -1,7 +1,5 @@
 export default {
-  transform: {
-    '^.+\\.mjs$': 'babel-jest',
-  },
+  transform: {},
   testEnvironment: 'node',
   moduleFileExtensions: ['js', 'jsx', 'mjs', 'ts', 'tsx', 'json', 'node'],
   transformIgnorePatterns: ['/node_modules/'],

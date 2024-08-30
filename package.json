@@ -23,13 +23,9 @@
 		"swagger-ui-express": "^5.0.1"
 	},
 	"devDependencies": {
-		"@babel/plugin-transform-modules-commonjs": "^7.24.8",
-		"@babel/preset-env": "^7.25.4",
 		"@types/react": "^18.3.3",
 		"@types/react-dom": "^18.3.0",
 		"@vitejs/plugin-react": "^4.3.1",
-		"babel-jest": "^29.7.0",
-		"babel-plugin-transform-import-meta": "^2.2.1",
 		"concurrently": "^8.2.2",
 		"eslint": "^8.57.0",
 		"eslint-plugin-react": "^7.34.3",
@@ -41,7 +37,8 @@
 		"nodemon": "^2.0.21",
 		"puppeteer": "^23.1.1",
 		"supertest": "^7.0.0",
-		"vite": "^5.3.4"
+	  "vite": "^5.3.4",
+	  "wait-on": "^7.0.1"
 	},
 	"scripts": {
 		"dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
@@ -50,6 +47,6 @@
 		"dev:client": "vite",
 		"build:client": "vite build",
 		"preview:client": "vite preview",
-		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+	  "test": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --runInBand\""
 	}
 }
