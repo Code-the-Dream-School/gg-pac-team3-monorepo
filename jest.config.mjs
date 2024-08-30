@@ -5,9 +5,4 @@ export default {
   transformIgnorePatterns: ['/node_modules/'],
   testMatch: ['**/__tests__/**/*.mjs'],
   moduleDirectories: ['node_modules', '<rootDir>'], 
-  globals: {
-    'babel-jest': {
-      useESM: true,
-    },
-  },
 };
