@@ -17,10 +17,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Panel />}>
-            <Route path='/' element={<FrontPage />} />
-            <Route path='/teacher/dashboard' element={<TeacherDashboard />} />
-            <Route path='/teacher/courses' element={<Courses />} />
-            <Route path='/UserDashboard/home' element={<UserDashboard />} />
+            <Route path='/' element={<FrontPage />} />           
             <Route path='/teacher/dashboard' element={<TeacherDashboard />} />
             <Route path='/teacher/courses' element={<Courses />} />
             <Route path='/UserDashboard/home' element={<UserDashboard />} />            
