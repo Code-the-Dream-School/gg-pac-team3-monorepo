@@ -8,6 +8,7 @@ import CourseDetails from './pages/CourseDetails/CourseDetails';
 import UserDashboard from './pages/UserDashboard/UserDashboard';
 import Learn from './pages/Learn/Learn';
 import Quiz from './pages/Learn/Quiz';
+
 import './App.css';
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
             <Route path='/teacher/dashboard' element={<TeacherDashboard />} />
             <Route path='/teacher/courses' element={<Courses />} />
             <Route path='/UserDashboard/home' element={<UserDashboard />} />
+            <Route path='/teacher/dashboard' element={<TeacherDashboard />} />
+            <Route path='/teacher/courses' element={<Courses />} />
+            <Route path='/UserDashboard/home' element={<UserDashboard />} />            
             <Route
               path='/UserDashboard/my-courses'
               element={<UserDashboard />}
@@ -37,7 +41,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    </AuthProvider>   
   );
 }
 
