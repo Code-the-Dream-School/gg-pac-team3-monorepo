@@ -8,6 +8,7 @@ import {
   deleteCourse,
 } from '../controllers/courseController.mjs';
 import { verifyToken, isTeacher } from '../middlewares/verifyToken.mjs';
+import multer from 'multer';
 
 const router = express.Router();
 
@@ -110,8 +111,6 @@ router.get('/:uid', verifyToken, getCourse);
  *           schema:
  *             type: object
  *             properties:
- *               courseId:
- *                 type: string
  *               courseName:
  *                 type: string
  *               courseType:
@@ -142,7 +141,7 @@ router.get('/:uid', verifyToken, getCourse);
  *       500:
  *         description: Internal server error.
  */
-router.post('/', verifyToken, isTeacher, createCourse);
+router.post('/', verifyToken, isTeacher, multer({ dest: './public/data/uploads/' }).single('logo'), createCourse);
 
 /**
  * @swagger
@@ -166,8 +165,6 @@ router.post('/', verifyToken, isTeacher, createCourse);
  *           schema:
  *             type: object
  *             properties:
- *               courseId:
- *                 type: string
  *               courseName:
  *                 type: string
  *               courseType:
@@ -200,7 +197,7 @@ router.post('/', verifyToken, isTeacher, createCourse);
  *       500:
  *         description: Internal server error.
  */
-router.patch('/:uid', verifyToken, isTeacher, updateCourse);
+router.patch('/:uid', verifyToken, isTeacher, multer({ dest: './public/data/uploads/' }).single('logo'), updateCourse);
 
 /**
  * @swagger

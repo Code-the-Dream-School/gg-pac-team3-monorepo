@@ -10,9 +10,15 @@ import Learn from './pages/Learn/Learn';
 import Quiz from './pages/Learn/Quiz';
 
 import './App.css';
+import NewCourse from "./pages/NewCourse/NewCourse.jsx";
+import EditCourse from "./pages/EditCourse/EditCourse.jsx";
+import NewLesson from "./pages/NewLesson/NewLesson.jsx";
+import EditLesson from "./pages/EditLesson/EditLesson.jsx";
+import CourseLessons from "./pages/CourseLessons/CourseLessons.jsx";
 
 function App() {
   return (
+
     <AuthProvider>
       <BrowserRouter>
         <Routes>
@@ -42,6 +48,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>   
+
   );
 }
 
