@@ -4,6 +4,7 @@ import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassWordForm';
 import styles from './Nav.module.css';
 import logo from '../../assets/logos/blue.png';
+import SetNewPassWord from './SetNewPassword';
 
 const Nav = ({ isLoggedIn }) => {
   const [activeForm, setActiveForm] = useState(null);
@@ -16,11 +17,11 @@ const Nav = ({ isLoggedIn }) => {
       case 'Login':
         setActiveForm('SignIn');
         break;
-      case 'ForgotPassword': // Make sure this matches the case
+      case 'ForgotPassword':
         setActiveForm('ForgotPassword');
         break;
-      case 'SetNewPassword':
-        setActiveForm('SetNewPassword');
+      case 'SetNewPassWord': // Correct casing to match exactly
+        setActiveForm('SetNewPassWord');
         break;
       default:
         setActiveForm(null);
@@ -56,6 +57,9 @@ const Nav = ({ isLoggedIn }) => {
       {activeForm === 'SignIn' && <SignIn switchForm={switchForm} />}
       {activeForm === 'ForgotPassword' && (
         <ForgotPassword switchForm={switchForm} />
+      )}
+      {activeForm === 'SetNewPassWord' && ( // Updated to match correctly
+        <SetNewPassWord switchForm={switchForm} />
       )}
     </div>
   );

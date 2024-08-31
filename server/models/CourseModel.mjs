@@ -15,17 +15,17 @@ class CourseModel {
     createdAt = new Date(), // Default to current date if not provided
   }) {
     // Validate types
-    if (typeof courseId !== 'string') throw new Error('Invalid courseId');
-    if (typeof courseName !== 'string') throw new Error('Invalid courseName');
-    if (typeof courseType !== 'string') throw new Error('Invalid courseType');
-    if (typeof description !== 'string') throw new Error('Invalid description');
-    if (typeof imageUrl !== 'string') throw new Error('Invalid imageUrl');
-    if (typeof logoUrl !== 'string') throw new Error('Invalid logoUrl');
-    if (typeof duration !== 'string') throw new Error('Invalid duration');
-    if (typeof rating !== 'number') throw new Error('Invalid rating');
-    if (typeof otherInfo !== 'string') throw new Error('Invalid otherInfo');
-    if (typeof createdBy !== 'string') throw new Error('Invalid createdBy');
-    if (!(createdAt instanceof Date)) throw new Error('Invalid createdAt');
+    // if (typeof courseId !== 'string') throw new Error('Invalid courseId');
+    // if (typeof courseName !== 'string') throw new Error('Invalid courseName');
+    // if (typeof courseType !== 'string') throw new Error('Invalid courseType');
+    // if (typeof description !== 'string') throw new Error('Invalid description');
+    // if (typeof imageUrl !== 'string') throw new Error('Invalid imageUrl');
+    // if (typeof logoUrl !== 'string') throw new Error('Invalid logoUrl');
+    // if (typeof duration !== 'string') throw new Error('Invalid duration');
+    // if (typeof rating !== 'number') throw new Error('Invalid rating');
+    // if (typeof otherInfo !== 'string') throw new Error('Invalid otherInfo');
+    // if (typeof createdBy !== 'string') throw new Error('Invalid createdBy');
+    // if (!(createdAt instanceof Date)) throw new Error('Invalid createdAt');
 
     this.courseId = courseId;
     this.courseName = courseName;
