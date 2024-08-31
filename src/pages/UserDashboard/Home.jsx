@@ -38,8 +38,8 @@ const Home = ({ userId, onCourseClick }) => {
   const handleSearch = (event) => {
     event.preventDefault();
     console.log(coursesData);
-    const filteredCoursesList = coursesData.filter((course) => 
-      course.courseName.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredCoursesList = coursesData.filter((course) =>
+      course.courseName.toLowerCase().includes(searchTerm.toLowerCase()),
     );
     setFilteredCourses(filteredCoursesList);
   };
@@ -52,7 +52,11 @@ const Home = ({ userId, onCourseClick }) => {
   return (
     <div>
       <div className={styles.searchContainer}>
-        <form id='submitSearchForm' onSubmit={handleSearch} className={styles.form}>
+        <form
+          id='submitSearchForm'
+          onSubmit={handleSearch}
+          className={styles.form}
+        >
           <h2>Search courses:</h2>
           <input
             onChange={handleSearchTerm}
@@ -60,7 +64,9 @@ const Home = ({ userId, onCourseClick }) => {
             placeholder={searchTerm}
             className={styles.searchInput}
           />
-          <button className={styles.submit} type='submit'>Search</button>
+          <button className={styles.submit} type='submit'>
+            Search
+          </button>
         </form>
       </div>
       <div className={styles.coursesContainer}>

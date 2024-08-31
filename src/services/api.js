@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const getAuthToken = () => {
   return localStorage.getItem('authToken');
@@ -133,7 +133,7 @@ export const updateProfileInfo = async (userId, updatedProfile) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     return response.data; // Return the updated profile data
   } catch (error) {

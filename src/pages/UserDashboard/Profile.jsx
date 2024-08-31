@@ -6,9 +6,10 @@ import styles from './Profile.module.css';
 const Profile = ({ userId }) => {
   const [profileData, setProfileData] = useState(null);
   const [updatedProfile, setUpdatedProfile] = useState({
+    role: '',
     name: '',
     email: '',
-    profilePictureUrl: '',
+    pictureUrl: '',
   });
 
   useEffect(() => {
@@ -18,9 +19,10 @@ const Profile = ({ userId }) => {
           const profile = await fetchUserProfile(userId);
           setProfileData(profile);
           setUpdatedProfile({
+            role: profile.userType,
             name: profile.name,
             email: profile.email,
-            profilePictureUrl: profile.profilePictureUrl,
+            pictureUrl: profile.profilePictureUrl,
           });
         }
       } catch (error) {
@@ -31,20 +33,28 @@ const Profile = ({ userId }) => {
     fetchProfile();
   }, [userId]);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setUpdatedProfile((prevProfile) => ({
-      ...prevProfile,
-      [name]: value,
+  const handleName = (event) => {
+    const newName = event.target.value;
+    setUpdatedProfile((updatedProfile) => ({
+      ...updatedProfile,
+      name: newName,
     }));
   };
 
-  const handleFormSubmit = (event) => {
+  const handleProfilePic = (event) => {
+    const newUrl = event.target.value;
+    setUpdatedProfile((updatedProfile) => ({
+      ...updatedProfile,
+      pictureUrl: newUrl,
+    }));
+  };
+
+  const handleForm = (event) => {
     event.preventDefault();
     const updateProfile = async () => {
       try {
         await updateProfileInfo(userId, updatedProfile);
-        const updatedData = await fetchUserProfile(userId); // Fetch the updated profile data
+        const updatedData = await fetchUserProfile(userId);
         setProfileData(updatedData);
       } catch (error) {
         console.error('Error updating profile:', error);
@@ -60,35 +70,37 @@ const Profile = ({ userId }) => {
         <>
           <div>
             <img
-              src={profileData.profilePictureUrl}
-              alt="Profile"
+              src={updatedProfile.pictureUrl}
+              alt='Profile Picture'
               className={styles.profileImage}
             />
           </div>
           <form
-            id="updateProfileForm"
+            id='updateProfileForm'
             className={styles.form}
-            onSubmit={handleFormSubmit}
+            onSubmit={handleForm}
           >
             <div className={styles.inputContainer}>
-              <label className={styles.label}>Role: {profileData.userType}</label>
+              <label className={styles.label}>
+                Role: {profileData.userType}
+              </label>
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Name:</label>
               <input
                 className={styles.input}
-                type="text"
-                name="name"
+                type='text'
+                name='name'
                 value={updatedProfile.name}
-                onChange={handleChange}
+                onChange={handleName}
               />
             </div>
             <div className={styles.inputContainer}>
               <label className={styles.label}>Email:</label>
               <input
                 className={styles.input}
-                type="text"
-                name="email"
+                type='text'
+                name='email'
                 value={updatedProfile.email}
                 readOnly={true}
               />
@@ -97,13 +109,13 @@ const Profile = ({ userId }) => {
               <label className={styles.label}>Profile Picture URL:</label>
               <input
                 className={styles.input}
-                type="text"
-                name="profilePictureUrl"
-                value={updatedProfile.profilePictureUrl}
-                onChange={handleChange}
+                type='text'
+                name='pictureUrl'
+                value={updatedProfile.pictureUrl}
+                onChange={handleProfilePic}
               />
             </div>
-            <button className={styles.submit} type="submit">
+            <button className={styles.submit} type='submit'>
               Submit
             </button>
           </form>
