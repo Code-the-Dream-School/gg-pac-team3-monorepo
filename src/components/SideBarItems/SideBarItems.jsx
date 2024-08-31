@@ -14,7 +14,6 @@ const SIDEBAR_ITEMS = [
 
 const SideBarItems = () => {
   const location = useLocation();
-  const location = useLocation();
 
   return (
     <ul className={styles.sideBarItems}>

@@ -8,6 +8,7 @@ import CourseDetails from './pages/CourseDetails/CourseDetails';
 import UserDashboard from './pages/UserDashboard/UserDashboard';
 import Learn from './pages/Learn/Learn';
 import Quiz from './pages/Learn/Quiz';
+
 import './App.css';
 import NewCourse from "./pages/NewCourse/NewCourse.jsx";
 import EditCourse from "./pages/EditCourse/EditCourse.jsx";
@@ -21,10 +22,15 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Panel />}>
-            <Route path='/' element={<FrontPage />} />
+            <Route path='/' element={<FrontPage />} />           
             <Route path='/teacher/dashboard' element={<TeacherDashboard />} />
+            <Route path='/teacher/courses/new' element={<NewCourse />} />
+            <Route path='/teacher/courses/edit/:id' element={<EditCourse />} />
+            <Route path='/teacher/courses/:id/lessons' element={<CourseLessons />} />
+            <Route path='/teacher/courses/:id/lessons/new' element={<NewLesson />} />
+            <Route path='/teacher/courses/:id/lessons/edit/:lessonId' element={<EditLesson />} />
             <Route path='/teacher/courses' element={<Courses />} />
-            <Route path='/UserDashboard/home' element={<UserDashboard />} />
+            <Route path='/UserDashboard/home' element={<UserDashboard />} />            
             <Route
               path='/UserDashboard/my-courses'
               element={<UserDashboard />}
@@ -42,7 +48,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
+    </AuthProvider>   
   );
 }
 

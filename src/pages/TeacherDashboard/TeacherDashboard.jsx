@@ -8,10 +8,6 @@ const TeacherDashboard = () => {
   const [courses, setCourses] = useState([]);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
-  const baseUrl = import.meta.env.VITE_API_BASE_URL;
-  const [courses, setCourses] = useState([]);
-  const token = localStorage.getItem('token');
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!token) {

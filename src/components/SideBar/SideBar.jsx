@@ -1,4 +1,4 @@
-import SideBarItems from '../SideBarItems/SideBarItems.jsx';
+import SideBarItems from "../SideBarItems/SideBarItems.jsx";
 import styles from './SideBar.module.css';
 import {Link} from "react-router-dom";
 

@@ -4,15 +4,8 @@ import axios from 'axios';
 import CourseModel from '../models/CourseModel.mjs';
 import LessonModel from '../models/LessonModel.mjs';
 import UserCourseModel from '../models/UserCourseModel.mjs';
-import {
-  COURSES,
-  LESSONS,
-  USER_COURSES,
-  USERS,
-  COURSE_ID,
-  TEACHER_ID,
-  CREATED_BY,
-} from './constants.mjs';
+import {COURSES, LESSONS, USER_COURSES, USERS, COURSE_ID, TEACHER_ID, CREATED_BY} from './constants.mjs';
+import cloudinary from "../config/cloudinary.mjs";
 
 dotenv.config();
 const db = admin.firestore();
@@ -79,37 +72,33 @@ export const getCourse = async (req, res) => {
 
 // Fetch courses created by a specific teacher
 export const getTeacherCourses = async (req, res) => {
-  const teacherEmail = req.user.email;
+    const teacherEmail = req.user.email;
 
-  try {
-    const coursesRef = db.collection(COURSES);
-    const coursesSnapshot = await coursesRef
-      .where(CREATED_BY, '==', teacherEmail)
-      .get();
+    try {
+        const coursesRef = db.collection(COURSES);
+        const coursesSnapshot = await coursesRef.where(CREATED_BY, '==', teacherEmail).get();
 
-    if (coursesSnapshot.empty) {
-      return res.status(200).send([]);
+        if (coursesSnapshot.empty) {
+            return res.status(200).send([]);
+        }
+
+        const courses = await Promise.all(coursesSnapshot.docs.map(async (doc) => {
+            const courseModel = CourseModel.fromFirestore(doc.data());
+            const lessons = await getCourseLessons(doc.id, coursesRef);
+            const userCourses = await getUserCourses(courseModel.courseId);
+            return {
+                id: doc.id,
+                lessons: lessons,
+                user_courses: userCourses,
+                ...courseModel
+            };
+        }));
+
+        res.status(200).send(courses);
+    } catch (error) {
+        console.error('Error fetching teacher courses:', error);
+        res.status(500).send({ error: error.message });
     }
-
-    const courses = await Promise.all(
-      coursesSnapshot.docs.map(async (doc) => {
-        const courseModel = CourseModel.fromFirestore(doc.data());
-        const lessons = await getCourseLessons(doc.id, coursesRef);
-        const userCourses = await getUserCourses(courseModel.courseId);
-        return {
-          id: doc.id,
-          lessons: lessons,
-          user_courses: userCourses,
-          ...courseModel,
-        };
-      }),
-    );
-
-    res.status(200).send(courses);
-  } catch (error) {
-    console.error('Error fetching teacher courses:', error);
-    res.status(500).send({ error: error.message });
-  }
 };
 
 // Fetch all courses, skipping those with invalid data
