@@ -37,8 +37,8 @@ const Nav = ({ isLoggedIn, onLogout }) => {
       case 'ForgotPassword': // Make sure this matches the case
         setActiveForm('ForgotPassword');
         break;
-      case 'SetNewPassword':
-        setActiveForm('SetNewPassword');
+      case 'SetNewPassWord': // Correct casing to match exactly
+        setActiveForm('SetNewPassWord');
         break;
       case 'ForgotPassword':
         setActiveForm('ForgotPassword');
@@ -94,7 +94,7 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         <ForgotPassword switchForm={switchForm} />
       )}
       {activeForm === "SetNewPassword" && (
-        <SignUp switchForm={switchForm} />)}
+        <SetNewPassWord switchForm={switchForm} />)}
     </div>
   );
 };
