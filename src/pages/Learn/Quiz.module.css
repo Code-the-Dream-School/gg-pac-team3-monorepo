@@ -1,0 +1,180 @@
+/* Quiz.module.css */
+
+.quizContainer {
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fdfdfd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-width: 800px;
+}
+
+.quizTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.quizForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.question {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: #fcfcf5;
+  border-radius: 8px;
+  color: rgb(12, 12, 12);
+  border: 1px solid #e1e4e8;
+}
+
+.questionText {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  color: rgb(10, 10, 10);
+}
+
+.option {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-size: 1.2rem;
+  color: rgb(9, 9, 9);
+  cursor: pointer;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.option input {
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  margin: 0;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.submitButton {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #122a50;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  align-self: center;
+  margin-top: 1.5rem;
+}
+
+.submitButton:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.result {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #fcfcf5;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #d1d8e0;
+}
+
+.result p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #2c3e50;
+  margin: 0.5rem 0;
+}
+
+.retryButton {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #122a50;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-top: 1rem;
+}
+
+.retryButton:hover {
+  background-color: #27ae60;
+  transform: translateY(-2px);
+}
+.goBackButton {
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #122a50;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  align-self: center;
+  margin-top: 2rem;
+}
+
+.goBackButton:hover {
+  background-color: #7f8c8d;
+  transform: translateY(-2px);
+}
+
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .quizContainer {
+    padding: 1.5rem;
+  }
+
+  .quizTitle {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .questionText {
+    font-size: 1.3rem;
+  }
+
+  .option {
+    font-size: 1rem;
+  }
+
+  .submitButton, .retryButton {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .quizContainer {
+    padding: 1rem;
+  }
+
+  .quizTitle {
+    font-size: 1.8rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .questionText {
+    font-size: 1.2rem;
+  }
+
+  .option {
+    font-size: 0.9rem;
+    padding-left: 1rem;
+  }
+
+  .submitButton, .retryButton {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
