@@ -46,6 +46,8 @@
 
 .courseLogo {
   padding: 1em;
+  width: 6rem;
+  height: 5rem;
 }
 .courseDescritpion {
   display: flex;

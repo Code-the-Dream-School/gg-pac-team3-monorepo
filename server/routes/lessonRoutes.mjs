@@ -99,8 +99,6 @@ router.get('/:courseId/lesson/:lessonId', verifyToken, getLesson);
  *           schema:
  *             type: object
  *             properties:
- *               lessonId:
- *                 type: string
  *               title:
  *                 type: string
  *               description:
@@ -162,8 +160,6 @@ router.post('/:courseId', verifyToken, isTeacher, createLesson);
  *           schema:
  *             type: object
  *             properties:
- *               lessonId:
- *                 type: string
  *               title:
  *                 type: string
  *               description:

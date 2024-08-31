@@ -47,17 +47,26 @@
   }
 }
 
+.courseLink {
+  text-decoration: none;
+  color: black;
+}
+
 .courseLogo {
   width: 3rem;
   text-align: center;
 }
 
-.newCourseButton {
+.newCourseLink {
   background-color: transparent;
+  color: black;
   border: black solid 0.1rem;
   border-radius: 0.625rem;
   padding: 0.5rem;
-  margin: 2rem 0;
+  margin: 2rem auto;
   width: 10rem;
+  text-align: center;
+  text-decoration: none;
 }
+
 
