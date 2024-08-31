@@ -29,7 +29,6 @@ export const enrollInCourse = async (req, res) => {
       message: "Enrolled in course successfully",
       id: userCourseRef.id,
     });
->>>>>>> origin/main:server/controllers/userCourseController.mjs
   } catch (error) {
     console.error("Error enrolling in course:", error);
     res.status(500).send({ error: error.message });

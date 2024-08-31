@@ -72,6 +72,7 @@ export const getCourse = async (req, res) => {
   }
 };
 
+// Fetch courses created by a specific teacher
 export const getTeacherCourses = async (req, res) => {
   const teacherEmail = req.user.email;
 
@@ -106,7 +107,7 @@ export const getTeacherCourses = async (req, res) => {
   }
 };
 
-// Fetch all courses
+// Fetch all courses, skipping those with invalid data
 export const getAllCourses = async (req, res) => {
   try {
     const coursesRef = db.collection(COURSES);
@@ -114,18 +115,35 @@ export const getAllCourses = async (req, res) => {
 
     const courses = await Promise.all(
       coursesSnapshot.docs.map(async (doc) => {
-        const courseModel = CourseModel.fromFirestore(doc.data());
-        const lessons = await getCourseLessons(doc.id, coursesRef);
-        const userCourses = await getUserCourses(courseModel.courseId);
-        return {
-          id: doc.id,
-          lessons: lessons,
-          user_courses: userCourses,
-          ...courseModel,
-        };
-      }),
+        try {
+          const data = doc.data();
+
+          // Skip documents with missing or invalid courseType
+          if (!data.courseType || typeof data.courseType !== 'string') {
+            console.warn(`Skipping document with ID ${doc.id} due to invalid courseType.`);
+            return null; // Skip this document
+          }
+
+          const courseModel = CourseModel.fromFirestore(data);
+          const lessons = await getCourseLessons(doc.id, coursesRef);
+          const userCourses = await getUserCourses(courseModel.courseId);
+          return {
+            id: doc.id,
+            lessons: lessons,
+            user_courses: userCourses,
+            ...courseModel,
+          };
+        } catch (docError) {
+          console.error(`Error processing document ID ${doc.id}:`, docError.message);
+          return null; // Skip this document if there's an error
+        }
+      })
     );
-    res.status(200).send(courses);
+
+    // Filter out any null values (skipped documents)
+    const validCourses = courses.filter(course => course !== null);
+
+    res.status(200).send(validCourses);
   } catch (error) {
     console.error('Error fetching courses:', error);
     res.status(500).send({ error: error.message });
