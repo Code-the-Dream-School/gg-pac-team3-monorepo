@@ -1,16 +1,16 @@
 .sideBarContainer {
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   width: 15rem;
-  height: 100vh;
+  height: auto;
   align-items: center;
   border-right: #122A50 solid 0.063rem;
-  padding: 2rem 0;
+  padding: 2rem;
 }
 
-.newCourseButton {
+.newCourseLink {
   background-color: transparent;
+  color: black;
   border: black solid 0.1rem;
   border-radius: 0.625rem;
   padding: 0.5rem;

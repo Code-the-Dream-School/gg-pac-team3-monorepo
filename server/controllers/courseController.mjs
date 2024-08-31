@@ -5,13 +5,17 @@ import CourseModel from '../models/CourseModel.mjs';
 import LessonModel from '../models/LessonModel.mjs';
 import UserCourseModel from '../models/UserCourseModel.mjs';
 import {COURSES, LESSONS, USER_COURSES, USERS, COURSE_ID, TEACHER_ID, CREATED_BY} from './constants.mjs';
+import cloudinary from "../config/cloudinary.mjs";
 
 dotenv.config();
 const db = admin.firestore();
+db.settings({ ignoreUndefinedProperties: true });
+const storage = admin.storage();
 
 // Create a new course
 export const createCourse = async (req, res) => {
-  const courseData = req.body;
+  let courseData = req.body;
+  const file = req.file;
 
   try {
     console.log(req.user.uid);
@@ -30,6 +34,8 @@ export const createCourse = async (req, res) => {
         .status(403)
         .send({ message: 'Only teachers can create courses' });
     }
+
+    courseData = await addFileToParams(file, courseData);
 
     // Create a new course
     const newCourse = new CourseModel(courseData);
@@ -64,6 +70,7 @@ export const getCourse = async (req, res) => {
   }
 };
 
+// Fetch courses created by a specific teacher
 export const getTeacherCourses = async (req, res) => {
     const teacherEmail = req.user.email;
 
@@ -94,7 +101,7 @@ export const getTeacherCourses = async (req, res) => {
     }
 };
 
-// Fetch all courses
+// Fetch all courses, skipping those with invalid data
 export const getAllCourses = async (req, res) => {
   try {
     const coursesRef = db.collection(COURSES);
@@ -102,24 +109,42 @@ export const getAllCourses = async (req, res) => {
 
     const courses = await Promise.all(
       coursesSnapshot.docs.map(async (doc) => {
-        const courseModel = CourseModel.fromFirestore(doc.data());
-        const lessons = await getCourseLessons(doc.id, coursesRef);
-        const userCourses = await getUserCourses(courseModel.courseId);
-        return {
-          id: doc.id,
-          lessons: lessons,
-          user_courses: userCourses,
-          ...courseModel,
-        };
-      }),
+        try {
+          const data = doc.data();
+
+          // Skip documents with missing or invalid courseType
+          if (!data.courseType || typeof data.courseType !== 'string') {
+            console.warn(`Skipping document with ID ${doc.id} due to invalid courseType.`);
+            return null; // Skip this document
+          }
+
+          const courseModel = CourseModel.fromFirestore(data);
+          const lessons = await getCourseLessons(doc.id, coursesRef);
+          const userCourses = await getUserCourses(courseModel.courseId);
+          return {
+            id: doc.id,
+            lessons: lessons,
+            user_courses: userCourses,
+            ...courseModel,
+          };
+        } catch (docError) {
+          console.error(`Error processing document ID ${doc.id}:`, docError.message);
+          return null; // Skip this document if there's an error
+        }
+      })
     );
-    res.status(200).send(courses);
+
+    // Filter out any null values (skipped documents)
+    const validCourses = courses.filter(course => course !== null);
+
+    res.status(200).send(validCourses);
   } catch (error) {
     console.error('Error fetching courses:', error);
     res.status(500).send({ error: error.message });
   }
 };
 
+// Fetch lessons for a specific course
 const getCourseLessons = async (courseId, coursesRef) => {
   try {
     const lessonsSnapshot = await coursesRef
@@ -139,6 +164,7 @@ const getCourseLessons = async (courseId, coursesRef) => {
   }
 };
 
+// Fetch user courses for a specific course
 const getUserCourses = async (courseId) => {
   try {
     const userCoursesSnapshot = await db
@@ -165,7 +191,8 @@ const getUserCourses = async (courseId) => {
 // Update a course by ID
 export const updateCourse = async (req, res) => {
   const { uid } = req.params;
-  const updates = req.body;
+  let updates = req.body;
+  const file = req.file;
 
   try {
     // Access the courses subcollection within the user document
@@ -175,7 +202,7 @@ export const updateCourse = async (req, res) => {
     if (!courseDoc.exists) {
       return res.status(404).send({ message: 'Course not found' });
     }
-
+    updates = await addFileToParams(file, updates);
     await courseRef.update(updates);
     res.status(200).send({ message: 'Course updated successfully' });
   } catch (error) {
@@ -183,6 +210,20 @@ export const updateCourse = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
+
+const addFileToParams = async (file, params) => {
+  if (file) {
+    const uploadResult = await cloudinary.uploader.upload(file.path).catch((error) => {
+      console.log(error);
+    });
+
+    params.imageUrl = uploadResult.secure_url;
+    params.logoUrl = uploadResult.secure_url;
+
+    return params;
+  }
+  return params;
+}
 
 // Delete a course by ID
 export const deleteCourse = async (req, res) => {
