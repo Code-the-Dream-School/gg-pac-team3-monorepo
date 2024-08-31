@@ -7,6 +7,7 @@ import styles from './Nav.module.css';
 import { useAuth } from '../../AuthContext';
 import logo from '../../assets/logos/blue.png';
 import { useNavigate } from 'react-router-dom';
+import SetNewPassWord from './SetNewPassword';
 
 const Nav = ({ isLoggedIn, onLogout }) => {
   const [activeForm, setActiveForm] = useState(null);
@@ -36,8 +37,8 @@ const Nav = ({ isLoggedIn, onLogout }) => {
       case 'ForgotPassword': // Make sure this matches the case
         setActiveForm('ForgotPassword');
         break;
-      case 'SetNewPassword':
-        setActiveForm('SetNewPassword');
+      case 'SetNewPassWord': // Correct casing to match exactly
+        setActiveForm('SetNewPassWord');
         break;
       default:
         setActiveForm(null);
@@ -88,7 +89,7 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         <ForgotPassword switchForm={switchForm} />
       )}
       {activeForm === "SetNewPassword" && (
-        <SignUp switchForm={switchForm} />)}
+        <SetNewPassWord switchForm={switchForm} />)}
     </div>
   );
 };

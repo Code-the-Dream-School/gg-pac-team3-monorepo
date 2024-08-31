@@ -1,8 +1,8 @@
 import React from 'react';
 import styles from './ForgotPasswordForm.module.css'; // Adjust to your path
 import CloseIcon from '../icons/CloseIcon';
+
 const ForgotPassword = ({ switchForm }) => {
-  console.log('This is the switchform', switchForm);
   return (
     <div className={styles.pageContainer}>
       <div className={styles.formContainer}>
@@ -37,7 +37,12 @@ const ForgotPassword = ({ switchForm }) => {
             type='text'
           />
 
-          <button className={styles.button}>RESET PASSWORD</button>
+          <button
+            className={styles.button}
+            onClick={() => switchForm('SetNewPassWord')} // Correct casing here
+          >
+            RESET PASSWORD
+          </button>
 
           <p className={styles.resendText}>
             Code not received?{' '}
