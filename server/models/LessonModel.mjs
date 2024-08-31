@@ -46,11 +46,11 @@ class LessonModel {
     return new LessonModel({
       lessonId: data.lessonId,
       title: data.title,
-      description: data.description || {}, // Ensure default to empty object if not present
-      points: data.points || 0, // Ensure default to 0 if not present
-      order: data.order || 0, // Ensure default to 0 if not present
-      videoLinks: data.videoLinks || [], // Ensure default to empty array if not present
-      materials: data.materials || '', // Ensure default to empty string if not present
+      description: data.description || {}, 
+      points: data.points || 0, 
+      order: data.order || 0, 
+      videoLinks: data.videoLinks || [], 
+      materials: data.materials || '', 
     });
   }
 }
