@@ -35,16 +35,6 @@ class UsersModel {
       createdAt: admin.firestore.FieldValue.serverTimestamp(),
     };
   }
-
-  static async update(uid, updates) {
-    const db = admin.firestore();
-    try {
-      await db.collection('users').doc(uid).update(updates);
-    } catch (error) {
-      console.error('Error updating user:', error);
-      throw error;
-    }
-  }
 }
 
 export default UsersModel;

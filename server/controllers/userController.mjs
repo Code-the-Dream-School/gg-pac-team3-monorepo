@@ -219,8 +219,7 @@ export const updateUserProfile = async (req, res) => {
     if (typeof name !== 'string' || name.trim() === '') {
       return res.status(400).json({ error: 'Invalid name' });
     }
-    updates.displayName = name;
-    updates.name = name; // For Firestore
+    updates.name = name;
   }
 
   if (email) {
@@ -237,16 +236,15 @@ export const updateUserProfile = async (req, res) => {
     ) {
       return res.status(400).json({ error: 'Invalid profilePictureUrl' });
     }
-    updates.photoURL = profilePictureUrl;
-    updates.profilePictureUrl = profilePictureUrl; // For Firestore
+    updates.profilePictureUrl = profilePictureUrl;
   }
 
   try {
     // Update the user profile in Firebase Authentication
     const userRecord = await admin.auth().updateUser(uid, updates);
 
-    // Update Firestore if additional fields need to be updated there
-    await UsersModel.update(uid, updates);
+    // Update Firestore
+    await db.collection(USERS).doc(uid).update(updates);
 
     res.status(200).send({ message: 'User profile updated successfully', user: userRecord });
   } catch (error) {
