@@ -49,7 +49,7 @@ router.get('/public', getAllCourses);
  *       500:
  *         description: Internal server error.
  */
-router.get('/teacher_courses', verifyToken, getTeacherCourses);
+router.get('/teacher_courses', verifyToken, isTeacher, getTeacherCourses);
 
 /**
  * @swagger
