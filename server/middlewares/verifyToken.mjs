@@ -23,6 +23,10 @@ export const verifyToken = async (req, res, next) => {
     req.user = decodedToken; // Attach the decoded token to the request object
     next();
   } catch (error) {
+    if (error.code === 'auth/id-token-expired') {
+      // Send a custom response or status code
+      return res.status(401).json({ message: 'TokenExpired' });
+    }
     console.error('Error verifying ID token:', error);
     res.status(400).json({ error: 'Invalid or expired token' });
   }
