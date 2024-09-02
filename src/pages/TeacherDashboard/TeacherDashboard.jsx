@@ -6,7 +6,7 @@ import {Link, useNavigate} from "react-router-dom";
 const TeacherDashboard = () => {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const [courses, setCourses] = useState([]);
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('authToken');
   const navigate = useNavigate();
 
   useEffect(() => {

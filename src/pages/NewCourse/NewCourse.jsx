@@ -7,7 +7,7 @@ const NewCourse = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [course, setCourse] = useState({});
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('authToken');
   const decodedToken = jwtDecode(token);
   const teacherEmail = decodedToken.email;
 

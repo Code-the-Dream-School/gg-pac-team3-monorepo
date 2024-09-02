@@ -1,10 +1,74 @@
 import axios from 'axios';
-
 const API_BASE_URL = import.meta.env.VITE_BASE_URL;
+
 
 const getAuthToken = () => {
   return localStorage.getItem('authToken');
 };
+
+//Function for user to login
+export const LoginUser = async (email, password) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/login`, {
+      email,
+      password,
+    });
+    const { token, user } = response.data;
+
+    if (user) {
+      localStorage.setItem('userId', user.uid);
+    }
+    if (token) {
+      localStorage.setItem('authToken', token);
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Error logging in user:', error);
+    throw error;
+  }
+};
+
+//Function to create a account / register
+export const registerUser = async (name, email, password, userType) => {
+  try {
+    const token = getAuthToken();
+    const response = await axios.post(
+      `${API_BASE_URL}/user`,
+      { name, email, password, userType },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Error registering user:', error);
+    throw error;
+  }
+};
+
+//fetchQuizByLessonId
+export const fetchQuizByLessonId = async (lessonId, courseId) => {
+  try {
+    const token = getAuthToken();
+    const response = await axios.get(
+      `${API_BASE_URL}/course/${courseId}/${lessonId}/quizzes`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching courses:', error);
+    throw error;
+  }
+};
+
 
 // Function to fetch a list of courses to display on the front page
 export const fetchCourses = async () => {
@@ -53,6 +117,22 @@ export const fetchUserEnrolledCourses = async (userId) => {
         },
       },
     );
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching enrolled courses:', error);
+    throw error;
+  }
+};
+
+//Function to fetch course data by course ID
+export const fetchCourseByCourseId = async (courseId) => {
+  try {
+    const token = getAuthToken();
+    const response = await axios.get(`${API_BASE_URL}/course/${courseId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error('Error fetching enrolled courses:', error);

@@ -144,8 +144,7 @@ export const getAllCourses = async (req, res) => {
   }
 };
 
-// Fetch lessons for a specific course
-const getCourseLessons = async (courseId, coursesRef) => {
+export const getCourseLessons = async (courseId, coursesRef) => {
   try {
     const lessonsSnapshot = await coursesRef
       .doc(courseId)
@@ -164,8 +163,7 @@ const getCourseLessons = async (courseId, coursesRef) => {
   }
 };
 
-// Fetch user courses for a specific course
-const getUserCourses = async (courseId) => {
+export const getUserCourses = async (courseId) => {
   try {
     const userCoursesSnapshot = await db
       .collection(USER_COURSES)
