@@ -26,12 +26,13 @@ const Quiz = () => {
       }
     } catch (error) {
       console.error('Error fetching quiz:', error);
+      navigate('/');
     }
   };
 
   useEffect(() => {
     getQuiz();
-  }, [lessonId, courseId]);
+  }, [lessonId, courseId, navigate]);
 
   useEffect(() => {
     console.log('Quiz data updated:', quiz);
@@ -149,7 +150,7 @@ Quiz.propTypes = {
         questionText: PropTypes.string.isRequired,
         options: PropTypes.arrayOf(PropTypes.string).isRequired,
         answer: PropTypes.string.isRequired,
-      }),
+      })
     ).isRequired,
   }),
 };
