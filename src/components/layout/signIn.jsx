@@ -76,15 +76,15 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
 
       <section className={styles.closingSection}>
         <p className={styles.content}>
-          Don’t have an account?{' '}
+          Already have an account?{' '}
           <a
             className={styles.join}
             onClick={(e) => {
               e.preventDefault();
-              switchForm('Register');
+              switchForm('Login');
             }}
           >
-            Sign up now
+            Login now
           </a>
         </p>
       </section>
@@ -98,3 +98,4 @@ SignIn.propTypes = {
 };
 
 export default SignIn;
+

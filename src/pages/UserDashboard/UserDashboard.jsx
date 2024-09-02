@@ -69,9 +69,6 @@ const UserDashboard = () => {
           {PROFILE_TAB}
         </button>
       </header>
-      <div className={styles.introText}>
-        <h1>Get Started with These Free Courses</h1>
-      </div>
       <main className={styles.content}>
         {activeTab === HOME_TAB && (
           <Home userId={userId} onCourseClick={handleCourseClick} />
