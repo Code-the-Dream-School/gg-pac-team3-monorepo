@@ -207,21 +207,28 @@ export const resetPassword = async (req, res) => {
 
 export const updateUserProfile = async (req, res) => {
   const { uid } = req.params; // User ID from URL params
-  const { name, profilePictureUrl } = req.body; // New name and profile picture URL
+  const { name, email, profilePictureUrl } = req.body; // New profile fields
 
-  // Check if UID is provided
   if (!uid) {
     return res.status(400).json({ error: 'User ID is required' });
   }
 
-  // Prepare the updates object
   const updates = {};
+
   if (name) {
     if (typeof name !== 'string' || name.trim() === '') {
       return res.status(400).json({ error: 'Invalid name' });
     }
-    updates.name = name; // Update name field in Firebase Authentication
+    updates.name = name;
   }
+
+  if (email) {
+    if (typeof email !== 'string' || email.trim() === '') {
+      return res.status(400).json({ error: 'Invalid email' });
+    }
+    updates.email = email;
+  }
+
   if (profilePictureUrl) {
     if (
       typeof profilePictureUrl !== 'string' ||
@@ -229,16 +236,17 @@ export const updateUserProfile = async (req, res) => {
     ) {
       return res.status(400).json({ error: 'Invalid profilePictureUrl' });
     }
-    updates.photoURL = profilePictureUrl; // Update photoURL field in Firebase Authentication
+    updates.profilePictureUrl = profilePictureUrl;
   }
 
   try {
     // Update the user profile in Firebase Authentication
     const userRecord = await admin.auth().updateUser(uid, updates);
 
-    res
-      .status(200)
-      .send({ message: 'User profile updated successfully', user: userRecord });
+    // Update Firestore
+    await db.collection(USERS).doc(uid).update(updates);
+
+    res.status(200).send({ message: 'User profile updated successfully', user: userRecord });
   } catch (error) {
     console.error('Error updating user profile:', error);
     res.status(500).send({ error: error.message });

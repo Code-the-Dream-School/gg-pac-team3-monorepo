@@ -1,4 +1,4 @@
-import admin from "../config/firebase.mjs";
+import admin from '../config/firebase.mjs';
 
 class UsersModel {
   constructor({
