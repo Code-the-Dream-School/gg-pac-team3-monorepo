@@ -37,8 +37,13 @@
 		"nodemon": "^2.0.21",
 		"puppeteer": "^23.1.1",
 		"supertest": "^7.0.0",
+<<<<<<< HEAD
 	  "vite": "^5.3.4",
 	  "wait-on": "^7.0.1"
+=======
+	    "vite": "^5.3.4",
+	    "wait-on": "^7.0.1"
+>>>>>>> 4874479191bac310ee9c1dcd0e9354058468cef7
 	},
 	"scripts": {
 		"dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
@@ -47,6 +52,14 @@
 		"dev:client": "vite",
 		"build:client": "vite build",
 		"preview:client": "vite preview",
+<<<<<<< HEAD
 	  "test": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --runInBand\""
+=======
+		"test": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --runInBand\"",
+		"test:user": "npm test -- __tests__/userController.tests.mjs",
+   		"test:frontpage": "npm test -- __tests__/frontpage.tests.mjs",
+    	"test:course": "npm test -- __tests__/courseController.tests.mjs",
+    	"test:lesson": "npm test -- __tests__/lessonController.tests.mjs"
+>>>>>>> 4874479191bac310ee9c1dcd0e9354058468cef7
 	}
 }
