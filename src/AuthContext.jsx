@@ -27,8 +27,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const handleLogout = () => {
+    
     setIsLoggedIn(false);
     setUserName('');
+
     localStorage.removeItem('authToken');
     localStorage.removeItem('userName');
     localStorage.removeItem('isLoggedIn');
