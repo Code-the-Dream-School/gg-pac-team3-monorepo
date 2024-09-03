@@ -158,9 +158,15 @@ export const fetchTeacherDataByCourseId = async (courseId) => {
 };
 
 //function to add user Feedback To Course addFeedbackToCourse
-export const addFeedbackToCourse = async (courseId, rating, userId, feedback) => {
+export const addUserFeedbackToCourse = async (
+  courseId,
+  rating,
+  userId,
+  feedback
+) => {
   try {
     const token = getAuthToken();
+   
     const response = await axios.post(
       `${API_BASE_URL}/user/AddUserFeedback`,
       { courseId, rating, userId, feedback },
@@ -172,7 +178,7 @@ export const addFeedbackToCourse = async (courseId, rating, userId, feedback) =>
     );
     return response.data;
   } catch (error) {
-    console.error('Error adding user courses:', error);
+    console.error('Error adding user feedback to the course:', error);
     throw error;
   }
 };

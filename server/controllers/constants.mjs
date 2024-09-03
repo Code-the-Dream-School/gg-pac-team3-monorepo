@@ -5,5 +5,5 @@ export const USERS = 'users';
 export const USER_COURSES = 'user_courses';
 export const COURSE_ID = 'courseId';
 export const TEACHER_ID = 'teacherId';
-
+export const USER_FEEDBACKS = 'user_feedback';
 export const CREATED_BY = 'createdBy';

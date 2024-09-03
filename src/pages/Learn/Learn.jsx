@@ -53,8 +53,8 @@ const Learn = () => {
 
 
   useEffect(() => {
-    console.log('Course:', course);
-    console.log('Lessons:', lessons);
+    // console.log('Course:', course);
+    // console.log('Lessons:', lessons);
   }, [course, lessons]);
 
   const handleLessonClick = (lesson) => {

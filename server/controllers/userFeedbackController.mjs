@@ -1,39 +1,37 @@
 import dotenv from 'dotenv';
 import admin from '../config/firebase.mjs';
 // import axios from 'axios';
-import UserFeedbackModel from '../models/UserFeedbackModel.mjs';
-import { USERS } from './constants.mjs';
+// import UserFeedbackModel from '../models/UserFeedbackModel.mjs';
+import { USER_FEEDBACKS } from './constants.mjs';
 
 dotenv.config();
 const db = admin.firestore();
 
 export const AddUserFeedback = async (req, res) => {
   const { courseId, userId, rating, feedback } = req.body;
-
+  console.log('Received feedback data:', req.body);
+  // Check if all required fields are present
   if (!courseId || !userId || !rating) {
     return res.status(400).json({ error: 'All fields are required' });
   }
 
   try {
-    const userRecord = await admin.auth().createUserFeedback({
+    // Assuming you're using Firestore to store feedback
+    const feedbackDoc = {
       courseId,
       userId,
       rating,
       feedback,
+      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+    };
+
+    // Save the feedback in the collection
+    await db.collection(USER_FEEDBACKS).add(feedbackDoc);
+
+    res.status(201).send({
+      message: 'User feedback saved successfully',
+      feedback: feedbackDoc,
     });
-
-    const user = new UserFeedbackModel({
-      courseId,
-      userId,
-      rating,
-      feedback,
-    });
-
-    await db.collection(USERS).doc(userRecord.uid).set(user.toFirestore());
-
-    res
-      .status(201)
-      .send({ message: 'User feedback saved successfully', user: userRecord });
   } catch (error) {
     console.error('Error saving user feedback:', error);
     res.status(500).send({ error: error.message });
