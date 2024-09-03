@@ -1,5 +1,5 @@
 export default {
-  transform: {},
+  transform: { },
   testEnvironment: 'node',
   moduleFileExtensions: ['js', 'jsx', 'mjs', 'ts', 'tsx', 'json', 'node'],
   transformIgnorePatterns: ['/node_modules/'],

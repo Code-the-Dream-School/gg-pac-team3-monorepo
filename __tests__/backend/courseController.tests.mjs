@@ -1,11 +1,11 @@
-import admin from '../server/config/firebase.mjs';
+import admin from '../../server/config/firebase.mjs';
 import {
   createCourse,
   getCourse,
   updateCourse,
   deleteCourse
-} from '../server/controllers/courseController.mjs';
-import { USERS, COURSES } from '../server/controllers/constants.mjs';
+} from '../../server/controllers/courseController.mjs';
+import { USERS, COURSES } from '../../server/controllers/constants.mjs';
 import supertest from 'supertest';
 import express from 'express';
 
@@ -30,7 +30,7 @@ let server;
 
 // Setup before tests
 beforeAll(async () => {
-  server = app.listen(4050); 
+  server = app.listen(4500); 
   // Set up a test user in Firestore (a user with 'Teacher' role)
   const userRef = admin.firestore().collection(USERS).doc(testUserId);
   await userRef.set({
