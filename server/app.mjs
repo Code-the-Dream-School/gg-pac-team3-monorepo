@@ -11,6 +11,7 @@ import mainRouter from './routes/mainRouter.mjs';
 import lessonRoutes from './routes/lessonRoutes.mjs';
 import quizRoutes from './routes/quizRoutes.mjs';
 import userCourseRoutes from './routes/userCourseRoutes.mjs';
+import UserFeedback from './routes/userFeedbackRoutes.mjs';
 
 const app = express();
 
@@ -61,6 +62,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // Routes
 app.use('/', mainRouter);
 app.use('/api/user', userRoutes);
+app.use('/api/user', UserFeedback);
 app.use('/api/course', courseRoutes);
 app.use('/api/course', lessonRoutes);
 app.use('/api/course', quizRoutes);

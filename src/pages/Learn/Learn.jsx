@@ -4,6 +4,8 @@ import styles from './Learn.module.css';
 import PropTypes from 'prop-types';
 import { fetchCourseLessons, fetchCourseByCourseId } from '../../services/api';
 import Lesson from './Lesson';
+import UserFeedback from './UserFeedback';
+import CourseInfo from './CourseInfo';
 
 const Learn = () => {
   const location = useLocation();
@@ -15,8 +17,9 @@ const Learn = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // State for controlling the collapse/expand of lesson list
-  const [isLessonListVisible, setIsLessonListVisible] = useState(true);
+  // State for controlling which component to display: 'lesson', 'feedback', or 'courseInfo'
+  const [view, setView] = useState('lesson');
+
   const fetchCourseData = async () => {
     try {
       if (!courseId) {
@@ -26,7 +29,7 @@ const Learn = () => {
       const courseData = await fetchCourseByCourseId(courseId);
       const lessonsData = await fetchCourseLessons(courseId);
       setCourse(courseData);
-      setLessons(lessonsData);
+      setLessons(lessonsData || []);
 
       // Auto-select first lesson or the one in the URL
       const lessonInUrl = lessonsData.find(
@@ -43,30 +46,32 @@ const Learn = () => {
       navigate('/');
     }
   };
+
   useEffect(() => {
     fetchCourseData();
   }, [courseId, location.pathname, navigate]);
 
+
+  useEffect(() => {
+    console.log('Course:', course);
+    console.log('Lessons:', lessons);
+  }, [course, lessons]);
+
   const handleLessonClick = (lesson) => {
     setSelectedLesson(lesson);
+    setView('lesson'); // Switch back to lesson view when a lesson is clicked
     navigate(
       `/learn/${course.courseName}/lesson/${encodeURIComponent(lesson.title)}`,
       { state: { courseId, lessonId: lesson.id } }
-    ); // Navigate with courseId in state
+    );
   };
 
   const handleCourseInfo = () => {
-    navigate(`/learn/${course.courseName}/courseInfo`, {
-      state: { courseId, course, lessons },
-    });
+    setView('courseInfo'); // Switch to course info view
   };
 
   const handleFeedback = () => {
-    navigate();
-  };
-  // Toggle the visibility of the lesson list
-  const toggleLessonListVisibility = () => {
-    setIsLessonListVisible(!isLessonListVisible);
+    setView('feedback'); // Switch to feedback view
   };
 
   if (loading) {
@@ -86,23 +91,21 @@ const Learn = () => {
         <div className={styles.learnContent}>
           <div className={styles.lessonList}>
             <div className={styles.lessonListHeader}>
-              <button onClick={toggleLessonListVisibility}>
-                <h3> Course Lessons </h3>
+              <button onClick={() => setView('lesson')}>
+                <h3>Course Lessons</h3>
               </button>
             </div>
-            {isLessonListVisible && (
-              <ul>
-                {lessons.map((lesson) => (
-                  <li
-                    key={lesson.lessonId}
-                    className={styles.lessonItem}
-                    onClick={() => handleLessonClick(lesson)}
-                  >
-                    {lesson.title}
-                  </li>
-                ))}
-              </ul>
-            )}
+            <ul>
+              {lessons.map((lesson) => (
+                <li
+                  key={lesson.lessonId}
+                  className={styles.lessonItem}
+                  onClick={() => handleLessonClick(lesson)}
+                >
+                  {lesson.title}
+                </li>
+              ))}
+            </ul>
 
             <div className={styles.lessonListHeader}>
               <button onClick={handleCourseInfo}>
@@ -116,7 +119,13 @@ const Learn = () => {
             </div>
           </div>
           <div className={styles.lessonDetails}>
-            {selectedLesson && <Lesson lesson={selectedLesson} />}
+            {view === 'lesson' && selectedLesson && (
+              <Lesson lesson={selectedLesson} />
+            )}
+            {view === 'feedback' && <UserFeedback courseId={courseId} />}
+            {view === 'courseInfo' && (
+              <CourseInfo course={course} lessons={lessons} />
+            )}
           </div>
         </div>
       </>

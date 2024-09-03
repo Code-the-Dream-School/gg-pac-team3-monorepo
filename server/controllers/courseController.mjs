@@ -18,7 +18,7 @@ export const createCourse = async (req, res) => {
   const file = req.file;
 
   try {
-    console.log(req.user.uid);
+    // console.log(req.user.uid);
     // Fetch user data
     const userRef = db.collection(USERS).doc(req.user.uid);
     const userDoc = await userRef.get();

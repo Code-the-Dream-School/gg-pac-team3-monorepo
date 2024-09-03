@@ -8,6 +8,7 @@ import CourseDetails from './pages/CourseDetails/CourseDetails';
 import UserDashboard from './pages/UserDashboard/UserDashboard';
 import Learn from './pages/Learn/Learn';
 import CourseInfo from './pages/Learn/CourseInfo';
+import UserFeedback from './pages/Learn/UserFeedback';
 import Quiz from './pages/Learn/Quiz';
 
 import './App.css';
@@ -54,6 +55,10 @@ function App() {
             <Route
               path='/learn/:courseId/courseInfo'
               element={<CourseInfo />}
+            />
+            <Route
+              path='/learn/:courseId/UserFeedback'
+              element={<UserFeedback />}
             />
             <Route
               path='/learn/:courseId/lesson/:lessonId/quiz'
