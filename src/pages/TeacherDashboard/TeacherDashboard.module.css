@@ -1,0 +1,72 @@
+.teacherDashboardContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.headerDashboard {
+  margin: 1.25rem 0;
+}
+
+.courseContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.courseTable {
+  display: inline-table;
+  border-collapse: collapse;
+  border-top: black solid 2px;
+  margin: 1.25rem;
+}
+
+.courseTableHeader {
+  border-bottom: black solid 2px;
+  th {
+    padding: 0.625rem;
+    text-align: center;
+  }
+  tr {
+    height: 5rem;
+  }
+}
+
+
+.courseTableBody {
+  border-bottom: black solid 0.125rem;
+  td {
+    padding: 0.625rem;
+    text-align: center;
+  }
+  tr {
+    height: 5rem;
+    border-bottom: black solid 0.0625rem;
+  }
+  img {
+    margin: auto;
+  }
+}
+
+.courseLink {
+  text-decoration: none;
+  color: black;
+}
+
+.courseLogo {
+  width: 3rem;
+  text-align: center;
+}
+
+.newCourseLink {
+  background-color: transparent;
+  color: black;
+  border: black solid 0.1rem;
+  border-radius: 0.625rem;
+  padding: 0.5rem;
+  margin: 2rem auto;
+  width: 10rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+

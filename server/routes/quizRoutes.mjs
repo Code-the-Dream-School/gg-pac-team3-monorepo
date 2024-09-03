@@ -1,5 +1,11 @@
 import express from 'express';
-import { createQuiz, getQuiz, getAllQuizzesForLesson, updateQuiz, deleteQuiz } from '../controllers/quizController.mjs';
+import {
+  createQuiz,
+  getQuiz,
+  getAllQuizzesForLesson,
+  updateQuiz,
+  deleteQuiz,
+} from '../controllers/quizController.mjs';
 import { verifyToken, isTeacher } from '../middlewares/verifyToken.mjs';
 
 const router = express.Router();
@@ -209,7 +215,12 @@ router.post('/:courseId/:lessonId', verifyToken, isTeacher, createQuiz);
  *       500:
  *         description: Internal server error.
  */
-router.patch('/:courseId/:lessonId/quiz/:quizId', verifyToken, isTeacher, updateQuiz);
+router.patch(
+  '/:courseId/:lessonId/quiz/:quizId',
+  verifyToken,
+  isTeacher,
+  updateQuiz,
+);
 
 /**
  * @swagger
@@ -248,6 +259,11 @@ router.patch('/:courseId/:lessonId/quiz/:quizId', verifyToken, isTeacher, update
  *       500:
  *         description: Internal server error.
  */
-router.delete('/:courseId/:lessonId/quiz/:quizId', verifyToken, isTeacher, deleteQuiz);
+router.delete(
+  '/:courseId/:lessonId/quiz/:quizId',
+  verifyToken,
+  isTeacher,
+  deleteQuiz,
+);
 
 export default router;

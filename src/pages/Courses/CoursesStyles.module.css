@@ -1,9 +1,0 @@
-.courseContainer {
-    display: flex;
-    flex-direction: column;
-}
-
-.courseItems {
-    display: flex;
-    flex-direction: column;
-}

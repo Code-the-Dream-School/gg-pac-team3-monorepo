@@ -1,31 +1,16 @@
-import React from 'react';
-import SideBarItem from "../SideBarItem/SideBarItem.jsx";
-import styles from './SideBarStyles.module.css';
+import SideBarItems from "../SideBarItems/SideBarItems.jsx";
+import styles from './SideBar.module.css';
+import {Link} from "react-router-dom";
 
 
 const SideBar = () => {
-    const sideBarItems = [
-        {
-            name: "Dashboard",
-            href: "/teacher/dashboard"
-        },
-        {
-            name: "Courses",
-            href: "/teacher/courses",
-        }
-    ]
 
-    return (
-        <nav className={styles.sideBarContainer}>
-            <ul className={styles.sideBarItems}>
-                {
-                     sideBarItems.map((item, index) => {
-                        return <SideBarItem key={index} item={item}/>
-                    })
-                }
-            </ul>
-        </nav>
-    );
+  return (
+    <nav className={styles.sideBarContainer}>
+      <Link className={styles.newCourseLink} to={"/teacher/courses/new"}>New Course</Link>
+      <SideBarItems/>
+    </nav>
+  );
 };
 
 export default SideBar;

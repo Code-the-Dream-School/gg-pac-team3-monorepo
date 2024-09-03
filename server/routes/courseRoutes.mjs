@@ -1,6 +1,14 @@
 import express from 'express';
-import { createCourse, getAllCourses, getCourse, updateCourse, deleteCourse } from '../controllers/courseController.mjs';
+import {
+  createCourse,
+  getAllCourses,
+  getTeacherCourses,
+  getCourse,
+  updateCourse,
+  deleteCourse,
+} from '../controllers/courseController.mjs';
 import { verifyToken, isTeacher } from '../middlewares/verifyToken.mjs';
+import multer from 'multer';
 
 const router = express.Router();
 
@@ -24,6 +32,24 @@ const router = express.Router();
  *         description: Internal server error.
  */
 router.get('/public', getAllCourses);
+
+/**
+ * @swagger
+ * /api/course/teacher_courses:
+ *   get:
+ *     summary: Retrieve a list of courses created by teacher (requires authentication)
+ *     tags: [Courses]
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: A list of courses.
+ *       401:
+ *         description: Unauthorized. Access token is missing or invalid.
+ *       500:
+ *         description: Internal server error.
+ */
+router.get('/teacher_courses', verifyToken, isTeacher, getTeacherCourses);
 
 /**
  * @swagger
@@ -85,8 +111,6 @@ router.get('/:uid', verifyToken, getCourse);
  *           schema:
  *             type: object
  *             properties:
- *               courseId:
- *                 type: string
  *               courseName:
  *                 type: string
  *               courseType:
@@ -117,7 +141,7 @@ router.get('/:uid', verifyToken, getCourse);
  *       500:
  *         description: Internal server error.
  */
-router.post('/', verifyToken, isTeacher, createCourse);
+router.post('/', verifyToken, isTeacher, multer({ dest: './public/data/uploads/' }).single('logo'), createCourse);
 
 /**
  * @swagger
@@ -141,8 +165,6 @@ router.post('/', verifyToken, isTeacher, createCourse);
  *           schema:
  *             type: object
  *             properties:
- *               courseId:
- *                 type: string
  *               courseName:
  *                 type: string
  *               courseType:
@@ -175,7 +197,7 @@ router.post('/', verifyToken, isTeacher, createCourse);
  *       500:
  *         description: Internal server error.
  */
-router.patch('/:uid', verifyToken, isTeacher, updateCourse);
+router.patch('/:uid', verifyToken, isTeacher, multer({ dest: './public/data/uploads/' }).single('logo'), updateCourse);
 
 /**
  * @swagger

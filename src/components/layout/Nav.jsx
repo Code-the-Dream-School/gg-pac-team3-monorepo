@@ -1,56 +1,90 @@
-import React, { useState } from "react";
-import SignIn from "./signIn";
-import SignUp from "./SignUp";
-import styles from "./nav.module.css";
-import logo from "../../assets/logos/blue.png";
-const Nav = (props) => {
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
+import styles from './Nav.module.css';
+import { useAuth } from '../../AuthContext';
+import logo from '../../assets/logos/blue.png';
+import { useNavigate } from 'react-router-dom';
+
+const Nav = ({ isLoggedIn, onLogout }) => {
   const [activeForm, setActiveForm] = useState(null);
+  const navigate = useNavigate();
+  const { userName, handleLogin } = useAuth();
+  const [userType, setUserType] = useState('');
 
   const switchForm = (link) => {
-    console.log("Switch form function called with:", link); // Add logging here
-    if (link === "Register") {
-      setActiveForm("SignUp");
-    } else if (link === "Login") {
-      setActiveForm("SignIn");
-    } else {
-      setActiveForm(null);
+    switch (link) {
+      case 'Register':
+        setActiveForm('SignUp');
+        break;
+      case 'Login':
+        setActiveForm('SignIn');
+        break;
+      case 'Logout':
+        onLogout();
+        setActiveForm(null); // Close the form after logout
+        navigate('/');
+        break;
+      case 'Dashboard':
+        if (userType === 'Student') {
+          navigate('/UserDashboard/home'); // Navigate to Student Dashboard
+        } else if (userType === 'Teacher') {
+          navigate('/teacher/dashboard'); // Navigate to Teacher Dashboard
+        }
+        break;
+      default:
+        setActiveForm(null);
     }
   };
 
-  const { isLoggedIn } = props;
+  useEffect(() => {}, [userType]);
+
+  useEffect(() => {}, [isLoggedIn]);
 
   const navLinks = isLoggedIn
     ? [
-        { id: 1, link: "Dashboard" },
-        { id: 2, link: "Account" },
-        { id: 3, link: "Logout" },
+        { id: 1, link: `Welcome ${userName}` },
+        { id: 2, link: 'Dashboard' },
+        { id: 3, link: 'Logout' },
       ]
     : [
-        { id: 1, link: "About" },
-        { id: 2, link: "Login" },
-        { id: 3, link: "Register" },
+        { id: 1, link: 'Login' },
+        { id: 2, link: 'Register' },
       ];
 
   return (
     <div className={styles.nav}>
-      <img src={logo} alt="Logo" />
-      <div className={styles.list}>
-        <ul>
-          {navLinks.map((navLink) => (
-            <li
-              key={navLink.id}
-              to={navLink.link.toLowerCase()}
-              onClick={() => switchForm(navLink.link)}
-            >
-              {navLink.link}
-            </li>
-          ))}
-        </ul>
+      <img src={logo} alt='Logo' className={styles.logo} />
+      <div className={styles.navLinks}>
+        {navLinks.map((navLink) => (
+          <span
+            key={navLink.id}
+            className={styles.navLink}
+            onClick={() => switchForm(navLink.link)}
+          >
+            {navLink.link}
+          </span>
+        ))}
       </div>
-      {activeForm === "SignUp" && <SignUp switchForm={switchForm} />}
-      {activeForm === "SignIn" && <SignIn switchForm={switchForm} />}
+      {activeForm === 'SignUp' && <SignUp switchForm={switchForm} />}
+      {activeForm === 'SignIn' && (
+        <SignIn
+          switchForm={switchForm}
+          onLoginSuccess={(name, type) => {
+            // Set isLoggedIn to true in the parent component
+            switchForm(null); // Close the form
+            handleLogin(name);
+            setUserType(type);
+          }}
+        />
+      )}
     </div>
   );
 };
 
+Nav.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  onLogout: PropTypes.func.isRequired,
+};
 export default Nav;

@@ -7,7 +7,7 @@ class LessonModel {
     points = 0,
     order = 0,
     videoLinks = [], // Default to empty array if not provided
-    materials = ''
+    materials = '',
   }) {
     // Validate types
     if (typeof title !== 'string') throw new Error('Invalid title');
@@ -33,7 +33,7 @@ class LessonModel {
       points: this.points,
       order: this.order,
       videoLinks: this.videoLinks,
-      materials: this.materials
+      materials: this.materials,
     };
   }
 
@@ -42,12 +42,12 @@ class LessonModel {
     return {
       lessonId: lessonId,  // Firestore document ID
       title: data.title,
-      description: data.description || {}, // Ensure default to empty object if not present
-      points: data.points || 0, // Ensure default to 0 if not present
-      order: data.order || 0, // Ensure default to 0 if not present
-      videoLinks: data.videoLinks || [], // Ensure default to empty array if not present
-      materials: data.materials || '' // Ensure default to empty string if not present
-    };
+      description: data.description || {}, 
+      points: data.points || 0, 
+      order: data.order || 0, 
+      videoLinks: data.videoLinks || [], 
+      materials: data.materials || '', 
+    });
   }
 }
 
