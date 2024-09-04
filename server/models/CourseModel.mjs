@@ -15,7 +15,7 @@ class CourseModel {
     createdAt = new Date(), // Default to current date if not provided
   }) {
     // Validate types
-    if (typeof courseId !== 'string') throw new Error('Invalid courseId');
+    if (courseId !== null && typeof courseId !== 'string') throw new Error('Invalid courseId');
     if (typeof courseName !== 'string') throw new Error('Invalid courseName');
     if (typeof description !== 'string') throw new Error('Invalid description');
     if (typeof imageUrl !== 'string') throw new Error('Invalid imageUrl');

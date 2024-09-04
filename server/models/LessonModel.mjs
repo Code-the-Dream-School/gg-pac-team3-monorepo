@@ -47,7 +47,7 @@ class LessonModel {
       order: data.order || 0, 
       videoLinks: data.videoLinks || [], 
       materials: data.materials || '', 
-    });
+    };
   }
 }
 

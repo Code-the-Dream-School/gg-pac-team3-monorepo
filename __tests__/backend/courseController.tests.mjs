@@ -76,6 +76,7 @@ describe('Course Controller', () => {
     expect(response.body.courseId).toBeDefined();
 
     testCourseId = response.body.courseId; 
+    if (!testCourseId) throw new Error('Invalid courseId');
   });
 
   // Test for fetching a specific course

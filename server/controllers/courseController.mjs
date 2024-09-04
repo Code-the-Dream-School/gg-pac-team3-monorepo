@@ -37,8 +37,9 @@ export const createCourse = async (req, res) => {
     courseData = await addFileToParams(file, courseData);
 
     // Create a new course
-    const newCourse = new CourseModel(courseData);
     const courseRef = db.collection(COURSES).doc(); // Generate a new document ID
+    courseData.courseId = courseRef.id; // Assign the courseId
+    const newCourse = new CourseModel(courseData);
     await courseRef.set(newCourse.toFirestore());
 
     res

@@ -31,7 +31,7 @@ describe('Frontend Page Loading', () => {
     try {
       await page.goto('http://localhost:5173/', { waitUntil: 'networkidle2' });
       const pageTitle = await page.title();
-      expect(pageTitle).toBe('Vite + React'); 
+      expect(pageTitle).toBe('Learning Hub'); 
     } catch (error) {
       console.error('Error during test:', error);
       throw error;
