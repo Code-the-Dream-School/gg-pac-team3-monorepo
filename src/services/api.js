@@ -141,9 +141,10 @@ export const fetchCourseByCourseId = async (courseId) => {
 //Function to fetch Teacher data by using course ID from user_course table
 export const fetchTeacherDataByCourseId = async (courseId) => {
   try {
+    // console.log('courseId:api file:', courseId);
     const token = getAuthToken();
     const response = await axios.get(
-      `${API_BASE_URL}/user/${courseId}/course/getTeacherData`,
+      `${API_BASE_URL}/course/${courseId}/getTeacherData`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

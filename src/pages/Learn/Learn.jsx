@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './Learn.module.css';
-import PropTypes from 'prop-types';
 import { fetchCourseLessons, fetchCourseByCourseId } from '../../services/api';
 import Lesson from './Lesson';
 import UserFeedback from './UserFeedback';
@@ -19,6 +18,8 @@ const Learn = () => {
 
   // State for controlling which component to display: 'lesson', 'feedback', or 'courseInfo'
   const [view, setView] = useState('lesson');
+
+  const [isLessonListExpanded, setIsLessonListExpanded] = useState(true);
 
   const fetchCourseData = async () => {
     try {
@@ -48,14 +49,14 @@ const Learn = () => {
   };
 
   useEffect(() => {
-    fetchCourseData();
+    if (!courseId) {
+      navigate('/'); // Redirect to a different page if courseId is not available
+    } else {
+      fetchCourseData();
+    }
   }, [courseId, location.pathname, navigate]);
 
-
-  useEffect(() => {
-    // console.log('Course:', course);
-    // console.log('Lessons:', lessons);
-  }, [course, lessons]);
+  useEffect(() => {}, [course, lessons]);
 
   const handleLessonClick = (lesson) => {
     setSelectedLesson(lesson);
@@ -72,6 +73,11 @@ const Learn = () => {
 
   const handleFeedback = () => {
     setView('feedback'); // Switch to feedback view
+  };
+
+  // Toggle the visibility of the lesson list
+  const toggleLessonList = () => {
+    setIsLessonListExpanded(!isLessonListExpanded);
   };
 
   if (loading) {
@@ -92,21 +98,22 @@ const Learn = () => {
           <div className={styles.lessonList}>
             <div className={styles.lessonListHeader}>
               <button onClick={() => setView('lesson')}>
-                <h3>Course Lessons</h3>
+                <h3 onClick={toggleLessonList}>Course Lessons</h3>
               </button>
             </div>
-            <ul>
-              {lessons.map((lesson) => (
-                <li
-                  key={lesson.lessonId}
-                  className={styles.lessonItem}
-                  onClick={() => handleLessonClick(lesson)}
-                >
-                  {lesson.title}
-                </li>
-              ))}
-            </ul>
-
+            {isLessonListExpanded && (
+              <ul>
+                {lessons.map((lesson, index) => (
+                  <li
+                    key={`${lesson.lessonId}-${index}`}
+                    className={styles.lessonItem}
+                    onClick={() => handleLessonClick(lesson)}
+                  >
+                    {lesson.title}
+                  </li>
+                ))}
+              </ul>
+            )}
             <div className={styles.lessonListHeader}>
               <button onClick={handleCourseInfo}>
                 <h4>Course Info</h4>
@@ -124,17 +131,17 @@ const Learn = () => {
             )}
             {view === 'feedback' && <UserFeedback courseId={courseId} />}
             {view === 'courseInfo' && (
-              <CourseInfo course={course} lessons={lessons} />
+              <CourseInfo
+                course={course}
+                lessons={lessons}
+                courseId={courseId}
+              />
             )}
           </div>
         </div>
       </>
     </div>
   );
-};
-
-Learn.propTypes = {
-  courseId: PropTypes.string.isRequired,
 };
 
 export default Learn;

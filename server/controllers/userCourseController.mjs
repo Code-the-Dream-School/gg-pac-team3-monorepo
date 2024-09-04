@@ -28,13 +28,10 @@ export const enrollInCourse = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
-//CreateUserCourses
 
-export const CreateUserCourses = async (req, res) => {
-  // const { userId, courseId } = req.params;
-  const { userId, courseId, role, progress, earnedPoints } = req.body;
-  // console.log('req.params', req.params);
-  console.log('req.body', req.body);
+export const CreateUserCourses = async (req, res) => {  
+  const { userId, courseId, role, progress, earnedPoints } = req.body; 
+ 
   try {
     const userCourse = new UserCourseModel({
       userId,
@@ -57,12 +54,13 @@ export const CreateUserCourses = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
+
 //  Fetch all courses that a user is not enrolled in
 export const getSuggestedCoursesForUser = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // Step 1: Fetch all courses
+    // Step 1: Fetch all courses    
     const allCoursesSnapshot = await db.collection(COURSES).get();
     const allCourses = [];
 
@@ -99,42 +97,6 @@ export const getSuggestedCoursesForUser = async (req, res) => {
     res.status(200).send(notEnrolledCourses);
   } catch (error) {
     console.error('Error fetching courses:', error);
-    res.status(500).send({ error: error.message });
-  }
-};
-
-//fetch teacher data by using courseId
-export const getTeacherDataByCourseId = async (req, res) => {
-  const { courseId } = req.params;
-  console.log('Received courseId:', courseId);
-
-  try {
-    // Query the USER_COURSES collection where courseId equals the given courseId and role equals 'Teacher'
-    const teacherDataByCourseId = await db
-      .collection('USER_COURSES')
-      .where('courseId', '==', courseId)
-      .where('role', '==', 'Teacher')
-      .get();
-
-    console.log('Query executed. Results:', teacherDataByCourseId.size);
-
-    if (teacherDataByCourseId.empty) {
-      console.log('No teacher found for this course ID:', courseId);
-      return res
-        .status(404)
-        .send({ message: 'No teacher found for this course ID' });
-    }
-
-    // Map through the results to extract the data
-    const teachers = teacherDataByCourseId.docs.map((doc) => {
-      console.log('Teacher doc data:', doc.data());
-      return doc.data();
-    });
-
-    console.log('Returning teachers:', teachers);
-    return res.status(200).send(teachers);
-  } catch (error) {
-    console.error('Error fetching teacher data:', error);
     res.status(500).send({ error: error.message });
   }
 };

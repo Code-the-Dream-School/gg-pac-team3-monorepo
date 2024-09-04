@@ -4,7 +4,6 @@ import {
   getSuggestedCoursesForUser,
   getUserCourses,
   getCoursesForUser,
-  getTeacherDataByCourseId,
   CreateUserCourses,
 } from '../controllers/userCourseController.mjs';
 import { verifyToken } from '../middlewares/verifyToken.mjs';
@@ -46,17 +45,6 @@ const router = express.Router();
 router.get('/user/:userId/course', verifyToken, getUserCourses);
 
 router.post('/users/courses/createUserCourse', verifyToken, CreateUserCourses);
-
-// router.get('/user/:courseId/course/getTeacherData', verifyToken, getTeacherDataByCourseId);
-router.get(
-  '/user/:courseId/course/getTeacherData',
-  verifyToken,
-  (req, res, next) => {
-    console.log('Route hit, courseId:', req.params.courseId);
-    next();
-  },
-  getTeacherDataByCourseId
-);
 
 /**
  * @swagger

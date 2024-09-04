@@ -1,10 +1,12 @@
 .courseInfoContainer {
   padding: 2rem;
-  background-color: #ffffff;
+  background-color: #f9f9f9;
   color: #333;
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
+  font-family: 'Arial', sans-serif;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .courseTitle {
@@ -12,72 +14,110 @@
   font-weight: bold;
   margin-bottom: 1rem;
   color: #2c3e50;
+  text-align: center;
 }
 
 .teacherInfo {
   display: flex;
   align-items: center;
+  background-color: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
 }
 
 .teacherImage {
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  margin-right: 1rem;
+  margin-right: 1.5rem;
+  border: 2px solid #2c3e50;
+}
+
+.teacherDetails {
+  display: flex;
+  flex-direction: column;
 }
 
 .teacherName {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #34495e;
+  margin-bottom: 0.25rem;
+  margin-right: 1.25em;
+}
+
+.teacherEmail {
+  font-size: 1rem;
   color: #7f8c8d;
+  font-weight: bold;
 }
 
 .courseDescriptionSection {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
 }
 
 .courseDescriptionSection h2 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: #34495e;
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #2c3e50;
 }
 
 .courseDescription {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 1.125rem;
+  line-height: 1.8;
   color: #7f8c8d;
+  margin-bottom: 1rem;
 }
 
 .lessonsSection {
-  margin-top: 2rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .lessonsSection h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #34495e;
+  font-size: 1.75rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
 }
 
 .lessonsList {
   list-style: none;
   padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 0.8rem;
 }
 
 .lessonItem {
-  margin-bottom: 1.5rem;
-  padding: 1rem;
+  background-color: #fdfdfd;
+  padding: 0.8rem;
   border: 1px solid #ecf0f1;
-  border-radius: 5px;
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.lessonItem:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .lessonItem h3 {
   font-size: 1.25rem;
+  font-weight: bold;
   margin-bottom: 0.5rem;
   color: #2c3e50;
 }
 
 .lessonItem p {
-  margin: 0.25rem 0;
   font-size: 1rem;
   color: #7f8c8d;
 }

@@ -34,9 +34,7 @@ const Quiz = () => {
     getQuiz();
   }, [lessonId, courseId, navigate]);
 
-  useEffect(() => {
-    console.log('Quiz data updated:', quiz);
-  }, [quiz]);
+  useEffect(() => {}, [quiz]);
 
   const handleAnswerChange = (questionId, option) => {
     setAnswers((prevAnswers) => ({

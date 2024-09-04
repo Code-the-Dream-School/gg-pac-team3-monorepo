@@ -37,9 +37,8 @@ const Home = ({ userId, onCourseClick }) => {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    console.log(coursesData);
     const filteredCoursesList = coursesData.filter((course) =>
-      course.courseName.toLowerCase().includes(searchTerm.toLowerCase()),
+      course.courseName.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredCourses(filteredCoursesList);
   };
@@ -70,9 +69,9 @@ const Home = ({ userId, onCourseClick }) => {
         </form>
       </div>
       <div className={styles.coursesContainer}>
-        {filteredCourses.map((course) => (
+        {filteredCourses.map((course, index) => (
           <div
-            key={course.courseID}
+            key={`${course.courseID}-${index}`}
             className={styles.courseCard}
             onClick={() => onCourseClick(course)}
           >

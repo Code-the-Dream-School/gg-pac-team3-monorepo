@@ -63,7 +63,7 @@ export const loginUser = async (req, res) => {
 
     // Retrieve user record from Firebase Authentication
     const userRecord = await admin.auth().getUserByEmail(email);
-    const userSnapshot = await db.collection('users').doc(userRecord.uid).get();
+    const userSnapshot = await db.collection(USERS).doc(userRecord.uid).get();
     const userData = userSnapshot.exists ? userSnapshot.data() : {};
 
     res.status(200).send({
