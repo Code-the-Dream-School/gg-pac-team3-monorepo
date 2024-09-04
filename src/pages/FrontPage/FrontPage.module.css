@@ -9,8 +9,8 @@
 .panelText {
   position: absolute;
   top: 5em;
-  right: 2em;
-  left: 20em;
+  right: 5em;
+  width: 25em;
 }
 
 .mainContainer {
@@ -180,5 +180,106 @@
 
   100% {
     opacity: 0;
+  }
+}
+
+/* Extra Small Screens*/
+@media (max-width: 576px) {
+  h1 {
+    font-size: 1.2em;
+  }
+  h3 {
+    font-size: 1em;
+  }
+  .panelText {
+    position: absolute;
+    top: 3em;
+    right: 1em;
+    width: 15em;
+    left: 8em;
+  }
+}
+
+/* Small Devices */
+@media (min-width: 576px) {
+  h1,
+  h3 {
+    font-size: 1em;
+  }
+  .panelText {
+    position: absolute;
+    top: 3em;
+    width: 15em;
+    left: 15em;
+  }
+}
+
+/* Medium Devices */
+@media (min-width: 768px) {
+  h1 {
+    font-size: 1.5em;
+  }
+  h3 {
+    font-size: 1.2em;
+  }
+  .panelText {
+    position: absolute;
+    top: 3em;
+    width: 20em;
+    left: 20em;
+  }
+}
+
+/* Large Devices */
+@media (min-width: 992px) {
+  h1 {
+    font-size: 1.5em;
+  }
+  h3 {
+    font-size: 1.2em;
+  }
+  .panelText {
+    position: absolute;
+    top: 5em;
+    width: 30em;
+    left: 30em;
+  }
+}
+
+/* Extra Large Devices */
+@media (min-width:1200px){
+    h1 {
+    font-size: 2em;
+  }
+  h3 {
+    font-size: 1.5em;
+  }
+  p {
+    font-size: 1.5em;
+  }
+  .panelText {
+    position: absolute;
+    top: 5em;
+    width: 40em;
+    left: 30em;
+  }
+}
+
+/* Extra Extra Large Devices */
+@media (min-width: 1400px) {
+  h1 {
+    font-size: 2em;
+  }
+  h3 {
+    font-size: 1.5em;
+  }
+  p {
+    font-size: 1.5em;
+  }
+  .panelText {
+    position: absolute;
+    top: 5em;
+    width: 40em;
+    left: 35em;
   }
 }
