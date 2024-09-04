@@ -37,8 +37,10 @@ const Home = ({ userId, onCourseClick }) => {
 
   const handleSearch = (event) => {
     event.preventDefault();
+
     const filteredCoursesList = coursesData.filter((course) =>
       course.courseName.toLowerCase().includes(searchTerm.toLowerCase())
+
     );
     setFilteredCourses(filteredCoursesList);
   };
@@ -72,6 +74,7 @@ const Home = ({ userId, onCourseClick }) => {
         {filteredCourses.map((course, index) => (
           <div
             key={`${course.courseID}-${index}`}
+
             className={styles.courseCard}
             onClick={() => onCourseClick(course)}
           >
