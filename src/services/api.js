@@ -6,7 +6,7 @@ const getAuthToken = () => {
   return localStorage.getItem('authToken');
 };
 
-//Function for user to login
+// Function for user to login
 export const LoginUser = async (email, password) => {
   try {
     const response = await axios.post(`${API_BASE_URL}/user/login`, {
@@ -29,7 +29,7 @@ export const LoginUser = async (email, password) => {
   }
 };
 
-//Function to create a account / register
+// Function to create an account / register
 export const registerUser = async (name, email, password, userType) => {
   try {
     const token = getAuthToken();
@@ -42,7 +42,6 @@ export const registerUser = async (name, email, password, userType) => {
         },
       },
     );
-
     return response.data;
   } catch (error) {
     console.error('Error registering user:', error);
@@ -50,7 +49,7 @@ export const registerUser = async (name, email, password, userType) => {
   }
 };
 
-//fetchQuizByLessonId
+// Function to fetch quizzes by lesson ID
 export const fetchQuizByLessonId = async (lessonId, courseId) => {
   try {
     const token = getAuthToken();
@@ -64,7 +63,7 @@ export const fetchQuizByLessonId = async (lessonId, courseId) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error fetching courses:', error);
+    console.error('Error fetching quizzes:', error);
     throw error;
   }
 };
@@ -85,7 +84,7 @@ export const fetchCourses = async () => {
   }
 };
 
-// Function to fetch a list of courses that the user might be interested in
+// Function to fetch a list of suggested courses for a user
 export const FetchSuggestedCoursesForUser = async (userId) => {
   try {
     const token = getAuthToken();
@@ -99,12 +98,12 @@ export const FetchSuggestedCoursesForUser = async (userId) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error fetching not enrolled courses by user:', error);
+    console.error('Error fetching suggested courses:', error);
     throw error;
   }
 };
 
-// function to fetch user enrolled courses using the userId
+// Function to fetch user enrolled courses using userId
 export const fetchUserEnrolledCourses = async (userId) => {
   try {
     const token = getAuthToken();
@@ -119,12 +118,11 @@ export const fetchUserEnrolledCourses = async (userId) => {
     return response.data;
   } catch (error) {
     console.error('Error fetching enrolled courses:', error);
-
     throw error;
   }
 };
 
-//Function to fetch course data by course ID
+// Function to fetch course data by course ID
 export const fetchCourseByCourseId = async (courseId) => {
   try {
     const token = getAuthToken();
@@ -135,12 +133,12 @@ export const fetchCourseByCourseId = async (courseId) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error fetching enrolled courses:', error);
+    console.error('Error fetching course data:', error);
     throw error;
   }
 };
 
-//Function to fetch list of course lessons  using the courseId
+// Function to fetch lessons for a course
 export const fetchCourseLessons = async (courseId) => {
   try {
     const token = getAuthToken();
@@ -178,7 +176,7 @@ export const fetchUserProfile = async (userId) => {
   }
 };
 
-//Function to assing selected course to user using userId and courseId
+// Function to assign selected course to user using userId and courseId
 export const AddUserCourse = async (userId, courseId, role) => {
   try {
     const token = getAuthToken();
@@ -193,7 +191,7 @@ export const AddUserCourse = async (userId, courseId, role) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error adding user courses:', error);
+    console.error('Error adding user course:', error);
     throw error;
   }
 };
@@ -221,21 +219,3 @@ export const updateProfileInfo = async (userId, updatedProfile) => {
     throw error;
   }
 };
-// export const LoginUser = async (email, password) => {
-//   try {
-//     // Sending a POST request to the login endpoint
-//     const response = await axios.post(`${API_BASE_URL}/auth/login`, {
-//       email,
-//       password,
-//     });
-
-//     // Store the token in local storage if login is successful
-//     localStorage.setItem('authToken', response.data.token);
-
-//     // Return the response data (could include user details, token, etc.)
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error logging in:', error);
-//     throw error;
-//   }
-// };
