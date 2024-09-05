@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import styles from './UserFeedback.module.css';
-import { useNavigate } from 'react-router-dom';
 import { addUserFeedbackToCourse } from '../../services/api';
 
 const UserFeedback = ({ courseId }) => {
@@ -8,7 +7,6 @@ const UserFeedback = ({ courseId }) => {
   const [feedback, setFeedback] = useState('');
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [error, setError] = useState(null);
-  //   const navigate = useNavigate();
   const userId = localStorage.getItem('userId');
 
   const handleRatingChange = (e) => {
@@ -31,8 +29,6 @@ const UserFeedback = ({ courseId }) => {
       await addUserFeedbackToCourse({ courseId, userId, rating, feedback });
       setSubmitSuccess(true);
       setError(null);
-      // Navigate to a confirmation page or the course details page
-      //   navigate(`/course/${courseId}`);
     } catch (err) {
       console.error('Error submitting feedback:', err);
       setError('Error submitting feedback. Please try again.');
