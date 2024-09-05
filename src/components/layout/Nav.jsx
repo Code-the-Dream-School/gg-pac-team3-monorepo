@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import SignIn from './SignIn';
+import SignIn from './signIn';
 import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassWordForm';
 import styles from './Nav.module.css';
 import logo from '../../assets/logos/blue.png';
-import { useNavigate } from 'react-router-dom';
 import SetNewPassWord from './SetNewPassword';
 
-const Nav = ({ isLoggedIn }) => {
+const Nav = ({ isLoggedIn, handleLogin, setUserType }) => {
   const [activeForm, setActiveForm] = useState(null);
 
   const switchForm = (link) => {
@@ -21,13 +20,7 @@ const Nav = ({ isLoggedIn }) => {
       case 'ForgotPassword':
         setActiveForm('ForgotPassword');
         break;
-      case 'SetNewPassWord': // Correct casing to match exactly
-        setActiveForm('SetNewPassWord');
-        break;
-      case 'ForgotPassword':
-        setActiveForm('ForgotPassword');
-        break;
-      case 'SetNewPassWord': // Correct casing to match exactly
+      case 'SetNewPassWord':
         setActiveForm('SetNewPassWord');
         break;
       default:
@@ -60,18 +53,23 @@ const Nav = ({ isLoggedIn }) => {
           </span>
         ))}
       </div>
+
       {activeForm === 'SignUp' && <SignUp switchForm={switchForm} />}
-      {activeForm === 'SignIn' && <SignIn switchForm={switchForm} />}
+      {activeForm === 'SignIn' && (
+        <SignIn
+          switchForm={switchForm}
+          onLoginSuccess={(name, type) => {
+            // Set isLoggedIn to true in the parent component
+            switchForm(null); // Close the form
+            handleLogin(name);
+            setUserType(type);
+          }}
+        />
+      )}
       {activeForm === 'ForgotPassword' && (
         <ForgotPassword switchForm={switchForm} />
       )}
-      {activeForm === 'SetNewPassWord' && ( // Updated to match correctly
-        <SetNewPassWord switchForm={switchForm} />
-      )}
-      {activeForm === 'ForgotPassword' && (
-        <ForgotPassword switchForm={switchForm} />
-      )}
-      {activeForm === 'SetNewPassWord' && ( // Updated to match correctly
+      {activeForm === 'SetNewPassWord' && (
         <SetNewPassWord switchForm={switchForm} />
       )}
     </div>
