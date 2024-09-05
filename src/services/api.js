@@ -117,22 +117,7 @@ export const fetchUserEnrolledCourses = async (userId) => {
     return response.data;
   } catch (error) {
     console.error('Error fetching enrolled courses:', error);
-    throw error;
-  }
-};
 
-// Function to fetch course data by course ID
-export const fetchCourseByCourseId = async (courseId) => {
-  try {
-    const token = getAuthToken();
-    const response = await axios.get(`${API_BASE_URL}/course/${courseId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching course data:', error);
     throw error;
   }
 };
@@ -152,6 +137,10 @@ export const fetchCourseByCourseId = async (courseId) => {
     throw error;
   }
 };
+
+// Function to fetch course data by course ID
+
+//Function to fetch course data by course ID
 
 //Function to fetch list of course lessons  using the courseId
 export const fetchCourseLessons = async (courseId) => {
@@ -234,6 +223,8 @@ export const updateProfileInfo = async (userId, updatedProfile) => {
     throw error;
   }
 };
+
+// Function to update user profile information
 // export const LoginUser = async (email, password) => {
 //   try {
 //     // Sending a POST request to the login endpoint

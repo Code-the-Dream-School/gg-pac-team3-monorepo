@@ -6,7 +6,6 @@ import ForgotPassword from './ForgotPassWordForm';
 import styles from './Nav.module.css';
 import { useAuth } from '../../AuthContext';
 import logo from '../../assets/logos/blue.png';
-import { useNavigate } from 'react-router-dom';
 import SetNewPassWord from './SetNewPassword';
 
 const Nav = ({ isLoggedIn, onLogout }) => {
@@ -75,6 +74,7 @@ const Nav = ({ isLoggedIn, onLogout }) => {
           </span>
         ))}
       </div>
+
       {activeForm === 'SignUp' && <SignUp switchForm={switchForm} />}
       {activeForm === 'SignIn' && (
         <SignIn
