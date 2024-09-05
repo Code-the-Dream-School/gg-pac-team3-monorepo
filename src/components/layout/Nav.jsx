@@ -34,6 +34,7 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         } else if (userType === 'Teacher') {
           navigate('/teacher/dashboard'); // Navigate to Teacher Dashboard
         }
+        break; // <-- Add break to prevent fall-through
       case 'ForgotPassword': // Make sure this matches the case
         setActiveForm('ForgotPassword');
         break;
@@ -84,11 +85,13 @@ const Nav = ({ isLoggedIn, onLogout }) => {
             setUserType(type);
           }}
         />
+      )}
       {activeForm === 'ForgotPassword' && (
         <ForgotPassword switchForm={switchForm} />
       )}
-      {activeForm === "SetNewPassword" && (
-        <SetNewPassWord switchForm={switchForm} />)}
+      {activeForm === 'SetNewPassWord' && (
+        <SetNewPassWord switchForm={switchForm} />
+      )}
     </div>
   );
 };
