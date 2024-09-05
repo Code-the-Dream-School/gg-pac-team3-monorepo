@@ -33,7 +33,7 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
       <section className={styles.headings}>
         <div className={styles.headingsContainer}>
           <h1 className={styles.header}>Log In</h1>
-          <p className={styles.name}>Welcome Back to LearningHub</p>{' '}
+          <p className={styles.name}>Welcome Back to LearningHub</p>
         </div>
         <button
           className={styles.closeFormButton}
@@ -103,10 +103,6 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
       </section>
     </div>
   );
-};
-SignIn.propTypes = {
-  switchForm: PropTypes.func.isRequired,
-  onLoginSuccess: PropTypes.func.isRequired,
 };
 
 SignIn.propTypes = {
