@@ -117,12 +117,11 @@ export const fetchUserEnrolledCourses = async (userId) => {
     return response.data;
   } catch (error) {
     console.error('Error fetching enrolled courses:', error);
-
     throw error;
   }
 };
 
-//Function to fetch course data by course ID
+// Function to fetch course data by course ID
 export const fetchCourseByCourseId = async (courseId) => {
   try {
     const token = getAuthToken();
@@ -133,7 +132,7 @@ export const fetchCourseByCourseId = async (courseId) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error fetching enrolled courses:', error);
+    console.error('Error fetching course data:', error);
     throw error;
   }
 };
@@ -235,21 +234,3 @@ export const updateProfileInfo = async (userId, updatedProfile) => {
     throw error;
   }
 };
-// export const LoginUser = async (email, password) => {
-//   try {
-//     // Sending a POST request to the login endpoint
-//     const response = await axios.post(`${API_BASE_URL}/auth/login`, {
-//       email,
-//       password,
-//     });
-
-//     // Store the token in local storage if login is successful
-//     localStorage.setItem('authToken', response.data.token);
-
-//     // Return the response data (could include user details, token, etc.)
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error logging in:', error);
-//     throw error;
-//   }
-// };
