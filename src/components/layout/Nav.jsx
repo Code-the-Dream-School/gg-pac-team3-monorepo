@@ -34,13 +34,13 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         } else if (userType === 'Teacher') {
           navigate('/teacher/dashboard'); // Navigate to Teacher Dashboard
         }
-      case 'ForgotPassword': // Make sure this matches the case
+        break;
+      case 'ForgotPassword':
         setActiveForm('ForgotPassword');
         break;
-      case 'SetNewPassWord': // Correct casing to match exactly
+      case 'SetNewPassWord':
         setActiveForm('SetNewPassWord');
         break;
-       
       default:
         setActiveForm(null);
     }
@@ -80,17 +80,18 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         <SignIn
           switchForm={switchForm}
           onLoginSuccess={(name, type) => {
-            // Set isLoggedIn to true in the parent component
             switchForm(null); // Close the form
             handleLogin(name);
             setUserType(type);
           }}
         />
+      )}
       {activeForm === 'ForgotPassword' && (
         <ForgotPassword switchForm={switchForm} />
       )}
-      {activeForm === "SetNewPassword" && (
-        <SetNewPassWord switchForm={switchForm} />)}
+      {activeForm === 'SetNewPassWord' && (
+        <SetNewPassWord switchForm={switchForm} />
+      )}
     </div>
   );
 };
@@ -99,4 +100,5 @@ Nav.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
+
 export default Nav;
