@@ -1,7 +1,6 @@
 import axios from 'axios';
 const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
-
 const getAuthToken = () => {
   return localStorage.getItem('authToken');
 };
@@ -68,7 +67,6 @@ export const fetchQuizByLessonId = async (lessonId, courseId) => {
     throw error;
   }
 };
-
 
 // Function to fetch a list of courses to display on the front page
 export const fetchCourses = async () => {
@@ -221,3 +219,21 @@ export const updateProfileInfo = async (userId, updatedProfile) => {
     throw error;
   }
 };
+// export const LoginUser = async (email, password) => {
+//   try {
+//     // Sending a POST request to the login endpoint
+//     const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+//       email,
+//       password,
+//     });
+
+//     // Store the token in local storage if login is successful
+//     localStorage.setItem('authToken', response.data.token);
+
+//     // Return the response data (could include user details, token, etc.)
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error logging in:', error);
+//     throw error;
+//   }
+// };
