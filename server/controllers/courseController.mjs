@@ -1,6 +1,5 @@
 import dotenv from 'dotenv';
 import admin from '../config/firebase.mjs';
-import axios from 'axios';
 import CourseModel from '../models/CourseModel.mjs';
 import LessonModel from '../models/LessonModel.mjs';
 import UserCourseModel from '../models/UserCourseModel.mjs';
@@ -38,8 +37,9 @@ export const createCourse = async (req, res) => {
     courseData = await addFileToParams(file, courseData);
 
     // Create a new course
-    const newCourse = new CourseModel(courseData);
     const courseRef = db.collection(COURSES).doc(); // Generate a new document ID
+    courseData.courseId = courseRef.id; // Assign the courseId
+    const newCourse = new CourseModel(courseData);
     await courseRef.set(newCourse.toFirestore());
 
     res
@@ -85,7 +85,7 @@ export const getTeacherCourses = async (req, res) => {
         const courses = await Promise.all(coursesSnapshot.docs.map(async (doc) => {
             const courseModel = CourseModel.fromFirestore(doc.data());
             const lessons = await getCourseLessons(doc.id, coursesRef);
-            const userCourses = await getUserCourses(courseModel.courseId);
+            const userCourses = await getUserCourses(doc.id);
             return {
                 id: doc.id,
                 lessons: lessons,
