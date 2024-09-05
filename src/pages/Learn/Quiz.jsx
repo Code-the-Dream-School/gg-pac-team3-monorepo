@@ -26,7 +26,7 @@ const Quiz = () => {
       }
     } catch (error) {
       console.error('Error fetching quiz:', error);
-      navigate('/');
+      navigate(`/learn/${courseId}/lesson/${lessonId}`);
     }
   };
 

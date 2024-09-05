@@ -50,7 +50,7 @@ const Learn = () => {
 
   useEffect(() => {
     if (!courseId) {
-      navigate('/'); // Redirect to a different page if courseId is not available
+      navigate('/UserDashboard/home'); // Redirect to a user dashboard page if courseId is not available
     } else {
       fetchCourseData();
     }

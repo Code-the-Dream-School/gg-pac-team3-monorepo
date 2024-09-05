@@ -22,8 +22,7 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         { id: 1, link: 'Login' },
         { id: 2, link: 'Register' },
       ];
-  // useEffect(() => {}, [userType1]);
-
+  
   const switchForm = (link) => {
     switch (link) {
       case 'Register':
