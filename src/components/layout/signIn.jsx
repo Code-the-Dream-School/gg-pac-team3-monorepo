@@ -75,6 +75,10 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
       </div>
 
       <section className={styles.closingSection}>
+        Forgot Your{' '}
+        <a className={styles.join} onClick={() => switchForm('ForgotPassword')}>
+          Password?
+        </a>
         <p className={styles.content}>
           Forgot Your{' '}
           <a
@@ -99,6 +103,10 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
       </section>
     </div>
   );
+};
+SignIn.propTypes = {
+  switchForm: PropTypes.func.isRequired,
+  onLoginSuccess: PropTypes.func.isRequired,
 };
 
 SignIn.propTypes = {
