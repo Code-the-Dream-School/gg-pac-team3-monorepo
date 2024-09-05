@@ -8,7 +8,7 @@ const SignIn = ({ switchForm }) => {
       <section className={styles.headings}>
         <div className={styles.headingsContainer}>
           <h1 className={styles.header}>Log In</h1>
-          <p className={styles.name}>Welcome Back to LearnHub</p>
+          <p className={styles.name}>Welcome Back to LearningHub</p>{' '}
         </div>
         <button
           className={styles.closeFormButton}
@@ -37,6 +37,10 @@ const SignIn = ({ switchForm }) => {
       </div>
 
       <section className={styles.closingSection}>
+        Forgot Your{' '}
+        <a className={styles.join} onClick={() => switchForm('ForgotPassword')}>
+          Password?
+        </a>
         <p className={styles.content}>
           Forgot Your{' '}
           <a
@@ -61,6 +65,10 @@ const SignIn = ({ switchForm }) => {
       </section>
     </div>
   );
+};
+SignIn.propTypes = {
+  switchForm: PropTypes.func.isRequired,
+  onLoginSuccess: PropTypes.func.isRequired,
 };
 
 export default SignIn;
