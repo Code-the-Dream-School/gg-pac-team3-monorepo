@@ -2,7 +2,7 @@ import admin from 'firebase-admin';
 
 class CourseModel {
   constructor({
-    courseId,
+    courseId = null, // Default to null; this will be set after Firestore document creation
     courseName,
     courseType,
     description,
@@ -17,6 +17,7 @@ class CourseModel {
     // Validate types
     if (courseId && typeof courseId !== 'string')
       throw new Error('Invalid courseId');
+
     if (typeof courseName !== 'string') throw new Error('Invalid courseName');
     if (typeof description !== 'string') throw new Error('Invalid description');
     if (typeof imageUrl !== 'string') throw new Error('Invalid imageUrl');
@@ -50,8 +51,7 @@ class CourseModel {
 
   // Convert to Firestore format
   toFirestore() {
-    return {
-      courseId: this.courseId,
+    const data = {
       courseName: this.courseName,
       courseType: this.courseType,
       description: this.description,
@@ -63,12 +63,18 @@ class CourseModel {
       createdBy: this.createdBy,
       createdAt: admin.firestore.Timestamp.fromDate(this.createdAt), // Convert JavaScript Date to Firestore Timestamp
     };
+
+    if (this.courseId) {
+      data.courseId = this.courseId; // Include courseId if it's set
+    }
+
+    return data;
   }
 
   // Convert from Firestore format
-  static fromFirestore(data) {
+  static fromFirestore(data, id) {
     return new CourseModel({
-      courseId: data.courseId,
+      courseId: id, // Use the Firestore document ID as the courseId
       courseName: data.courseName,
       courseType: data.courseType,
       description: data.description,
