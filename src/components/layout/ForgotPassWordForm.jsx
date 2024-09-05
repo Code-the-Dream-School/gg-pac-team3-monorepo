@@ -1,4 +1,4 @@
-:import React from 'react';
+import React from 'react';
 import styles from './ForgotPasswordForm.module.css'; // Adjust to your path
 import CloseIcon from '../icons/CloseIcon';
 
