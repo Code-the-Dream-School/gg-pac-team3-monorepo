@@ -38,7 +38,7 @@ const Nav = ({ isLoggedIn, onLogout }) => {
       case 'ForgotPassword': // Make sure this matches the case
         setActiveForm('ForgotPassword');
         break;
-      case 'SetNewPassWord': // Correct casing to match exactly
+      case 'SetNewPassWord':
         setActiveForm('SetNewPassWord');
         break;
       default:
