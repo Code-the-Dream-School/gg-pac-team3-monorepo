@@ -29,16 +29,19 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('isLoggedIn', 'true');
     localStorage.setItem('userName', name);
     localStorage.setItem('userType', type);
+
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setUserName('');
+
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('authToken');
     localStorage.removeItem('userId');
     localStorage.removeItem('userName');
     localStorage.removeItem('userType');
+
   };
 
   return (
