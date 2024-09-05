@@ -95,6 +95,10 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
     </div>
   );
 };
+SignIn.propTypes = {
+  switchForm: PropTypes.func.isRequired,
+  onLoginSuccess: PropTypes.func.isRequired,
+};
 
 SignIn.propTypes = {
   switchForm: PropTypes.func.isRequired,

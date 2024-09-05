@@ -43,7 +43,7 @@ const Nav = ({ isLoggedIn, onLogout }) => {
       case 'ForgotPassword':
         setActiveForm('ForgotPassword');
         break;
-      case 'SetNewPassWord':
+
         setActiveForm('SetNewPassWord');
         break;
       default:
