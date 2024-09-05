@@ -18,9 +18,7 @@ const SignUp = ({ switchForm }) => {
     }
     try {
       const response = await registerUser(name, email, password, userType);
-      setSuccessMessage(
-        `You have registered successfully ${response}, please login.`,
-      );
+      setSuccessMessage(`You have registered successfully, please login.`);
       // switch to login or dashboard after successful registration
       setTimeout(() => {
         switchForm('Login');
@@ -29,7 +27,7 @@ const SignUp = ({ switchForm }) => {
       console.error('Registration failed:', error);
       if (error.response && error.response.data) {
         setSuccessMessage(
-          `Registration failed: ${error.response.data.message}`,
+          `Registration failed: ${error.response.data.message}`
         );
       } else {
         setSuccessMessage('Registration failed, please try again later.');
