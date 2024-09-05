@@ -138,20 +138,6 @@ export const fetchCourseByCourseId = async (courseId) => {
 };
 
 //Function to fetch course data by course ID
-export const fetchCourseByCourseId = async (courseId) => {
-  try {
-    const token = getAuthToken();
-    const response = await axios.get(`${API_BASE_URL}/course/${courseId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching enrolled courses:', error);
-    throw error;
-  }
-};
 
 //Function to fetch list of course lessons  using the courseId
 export const fetchCourseLessons = async (courseId) => {
