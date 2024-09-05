@@ -4,9 +4,10 @@ import SignUp from './SignUp';
 import ForgotPassword from './ForgotPassWordForm';
 import styles from './Nav.module.css';
 import logo from '../../assets/logos/blue.png';
+import { useNavigate } from 'react-router-dom';
 import SetNewPassWord from './SetNewPassword';
 
-const Nav = ({ isLoggedIn, handleLogin, setUserType }) => {
+const Nav = ({ isLoggedIn }) => {
   const [activeForm, setActiveForm] = useState(null);
 
   const switchForm = (link) => {
@@ -20,7 +21,13 @@ const Nav = ({ isLoggedIn, handleLogin, setUserType }) => {
       case 'ForgotPassword':
         setActiveForm('ForgotPassword');
         break;
-      case 'SetNewPassWord':
+      case 'SetNewPassWord': // Correct casing to match exactly
+        setActiveForm('SetNewPassWord');
+        break;
+      case 'ForgotPassword':
+        setActiveForm('ForgotPassword');
+        break;
+      case 'SetNewPassWord': // Correct casing to match exactly
         setActiveForm('SetNewPassWord');
         break;
       default:
@@ -53,23 +60,18 @@ const Nav = ({ isLoggedIn, handleLogin, setUserType }) => {
           </span>
         ))}
       </div>
-
       {activeForm === 'SignUp' && <SignUp switchForm={switchForm} />}
-      {activeForm === 'SignIn' && (
-        <SignIn
-          switchForm={switchForm}
-          onLoginSuccess={(name, type) => {
-            // Set isLoggedIn to true in the parent component
-            switchForm(null); // Close the form
-            handleLogin(name);
-            setUserType(type);
-          }}
-        />
+      {activeForm === 'SignIn' && <SignIn switchForm={switchForm} />}
+      {activeForm === 'ForgotPassword' && (
+        <ForgotPassword switchForm={switchForm} />
+      )}
+      {activeForm === 'SetNewPassWord' && ( // Updated to match correctly
+        <SetNewPassWord switchForm={switchForm} />
       )}
       {activeForm === 'ForgotPassword' && (
         <ForgotPassword switchForm={switchForm} />
       )}
-      {activeForm === 'SetNewPassWord' && (
+      {activeForm === 'SetNewPassWord' && ( // Updated to match correctly
         <SetNewPassWord switchForm={switchForm} />
       )}
     </div>
