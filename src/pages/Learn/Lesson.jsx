@@ -70,6 +70,12 @@ const Lesson = ({ lesson }) => {
     }
   };
 
+  const getYouTubeVideoID = (url) => {
+    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  }
+
   return (
     <div className={styles.lessonContainer}>
       <h2 className={styles.learnTitle}>{title}</h2>
@@ -100,20 +106,41 @@ const Lesson = ({ lesson }) => {
               <div className={styles.descriptionContent}>
                 {key === MEDIA_TYPES.VIDEO ? (
                   <>
-                    <video
-                      controls
-                      src={description[key]}
-                      className={styles.videoPlayer}
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                    <a
-                      href={description[key]}
-                      download
-                      className={styles.downloadLink}
-                    >
-                      Download Video
-                    </a>
+                    {
+                      description[key].includes('youtube.com') || description[key].includes('youtu.be') ? (
+                        <>
+                          <iframe
+                            width="560"
+                            height="315"
+                            src={`https://www.youtube.com/embed/${getYouTubeVideoID(description[key])}`}
+                            title="YouTube video player"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen>
+                          </iframe>
+                        </>
+                      ) : (
+                        <>
+                          <video
+                            controls
+                            src={description[key]}
+                            className={styles.videoPlayer}
+                          >
+                            Your browser does not support the video tag.
+                          </video>
+                          <a
+                            href={description[key]}
+                            download
+                            className={styles.downloadLink}
+                          >
+                            Download Video
+                          </a>
+                        </>
+                      )
+                    }
+
+
+
                   </>
                 ) : key === MEDIA_TYPES.IMAGE ? (
                   <div className={styles.imageWrapper}>
@@ -121,7 +148,7 @@ const Lesson = ({ lesson }) => {
                       src={description[key]}
                       alt={key}
                       className={styles.imageDisplay}
-                      style={{ transform: `scale(${zoomLevel})` }}
+                      style={{transform: `scale(${zoomLevel})` }}
                     />
                     <div className={styles.zoomControls}>
                       <button

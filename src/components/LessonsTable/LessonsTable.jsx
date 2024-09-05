@@ -23,7 +23,6 @@ const LessonsTable = ({lessons = []}) => {
         ))}
         </tbody>
       </table>
-      <button>Add lesson</button>
     </>
   );
 };

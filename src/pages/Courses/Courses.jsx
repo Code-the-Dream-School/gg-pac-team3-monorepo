@@ -5,6 +5,7 @@ import styles from './Courses.module.css';
 const Courses = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const [courses, setCourses] = useState([]);
+  const token = localStorage.getItem('authToken');
 
   useEffect(() => {
     fetch(`${apiUrl}/course`, {
@@ -12,7 +13,7 @@ const Courses = () => {
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((response) => {

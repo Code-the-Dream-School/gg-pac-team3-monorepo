@@ -6,7 +6,7 @@ const EditLesson = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const { id } = useParams();
   const [lesson, setLesson] = useState({});
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('authToken');
 
   useEffect(() => {
     fetch(`${apiUrl}/lesson/${id}`,

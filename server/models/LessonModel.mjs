@@ -15,7 +15,7 @@ class LessonModel {
     if (typeof title !== 'string') throw new Error('Invalid title');
     if (typeof points !== 'number') throw new Error('Invalid points');
     if (typeof order !== 'number') throw new Error('Invalid order');
-    if (!Array.isArray(videoLinks)) throw new Error('Invalid videoLinks');
+    if (!videoLinks.length && !Array.isArray(videoLinks)) throw new Error('Invalid videoLinks');
     if (typeof materials !== 'string') throw new Error('Invalid materials');
     if (typeof description !== 'object') throw new Error('Invalid description');
 

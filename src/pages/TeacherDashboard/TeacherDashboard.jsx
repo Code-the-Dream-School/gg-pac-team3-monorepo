@@ -71,10 +71,11 @@ const TeacherDashboard = () => {
                   <tr key={course.id}>
                     <td><img className={styles.courseLogo} src={course.logoUrl}/></td>
                     <td><Link className={styles.courseLink}
-                              to={`/teacher/courses/edit/${course.id}`}>{course.courseName}</Link></td>
+                              to={`/teacher/courses/${course.id}/lessons`}>{course.courseName}</Link></td>
                     <td>{course.lessons.length}</td>
                     <td>{totalPoints(course.lessons)}</td>
                     <td>{course.user_courses.length}</td>
+                    <td><Link className={styles.courseLink} to={`/teacher/courses/edit/${course.id}`}>Edit</Link></td>
                   </tr>
                 )
               })

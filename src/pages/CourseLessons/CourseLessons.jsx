@@ -1,8 +1,8 @@
-import {useNavigate, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {jwtDecode} from "jwt-decode";
 import LessonsTable from "../../components/LessonsTable/LessonsTable.jsx";
-import styles from "../Courses/Courses.module.css";
+import styles from "./CourseLessons.module.css";
 import SideBar from "../../components/SideBar/SideBar.jsx";
 
 const CourseLessons = () => {
@@ -10,7 +10,7 @@ const CourseLessons = () => {
   const { id } = useParams();
   const [course, setCourse] = useState({});
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('authToken');
   const decodedToken = jwtDecode(token);
   const teacherEmail = decodedToken.email;
 
@@ -35,18 +35,19 @@ const CourseLessons = () => {
     });
   }, [id]);
 
-  console.log({course});
-
   return (
-    <div>
+    <>
       <SideBar />
-      <div>
+    <div className={styles.courseLessonsContainer}>
+      <div className={styles.courseInfoContainer}>
         <img src={course.logoUrl}/>
         <h1>{course.courseName}</h1>
         <p>{course.description}</p>
       </div>
       <LessonsTable />
+      <Link className={styles.addLessonButton} to={`/teacher/courses/${id}/lessons/new`}>Add lesson</Link>
     </div>
+    </>
   );
 };
 
