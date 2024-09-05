@@ -1,0 +1,120 @@
+.feedbackContainer {
+  margin: 1.25rem auto; 
+  padding: 1.25rem; 
+  max-width: 37.5rem; 
+  background-color: #f9f9f9;
+  border-radius: 0.5rem; 
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); 
+}
+
+.feedbackContainer h2 {
+  font-size: 1.5rem; 
+  margin-bottom: 1.25rem; 
+  text-align: center;
+}
+
+.ratingContainer,
+.feedbackContainer {
+  margin-bottom: 1.25rem; 
+}
+
+.ratingContainer label,
+.feedbackContainer label {
+  display: block;
+  font-size: 1.125rem; 
+  margin-bottom: 0.5rem; 
+}
+
+.ratingSelect {
+  width: 100%;
+  padding: 0.625rem; 
+  font-size: 1rem; 
+  border-radius: 0.25rem; 
+  border: 0.0625rem solid #ddd; 
+}
+
+.feedbackTextarea {
+  width: 100%;
+  padding: 0.625rem; 
+  font-size: 1rem;
+  border-radius: 0.25rem; 
+  border: 0.0625rem solid #ddd; 
+  resize: vertical;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 0.75rem; 
+  font-size: 1.125rem; 
+  background-color: #122a50;
+  color: white;
+  border: none;
+  border-radius: 0.25rem; 
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submitButton:hover {
+  background-color: #0056b3;
+}
+
+.errorMessage {
+  color: red;
+  text-align: center;
+  margin-bottom: 1.25rem; 
+}
+
+.successMessage {
+  color: green;
+  text-align: center;
+  margin-bottom: 1.25rem; 
+}
+
+/* Media Query for Responsiveness */
+@media (max-width: 768px) {
+  .feedbackContainer {
+    padding: 1rem;
+    max-width: 90%; 
+  }
+
+  .feedbackContainer h2 {
+    font-size: 1.25rem; 
+  }
+
+  .ratingContainer label,
+  .feedbackContainer label {
+    font-size: 1rem; 
+  }
+
+  .ratingSelect,
+  .feedbackTextarea {
+    padding: 0.5rem; 
+    font-size: 0.875rem; 
+  }
+
+  .submitButton {
+    padding: 0.625rem; 
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .feedbackContainer h2 {
+    font-size: 1.125rem; 
+  }
+
+  .ratingContainer label,
+  .feedbackContainer label {
+    font-size: 0.875rem; 
+  }
+
+  .ratingSelect,
+  .feedbackTextarea {
+    font-size: 0.75rem; 
+  }
+
+  .submitButton {
+    padding: 0.5rem; 
+    font-size: 0.875rem; 
+  }
+}

@@ -40,7 +40,7 @@ export const registerUser = async (name, email, password, userType) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
+      }
     );
 
     return response.data;
@@ -60,7 +60,7 @@ export const fetchQuizByLessonId = async (lessonId, courseId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -68,7 +68,6 @@ export const fetchQuizByLessonId = async (lessonId, courseId) => {
     throw error;
   }
 };
-
 
 // Function to fetch a list of courses to display on the front page
 export const fetchCourses = async () => {
@@ -96,7 +95,7 @@ export const FetchSuggestedCoursesForUser = async (userId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -115,7 +114,7 @@ export const fetchUserEnrolledCourses = async (userId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -140,6 +139,51 @@ export const fetchCourseByCourseId = async (courseId) => {
   }
 };
 
+//Function to fetch Teacher data by using course ID from user_course table
+export const fetchTeacherDataByCourseId = async (courseId) => {
+  try {
+    // console.log('courseId:api file:', courseId);
+    const token = getAuthToken();
+    const response = await axios.get(
+      `${API_BASE_URL}/course/${courseId}/getTeacherData`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching teachers data:', error);
+    throw error;
+  }
+};
+
+//function to add user Feedback To Course addFeedbackToCourse
+export const addUserFeedbackToCourse = async (
+  courseId,
+  rating,
+  userId,
+  feedback
+) => {
+  try {
+    const token = getAuthToken();
+   
+    const response = await axios.post(
+      `${API_BASE_URL}/user/AddUserFeedback`,
+      { courseId, rating, userId, feedback },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error adding user feedback to the course:', error);
+    throw error;
+  }
+};
 //Function to fetch list of course lessons  using the courseId
 export const fetchCourseLessons = async (courseId) => {
   try {
@@ -150,7 +194,7 @@ export const fetchCourseLessons = async (courseId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -169,7 +213,7 @@ export const fetchUserProfile = async (userId) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -189,7 +233,7 @@ export const AddUserCourse = async (userId, courseId, role) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      },
+      }
     );
     return response.data;
   } catch (error) {
@@ -213,7 +257,9 @@ export const updateProfileInfo = async (userId, updatedProfile) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+
       },
+
     );
     return response.data; // Return the updated profile data
   } catch (error) {

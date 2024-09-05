@@ -4,6 +4,7 @@ import {
   getSuggestedCoursesForUser,
   getUserCourses,
   getCoursesForUser,
+  CreateUserCourses,
 } from '../controllers/userCourseController.mjs';
 import { verifyToken } from '../middlewares/verifyToken.mjs';
 
@@ -43,6 +44,8 @@ const router = express.Router();
  */
 router.get('/user/:userId/course', verifyToken, getUserCourses);
 
+router.post('/users/courses/createUserCourse', verifyToken, CreateUserCourses);
+
 /**
  * @swagger
  * /api/user/{userId}/course/{courseId}/enrollment:
@@ -77,13 +80,13 @@ router.get('/user/:userId/course', verifyToken, getUserCourses);
 router.post(
   '/user/:userId/course/:courseId/enrollment',
   verifyToken,
-  enrollInCourse,
+  enrollInCourse
 );
 
 router.get('/user/:userId/course/UserCourses', verifyToken, getCoursesForUser);
 router.get(
   '/user/:userId/course/SuggestedCourses',
   verifyToken,
-  getSuggestedCoursesForUser,
+  getSuggestedCoursesForUser
 );
 export default router;

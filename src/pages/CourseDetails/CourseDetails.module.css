@@ -21,7 +21,8 @@
 
 .enrollSuccessMessage {
   font-size: 1.2rem;
-  color: #666;
+  font-weight: bold;
+  color: #f40505;
   margin-bottom: 1.25rem;
 }
 
