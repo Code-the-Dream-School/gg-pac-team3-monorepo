@@ -30,6 +30,12 @@ const Nav = ({ isLoggedIn }) => {
       case 'SetNewPassWord': // Correct casing to match exactly
         setActiveForm('SetNewPassWord');
         break;
+      case 'ForgotPassword':
+        setActiveForm('ForgotPassword');
+        break;
+      case 'SetNewPassWord': // Correct casing to match exactly
+        setActiveForm('SetNewPassWord');
+        break;
       default:
         setActiveForm(null);
     }
@@ -74,8 +80,19 @@ const Nav = ({ isLoggedIn }) => {
       {activeForm === 'SetNewPassWord' && ( // Updated to match correctly
         <SetNewPassWord switchForm={switchForm} />
       )}
+      {activeForm === 'ForgotPassword' && (
+        <ForgotPassword switchForm={switchForm} />
+      )}
+      {activeForm === 'SetNewPassWord' && (
+        <SetNewPassWord switchForm={switchForm} />
+      )}
     </div>
   );
+};
+
+Nav.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  onLogout: PropTypes.func.isRequired,
 };
 
 export default Nav;
