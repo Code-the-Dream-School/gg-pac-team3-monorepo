@@ -116,26 +116,8 @@ export const getTeacherCourses = async (req, res) => {
       .where(CREATED_BY, '==', teacherEmail)
       .get();
 
-
     if (coursesSnapshot.empty) {
       return res.status(200).send([]);
-        const courses = await Promise.all(coursesSnapshot.docs.map(async (doc) => {
-            const courseModel = CourseModel.fromFirestore(doc.data());
-            const lessons = await getCourseLessons(doc.id, coursesRef);
-            const userCourses = await getUserCourses(doc.id);
-            return {
-                id: doc.id,
-                lessons: lessons,
-                user_courses: userCourses,
-                ...courseModel
-            };
-        }));
-
-        res.status(200).send(courses);
-    } catch (error) {
-        console.error('Error fetching teacher courses:', error);
-        res.status(500).send({ error: error.message });
-
     }
 
     const courses = await Promise.all(
