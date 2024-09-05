@@ -8,11 +8,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 25rem; 
-  padding: 2.5rem; 
+  width: 25rem;
+  padding: 2.5rem;
   background-color: #fff;
-  border-radius: 0.5rem; 
-  box-shadow: 0.0625rem 0rem 1.25rem rgba(0, 0, 0, 0.5); 
+  border-radius: 0.5rem;
+  box-shadow: 0.0625rem 0rem 1.25rem rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 
@@ -23,66 +23,66 @@
 .header {
   font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 2.25rem; 
+  font-size: 2.25rem;
   line-height: 1.2;
   text-align: start;
   color: #f35c3c;
-  margin-bottom: 0.625rem; 
+  margin-bottom: 0.625rem;
 }
 
 .name {
   font-family: 'Inter', sans-serif;
   font-weight: 400;
-  font-size: 1.125rem; 
+  font-size: 1.125rem;
   line-height: 1.5;
   text-align: start;
   color: #122a50;
-  margin-bottom: 1.875rem; 
+  margin-bottom: 1.875rem;
 }
 
 .forms {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem; 
-  border: 0.125rem solid #122a50; 
-  padding: 1.5625rem; 
+  gap: 1.25rem;
+  border: 0.125rem solid #122a50;
+  padding: 1.5625rem;
   border-radius: 3%;
 }
 
 .formName {
-  font-size: 0.875rem; 
+  font-size: 0.875rem;
   color: #333;
-  margin-bottom: -0.875rem; 
+  margin-bottom: -0.875rem;
   margin-right: 90%;
   white-space: nowrap;
 }
 
 .inputField {
   width: 100%;
-  padding: 0.625rem; 
-  border: 0.0625rem solid #ccc; 
-  border-radius: 0.25rem; 
+  padding: 0.625rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.25rem;
   box-sizing: border-box;
-  font-size: 0.875rem; 
+  font-size: 0.875rem;
   background-color: white;
   color: #333;
 }
 
 .closingSection {
-  margin-top: 1.875rem; 
+  margin-top: 1.875rem;
   width: 100%;
   text-align: center;
 }
 
 .registerButton {
   width: 100%;
-  padding: 0.625rem; 
+  padding: 0.625rem;
   background-color: #122a50;
   color: white;
   border: none;
-  border-radius: 0.25rem; 
-  font-size: 1rem; 
+  border-radius: 0.25rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin: 0 auto;
@@ -95,8 +95,8 @@
 }
 
 .content {
-  margin-top: 0.9375rem; 
-  font-size: 0.875rem; 
+  margin-top: 0.9375rem;
+  font-size: 0.875rem;
   color: #333;
   text-decoration: underline;
 }
@@ -131,92 +131,92 @@
 .successMessage {
   color: green;
   font-weight: bold;
-  margin-top: 1.25rem; 
+  margin-top: 1.25rem;
   text-align: center;
 }
 
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .container {
-    width: 20rem; 
-    padding: 2rem; 
+    width: 20rem;
+    padding: 2rem;
   }
 
   .header {
-    font-size: 2rem; 
+    font-size: 2rem;
   }
 
   .name {
-    font-size: 1rem; 
-    margin-bottom: 1.5rem; 
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .forms {
-    padding: 1.25rem; 
-    gap: 1rem; 
+    padding: 1.25rem;
+    gap: 1rem;
   }
 
   .formName {
-    font-size: 0.8125rem; 
-    margin-bottom: -0.8125rem; 
+    font-size: 0.8125rem;
+    margin-bottom: -0.8125rem;
   }
 
   .inputField {
-    padding: 0.5625rem; 
+    padding: 0.5625rem;
   }
 
   .registerButton {
-    padding: 0.5625rem; 
-    font-size: 0.9375rem; 
+    padding: 0.5625rem;
+    font-size: 0.9375rem;
   }
 
   .content {
-    margin-top: 0.8125rem; 
-    font-size: 0.8125rem; 
+    margin-top: 0.8125rem;
+    font-size: 0.8125rem;
   }
 
   .successMessage {
-    margin-top: 1rem; 
+    margin-top: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .container {
-    width: 18rem; 
-    padding: 1.5rem; 
+    width: 18rem;
+    padding: 1.5rem;
   }
 
   .header {
-    font-size: 1.75rem; 
+    font-size: 1.75rem;
   }
 
   .name {
-    font-size: 0.9375rem; 
+    font-size: 0.9375rem;
     margin-bottom: 1.25rem;
   }
 
   .forms {
-    padding: 1rem; 
-    gap: 0.9375rem; 
+    padding: 1rem;
+    gap: 0.9375rem;
   }
 
   .formName {
-    font-size: 0.75rem; 
-    margin-bottom: -0.75rem; 
+    font-size: 0.75rem;
+    margin-bottom: -0.75rem;
   }
 
   .inputField {
-    padding: 0.5rem; 
+    padding: 0.5rem;
   }
 
   .registerButton {
-    padding: 0.5rem; 
-    font-size: 0.875rem; 
+    padding: 0.5rem;
+    font-size: 0.875rem;
   }
 
   .content {
-    margin-top: 0.75rem; 
-    font-size: 0.75rem; 
+    margin-top: 0.75rem;
+    font-size: 0.75rem;
   }
 
   .successMessage {
