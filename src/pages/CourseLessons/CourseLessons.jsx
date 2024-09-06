@@ -9,6 +9,7 @@ const CourseLessons = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const { id } = useParams();
   const [course, setCourse] = useState({});
+  const [lessons, setLessons] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem('authToken');
   const decodedToken = jwtDecode(token);
@@ -30,11 +31,21 @@ const CourseLessons = () => {
         return;
       }
       setCourse(data);
+      fetch(`${apiUrl}/course/${id}/lessons`, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((response) => {
+        return response.json();
+      }).then((data) => {
+        setLessons(data);
+      })
     }).catch((error) => {
       console.error(error);
     });
   }, [id]);
-
   return (
     <>
       <SideBar />
@@ -44,7 +55,7 @@ const CourseLessons = () => {
         <h1>{course.courseName}</h1>
         <p>{course.description}</p>
       </div>
-      <LessonsTable />
+      <LessonsTable courseId={id} lessons={lessons}/>
       <Link className={styles.addLessonButton} to={`/teacher/courses/${id}/lessons/new`}>Add lesson</Link>
     </div>
     </>

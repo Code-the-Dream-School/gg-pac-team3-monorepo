@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import speakerIcon from '../../assets/images/speaker-icon-png.png';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchQuizByLessonId } from '../../services/api';
+import Video from "../../components/Video/Video.jsx";
 
 const Lesson = ({ lesson }) => {
   const { id, title, description = {} } = lesson; 
@@ -105,43 +106,7 @@ const Lesson = ({ lesson }) => {
             {expandedKey === key && (
               <div className={styles.descriptionContent}>
                 {key === MEDIA_TYPES.VIDEO ? (
-                  <>
-                    {
-                      description[key].includes('youtube.com') || description[key].includes('youtu.be') ? (
-                        <>
-                          <iframe
-                            width="560"
-                            height="315"
-                            src={`https://www.youtube.com/embed/${getYouTubeVideoID(description[key])}`}
-                            title="YouTube video player"
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowFullScreen>
-                          </iframe>
-                        </>
-                      ) : (
-                        <>
-                          <video
-                            controls
-                            src={description[key]}
-                            className={styles.videoPlayer}
-                          >
-                            Your browser does not support the video tag.
-                          </video>
-                          <a
-                            href={description[key]}
-                            download
-                            className={styles.downloadLink}
-                          >
-                            Download Video
-                          </a>
-                        </>
-                      )
-                    }
-
-
-
-                  </>
+                  <Video videoLink={description[key]} />
                 ) : key === MEDIA_TYPES.IMAGE ? (
                   <div className={styles.imageWrapper}>
                     <img

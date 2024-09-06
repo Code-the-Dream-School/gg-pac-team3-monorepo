@@ -1,4 +1,7 @@
-const LessonsTable = ({lessons = []}) => {
+import {Link} from "react-router-dom";
+import styles from './LessonsTable.module.css';
+
+const LessonsTable = ({courseId, lessons = []}) => {
   return (
     <>
       <table>
@@ -16,8 +19,8 @@ const LessonsTable = ({lessons = []}) => {
             <td>{lesson.description.video}</td>
             <td>{lesson.points}</td>
             <td>
-              <button>Edit</button>
-              <button>Delete</button>
+              <Link className={styles.lessonEditLink}
+                    to={`/teacher/courses/${courseId}/lessons/edit/${lesson.id}`}>Edit</Link>
             </td>
           </tr>
         ))}
