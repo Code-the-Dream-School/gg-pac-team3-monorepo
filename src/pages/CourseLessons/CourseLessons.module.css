@@ -1,0 +1,24 @@
+.courseLessonsContainer {
+    display: flex;
+    flex-direction: column;
+    /*flex-grow: 1;*/
+    img {
+        margin: 1rem;
+        width: 6rem;
+        height: 5rem;
+    }
+}
+
+.courseInfoContainer {
+    display: flex;
+    flex-direction: column;
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    /*margin: 1rem;*/
+}
+
+.addLessonButton {
+    color: #0f2240;
+    background-color: #f7b600;
+
+}

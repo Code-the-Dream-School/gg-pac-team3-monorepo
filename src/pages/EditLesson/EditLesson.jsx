@@ -1,15 +1,16 @@
 import LessonForm from "../../components/LessonForm/LessonForm.jsx";
 import {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const EditLesson = () => {
   const apiUrl = import.meta.env.VITE_API_BASE_URL;
-  const { id } = useParams();
-  const [lesson, setLesson] = useState({});
-  const token = localStorage.getItem('token');
+  const { id, lessonId } = useParams();
+  const [lesson, setLesson] = useState(null);
+  const navigate = useNavigate();
+  const token = localStorage.getItem('authToken');
 
   useEffect(() => {
-    fetch(`${apiUrl}/lesson/${id}`,
+    fetch(`${apiUrl}/course/${id}/lesson/${lessonId}`,
       {
         method: 'GET',
         headers: {
@@ -23,12 +24,34 @@ const EditLesson = () => {
     }).catch((error) => {
       console.error(error);
     });
-  }, [id])
-  // const lesson = course.lessons.find(lesson => lesson.id === lessonId);
+  }, [lessonId])
+
+  const handleSubmit = (lesson) => {
+    fetch(`${apiUrl}/course/${id}/lesson/${lessonId}`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(lesson)
+    }).then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Failed to update lesson');
+      }
+    }
+    ).then(data => {
+      navigate(`/teacher/courses/${id}/lessons`);
+    }).catch(error => {
+      console.error(error);
+    });
+  }
+
 
   return (
     <div>
-      <LessonForm initialData={lesson} />
+      {lesson && <LessonForm initialData={lesson} onSubmit={handleSubmit}/>}
     </div>
   );
 };
