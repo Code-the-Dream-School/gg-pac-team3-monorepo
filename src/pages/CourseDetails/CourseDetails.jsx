@@ -100,7 +100,7 @@ const CourseDetails = () => {
         {lessons.map((lesson, index) => (
           <li className={styles.lessonsItem} key={`${lesson.id}-${index}`}>
             <h3 className={styles.lessonTitle}>{lesson.title}</h3>
-            <p>{lesson.materials}</p>
+            <p className={styles.lessonMaterials}>{lesson.materials}</p>
           </li>
         ))}
       </ul>

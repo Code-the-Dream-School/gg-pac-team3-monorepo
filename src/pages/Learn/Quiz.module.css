@@ -5,6 +5,7 @@
   padding: 2rem;
   background-color: #fdfdfd;
   border-radius: 12px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   max-width: 800px;
 }

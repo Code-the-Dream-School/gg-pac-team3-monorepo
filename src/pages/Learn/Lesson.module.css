@@ -32,7 +32,7 @@
 }
 
 .descriptionSection:hover {
-  transform: translateX(10px);
+  transform: translateX(2px);
 }
 
 .descriptionTitleContainer {
@@ -52,12 +52,31 @@
   font-size: 1.1rem;
   font-weight: 500;
   color: white;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  /* transition: background-color 0.3s ease, transform 0.3s ease; */
 }
 
 .descriptionTitle:hover {
   background-color: #debf41;
-  transform: scale(1.02);
+  /* transform: scale(1.02); */
+}
+.highlightedWord {
+  background-color: yellow; /* Highlight the currently spoken word */
+}
+.clickedKeyDisplay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  background-color: #f0f0f0;
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.speakerIconContainer {
+  display: block;
+  margin-top: 0.5rem;
 }
 
 .speakerIcon {
