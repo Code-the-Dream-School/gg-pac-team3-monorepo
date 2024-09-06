@@ -5,6 +5,7 @@ import {
   getTeacherCourses,
   getCourse,
   updateCourse,
+  getTeacherData,
   deleteCourse,
 } from '../controllers/courseController.mjs';
 import { verifyToken, isTeacher } from '../middlewares/verifyToken.mjs';
@@ -141,7 +142,13 @@ router.get('/:uid', verifyToken, getCourse);
  *       500:
  *         description: Internal server error.
  */
-router.post('/', verifyToken, isTeacher, multer({ dest: './public/data/uploads/' }).single('logo'), createCourse);
+router.post(
+  '/',
+  verifyToken,
+  isTeacher,
+  multer({ dest: './public/data/uploads/' }).single('logo'),
+  createCourse
+);
 
 /**
  * @swagger
@@ -197,7 +204,13 @@ router.post('/', verifyToken, isTeacher, multer({ dest: './public/data/uploads/'
  *       500:
  *         description: Internal server error.
  */
-router.patch('/:uid', verifyToken, isTeacher, multer({ dest: './public/data/uploads/' }).single('logo'), updateCourse);
+router.patch(
+  '/:uid',
+  verifyToken,
+  isTeacher,
+  multer({ dest: './public/data/uploads/' }).single('logo'),
+  updateCourse
+);
 
 /**
  * @swagger
@@ -226,4 +239,6 @@ router.patch('/:uid', verifyToken, isTeacher, multer({ dest: './public/data/uplo
  */
 router.delete('/:uid', verifyToken, isTeacher, deleteCourse);
 
+
+router.get('/:uid/getTeacherData', verifyToken, getTeacherData);
 export default router;

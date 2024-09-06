@@ -95,6 +95,7 @@ export const getLesson = async (req, res) => {
 
 // Fetch all lessons in a course
 export const getAllLessons = async (req, res) => {
+
   const { courseId } = req.params;
 
   try {
@@ -113,6 +114,7 @@ export const getAllLessons = async (req, res) => {
     console.error('Error fetching lessons:', error);
     res.status(500).send({ error: error.message });
   }
+
 };
 
 // Update a lesson by ID

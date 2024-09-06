@@ -14,7 +14,7 @@ const CourseDetails = () => {
   const [error, setError] = useState(null);
   const userId = localStorage.getItem('userId');
   const role = 'student';
-  
+
   const fetchLessons = async () => {
     try {
       if (!course) {
@@ -39,27 +39,28 @@ const CourseDetails = () => {
       await AddUserCourse(userId, course.id, role);
       setIsEnrolled(true);
       setMessage(
-        'You have successfully enrolled in this course. Enjoy your learning!',
+        'You have successfully enrolled in this course. Enjoy your learning!'
       );
     } catch (error) {
       console.error('Error enrolling in course:', error);
       setMessage('Enrollment failed, please try again.');
     }
   };
-  
+
   const handleGotoCourse = () => {
     if (lessons.length > 0) {
-      
       //for later use
       // const courseUrl = `/learn/${course.courseName.trim()}/lesson/${lessons[0].title.trim()}`;
       // window.open(courseUrl, '_blank', 'noopener,noreferrer');
-      
+
       navigate(
         `/learn/${course.courseName.trim()}/lesson/${lessons[0].title.trim()}`,
         {
           state: { courseId: course.id },
-        },
+        }
       ); // Navigate to the Learn page
+    } else {
+      setMessage('Lessons are not available for this course. Coming soon!');
     }
   };
 
@@ -84,20 +85,20 @@ const CourseDetails = () => {
         </button>
       ) : (
         <div>
-          <p className={styles.enrollSuccessMessage}>{message}</p>
           <button
             className={styles.goToCourseButton}
             onClick={handleGotoCourse}
           >
             Go to Course
           </button>
+          <p className={styles.enrollSuccessMessage}>{message}</p>
         </div>
       )}
 
       <h3 className={styles.lessonsHeading}>What you&apos;ll learn</h3>
       <ul className={styles.lessonsListUl}>
-        {lessons.map((lesson) => (
-          <li className={styles.lessonsItem} key={lesson.id}>
+        {lessons.map((lesson, index) => (
+          <li className={styles.lessonsItem} key={`${lesson.id}-${index}`}>
             <h3 className={styles.lessonTitle}>{lesson.title}</h3>
             <p>{lesson.materials}</p>
           </li>

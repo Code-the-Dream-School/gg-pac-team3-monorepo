@@ -34,9 +34,9 @@ const MyCourses = ({ userId, onCourseClick }) => {
 
   return (
     <div className={styles.coursesContainer}>
-      {enrolledCoursesData.map((course) => (
+      {enrolledCoursesData.map((course, index) => (
         <div
-          key={course.courseID}
+          key={`${course.courseID}-${index}`}
           className={styles.courseCard}
           onClick={() => onCourseClick(course)}
         >
@@ -62,8 +62,8 @@ const MyCourses = ({ userId, onCourseClick }) => {
 
 // Prop validation
 MyCourses.propTypes = {
-  userId: PropTypes.string.isRequired, // userId is required and must be a string
-  onCourseClick: PropTypes.func.isRequired, // onCourseClick is required and must be a function
+  userId: PropTypes.string.isRequired,
+  onCourseClick: PropTypes.func.isRequired,
 };
 
 export default MyCourses;

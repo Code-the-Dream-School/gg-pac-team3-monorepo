@@ -1,7 +1,7 @@
-import admin from "../config/firebase.mjs";
-import UserCourseModel from "../models/userCourseModel.mjs";
-import { USER_COURSES, COURSES } from "./constants.mjs";
-import CourseModel from "../models/CourseModel.mjs";
+import admin from '../config/firebase.mjs';
+import UserCourseModel from '../models/userCourseModel.mjs';
+import { USER_COURSES, COURSES } from './constants.mjs';
+import CourseModel from '../models/CourseModel.mjs';
 const db = admin.firestore();
 
 //  User enrolled in selected course
@@ -20,11 +20,37 @@ export const enrollInCourse = async (req, res) => {
     await userCourseRef.set(userCourse.toFirestore());
 
     res.status(201).send({
-      message: "Enrolled in course successfully",
+      message: 'Enrolled in course successfully',
       id: userCourseRef.id,
     });
   } catch (error) {
-    console.error("Error enrolling in course:", error);
+    console.error('Error enrolling in course:', error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
+export const CreateUserCourses = async (req, res) => {  
+  const { userId, courseId, role, progress, earnedPoints } = req.body; 
+ 
+  try {
+    const userCourse = new UserCourseModel({
+      userId,
+      courseId,
+      role,
+      progress,
+      earnedPoints,
+      enrolledAt: new Date(),
+    });
+
+    const userCourseRef = db.collection(USER_COURSES).doc();
+    await userCourseRef.set(userCourse.toFirestore());
+
+    res.status(201).send({
+      message: 'create one course successfully by teacher',
+      id: userCourseRef.id,
+    });
+  } catch (error) {
+    console.error('Error creating course by teacher:', error);
     res.status(500).send({ error: error.message });
   }
 };
@@ -34,7 +60,7 @@ export const getSuggestedCoursesForUser = async (req, res) => {
   const { userId } = req.params;
 
   try {
-    // Step 1: Fetch all courses
+    // Step 1: Fetch all courses    
     const allCoursesSnapshot = await db.collection(COURSES).get();
     const allCourses = [];
 
@@ -43,7 +69,9 @@ export const getSuggestedCoursesForUser = async (req, res) => {
 
       // Validate the course data (minimal validation)
       if (!data.courseType || typeof data.courseType !== 'string') {
-        console.warn(`Skipping document with ID ${doc.id} due to invalid courseType.`);
+        console.warn(
+          `Skipping document with ID ${doc.id} due to invalid courseType.`
+        );
         return; // Skip this course if it has invalid data
       }
 
@@ -53,7 +81,7 @@ export const getSuggestedCoursesForUser = async (req, res) => {
     // Step 2: Fetch user's enrolled courses
     const userCoursesSnapshot = await db
       .collection(USER_COURSES)
-      .where("userId", "==", userId)
+      .where('userId', '==', userId)
       .get();
 
     const enrolledCourses = new Set();
@@ -68,10 +96,11 @@ export const getSuggestedCoursesForUser = async (req, res) => {
 
     res.status(200).send(notEnrolledCourses);
   } catch (error) {
-    console.error("Error fetching courses:", error);
+    console.error('Error fetching courses:', error);
     res.status(500).send({ error: error.message });
   }
 };
+
 
 //  Fetch all courses that a user is enrolled in
 export const getUserCourses = async (req, res) => {
@@ -80,13 +109,13 @@ export const getUserCourses = async (req, res) => {
   try {
     const userCoursesSnapshot = await db
       .collection(USER_COURSES)
-      .where("userId", "==", userId)
+      .where('userId', '==', userId)
       .get();
 
     if (userCoursesSnapshot.empty) {
       return res
         .status(404)
-        .send({ message: "No courses found for this user" });
+        .send({ message: 'No courses found for this user' });
     }
 
     const courses = [];
@@ -95,7 +124,9 @@ export const getUserCourses = async (req, res) => {
 
       // Validate course data
       if (!courseData.courseType || typeof courseData.courseType !== 'string') {
-        console.warn(`Skipping user course document with ID ${doc.id} due to invalid courseType.`);
+        console.warn(
+          `Skipping user course document with ID ${doc.id} due to invalid courseType.`
+        );
         return;
       }
 
@@ -107,7 +138,7 @@ export const getUserCourses = async (req, res) => {
 
     res.status(200).send(courses);
   } catch (error) {
-    console.error("Error fetching user courses:", error);
+    console.error('Error fetching user courses:', error);
     res.status(500).send({ error: error.message });
   }
 };
@@ -120,13 +151,13 @@ export const getCoursesForUser = async (req, res) => {
     // Step 1: Fetch course IDs from user_course collection
     const userCoursesSnapshot = await db
       .collection(USER_COURSES)
-      .where("userId", "==", userId)
+      .where('userId', '==', userId)
       .get();
 
     if (userCoursesSnapshot.empty) {
       return res
         .status(404)
-        .send({ message: "No courses found for this user" });
+        .send({ message: 'No courses found for this user' });
     }
 
     const courseIds = userCoursesSnapshot.docs.map(
@@ -136,17 +167,17 @@ export const getCoursesForUser = async (req, res) => {
     if (courseIds.length === 0) {
       return res
         .status(404)
-        .send({ message: "No courses found for this user" });
+        .send({ message: 'No courses found for this user' });
     }
 
     // Step 2: Fetch course details from course collection
     const coursesSnapshot = await db
       .collection(COURSES)
-      .where(admin.firestore.FieldPath.documentId(), "in", courseIds)
+      .where(admin.firestore.FieldPath.documentId(), 'in', courseIds)
       .get();
 
     if (coursesSnapshot.empty) {
-      return res.status(404).send({ message: "No course details found" });
+      return res.status(404).send({ message: 'No course details found' });
     }
 
     const courses = [];
@@ -155,7 +186,9 @@ export const getCoursesForUser = async (req, res) => {
 
       // Validate course data
       if (!data.courseType || typeof data.courseType !== 'string') {
-        console.warn(`Skipping course document with ID ${doc.id} due to invalid courseType.`);
+        console.warn(
+          `Skipping course document with ID ${doc.id} due to invalid courseType.`
+        );
         return;
       }
 
@@ -164,7 +197,7 @@ export const getCoursesForUser = async (req, res) => {
 
     res.status(200).send(courses);
   } catch (error) {
-    console.error("Error fetching user courses with details:", error);
+    console.error('Error fetching user courses with details:', error);
     res.status(500).send({ error: error.message });
   }
 };

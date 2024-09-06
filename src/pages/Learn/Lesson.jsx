@@ -181,9 +181,9 @@ Lesson.propTypes = {
     materials: PropTypes.string,
     description: PropTypes.objectOf(PropTypes.string), // Changed to objectOf for dynamic keys
   }).isRequired,
-  courseName: PropTypes.string.isRequired,
-  courseId: PropTypes.string.isRequired,
-  lessonId: PropTypes.string.isRequired,
+  // courseName: PropTypes.string.isRequired,
+  // courseId: PropTypes.string.isRequired,
+  // lessonId: PropTypes.string.isRequired,
 };
 
 export default Lesson;

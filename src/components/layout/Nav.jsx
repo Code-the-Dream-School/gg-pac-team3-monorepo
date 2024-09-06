@@ -10,9 +10,19 @@ import { useNavigate } from 'react-router-dom';
 const Nav = ({ isLoggedIn, onLogout }) => {
   const [activeForm, setActiveForm] = useState(null);
   const navigate = useNavigate();
-  const { userName, handleLogin } = useAuth();
-  const [userType, setUserType] = useState('');
+  const { userName, handleLogin, userType } = useAuth();
 
+  const navLinks = isLoggedIn
+    ? [
+        { id: 1, link: `Welcome ${userName}` },
+        { id: 2, link: 'Dashboard' },
+        { id: 3, link: 'Logout' },
+      ]
+    : [
+        { id: 1, link: 'Login' },
+        { id: 2, link: 'Register' },
+      ];
+  
   const switchForm = (link) => {
     switch (link) {
       case 'Register':
@@ -38,20 +48,7 @@ const Nav = ({ isLoggedIn, onLogout }) => {
     }
   };
 
-  useEffect(() => {}, [userType]);
-
   useEffect(() => {}, [isLoggedIn]);
-
-  const navLinks = isLoggedIn
-    ? [
-        { id: 1, link: `Welcome ${userName}` },
-        { id: 2, link: 'Dashboard' },
-        { id: 3, link: 'Logout' },
-      ]
-    : [
-        { id: 1, link: 'Login' },
-        { id: 2, link: 'Register' },
-      ];
 
   return (
     <div className={styles.nav}>
@@ -74,8 +71,7 @@ const Nav = ({ isLoggedIn, onLogout }) => {
           onLoginSuccess={(name, type) => {
             // Set isLoggedIn to true in the parent component
             switchForm(null); // Close the form
-            handleLogin(name);
-            setUserType(type);
+            handleLogin(name, type);
           }}
         />
       )}

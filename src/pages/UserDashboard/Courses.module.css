@@ -6,11 +6,20 @@
   padding: 1.25rem;
   background-color: #eef2f3;
 }
+
 .searchContainer {
+
   display: flex;
   flex-direction: column;
   background-color: #eef2f3;
 }
+
+.form > h2{
+  color:#f35c3c;
+  padding: 1em;
+}
+
+
 .form > h2 {
   color: #f35c3c;
   padding: 1em;
@@ -28,6 +37,7 @@
 
 .submit {
   padding: 1em;
+
 }
 .courseCard {
   display: flex;
