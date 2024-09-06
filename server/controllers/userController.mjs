@@ -22,8 +22,7 @@ export const signupUser = async (req, res) => {
       userType,
     });
 
-    const defaultprofilePictureUrl =
-      'gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg';
+    const defaultprofilePictureUrl = '/images/userProfileImage.jpg';
 
     const user = new UsersModel({
       name,
