@@ -1,13 +1,34 @@
 import admin from '../config/firebase.mjs';
 import LessonModel from '../models/LessonModel.mjs';
 import { COURSES, LESSONS } from './constants.mjs';
+import cloudinary from "../config/cloudinary.mjs";
 
 const db = admin.firestore();
 
 // Create a new lesson in a course
 export const createLesson = async (req, res) => {
   const { courseId } = req.params; // courseId from URL params
-  const lessonData = req.body;
+  let lessonData = req.body;
+  const { file, image } = req.files;
+  if (lessonData.description) {
+    lessonData['description'] = JSON.parse(lessonData['description']);
+  }
+  console.log({lessonData})
+
+  if (file) {
+    lessonData = await addFileToParams(file[0], lessonData);
+  }
+
+  if (image) {
+    lessonData = await addFileToParams(image[0], lessonData);
+  }
+  lessonData = setLessonId(lessonData);
+  lessonData['points'] = parseInt(lessonData['points']);
+  if (lessonData['videoLinks']) {
+    lessonData['videoLinks'] = JSON.parse(lessonData['videoLinks']);
+  }
+
+  console.log({lessonData});
 
   try {
     const courseRef = db.collection(COURSES).doc(courseId);
@@ -29,6 +50,24 @@ export const createLesson = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
+
+const addFileToParams = async (file, params) => {
+  params.description = params.description || {};
+  if (file) {
+    const uploadResult = await cloudinary.uploader.upload(file.path).catch((error) => {
+      console.log(error);
+    });
+    params.description[file.fieldname] = uploadResult.secure_url;
+  }
+  return params;
+}
+
+const setLessonId = (params) => {
+  if (!params.lessonId && params.title) {
+    params.lessonId = camelCase(params.title);
+  }
+  return params;
+}
 
 // Fetch a specific lesson by ID
 export const getLesson = async (req, res) => {
@@ -126,3 +165,9 @@ export const deleteLesson = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
+
+function camelCase(str) {
+  return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+    return index == 0 ? word.toLowerCase() : word.toUpperCase();
+  }).replace(/\s+/g, '');
+}

@@ -1,0 +1,17 @@
+.videoPlayer {
+
+}
+
+.downloadLink {
+    display: block;
+    margin-top: 1rem;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.downloadLink:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}

@@ -8,7 +8,7 @@ const EditCourse = () => {
   const {id} = useParams();
   const [course, setCourse] = useState({});
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('authToken');
   const decodedToken = jwtDecode(token);
   const teacherEmail = decodedToken.email;
 

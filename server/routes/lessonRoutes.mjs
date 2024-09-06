@@ -7,6 +7,7 @@ import {
   deleteLesson,
 } from '../controllers/lessonController.mjs';
 import { verifyToken, isTeacher } from '../middlewares/verifyToken.mjs';
+import multer from 'multer';
 
 const router = express.Router();
 
@@ -130,7 +131,12 @@ router.get('/:courseId/lesson/:lessonId', verifyToken, getLesson);
  *       500:
  *         description: Internal server error.
  */
-router.post('/:courseId', verifyToken, isTeacher, createLesson);
+router.post('/:courseId',
+  verifyToken,
+  isTeacher,
+  multer({ dest: './public/data/uploads/' })
+    .fields([{ name: 'file', maxCount: 1 }, { name: 'image', maxCount: 1 }]),
+  createLesson);
 
 /**
  * @swagger
