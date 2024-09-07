@@ -52,7 +52,14 @@ const Nav = ({ isLoggedIn, onLogout }) => {
 
   return (
     <div className={styles.nav}>
-      <img src={logo} alt='Logo' className={styles.logo} />
+      <img
+        onClick={() => {
+          navigate('/');
+        }}
+        src={logo}
+        alt='Logo'
+        className={styles.logo}
+      />
       <div className={styles.navLinks}>
         {navLinks.map((navLink) => (
           <span

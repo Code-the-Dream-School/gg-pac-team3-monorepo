@@ -5,7 +5,7 @@ import styles from './Courses.module.css';
 
 const Home = ({ userId, onCourseClick }) => {
   const [coursesData, setCoursesData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('Ex:JavaScript');
+  const [searchTerm, setSearchTerm] = useState('');
   const [filteredCourses, setFilteredCourses] = useState([]);
 
   useEffect(() => {
@@ -35,15 +35,16 @@ const Home = ({ userId, onCourseClick }) => {
     ));
   };
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-
-    const filteredCoursesList = coursesData.filter((course) =>
-      course.courseName.toLowerCase().includes(searchTerm.toLowerCase())
-
-    );
-    setFilteredCourses(filteredCoursesList);
-  };
+  useEffect(() => {
+    if (!searchTerm) {
+      setFilteredCourses(coursesData);
+    } else {
+      const filteredCoursesList = coursesData.filter((course) =>
+        course.courseName.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+      setFilteredCourses(filteredCoursesList);
+    }
+  }, [searchTerm, coursesData]);
 
   const handleSearchTerm = (event) => {
     const input = event.target.value;
@@ -53,21 +54,17 @@ const Home = ({ userId, onCourseClick }) => {
   return (
     <div>
       <div className={styles.searchContainer}>
-        <form
-          id='submitSearchForm'
-          onSubmit={handleSearch}
-          className={styles.form}
-        >
+        <form id='submitSearchForm' className={styles.form}>
           <h2>Search courses:</h2>
           <input
             onChange={handleSearchTerm}
+            onClick={() => {
+              setSearchTerm('');
+            }}
             value={searchTerm}
             placeholder={searchTerm}
             className={styles.searchInput}
           />
-          <button className={styles.submit} type='submit'>
-            Search
-          </button>
         </form>
       </div>
       <div className={styles.coursesContainer}>
