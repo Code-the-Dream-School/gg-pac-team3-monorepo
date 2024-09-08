@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { LoginUser } from '../../services/api';
+import { useState, useEffect } from 'react';
+import { LoginUser, googleSignIn } from '../../services/api';
 import CloseIcon from '../icons/CloseIcon';
 import styles from './SignIn.module.css';
 import PropTypes from 'prop-types';
@@ -7,33 +7,86 @@ import PropTypes from 'prop-types';
 const SignIn = ({ switchForm, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isGoogleReady, setIsGoogleReady] = useState(false);
+
+  useEffect(() => {
+    const loadGoogleScript = () => {
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => setIsGoogleReady(true);
+      document.body.appendChild(script);
+    };
+
+    if (!window.google) {
+      loadGoogleScript();
+    } else {
+      setIsGoogleReady(true);
+    }
+
+    return () => {
+      const script = document.querySelector('script[src="https://accounts.google.com/gsi/client"]');
+      if (script) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isGoogleReady && window.google) {
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: handleGoogleSignIn,
+      });
+      window.google.accounts.id.renderButton(
+        document.getElementById('googleSignInButton'),
+        { theme: 'outline', size: 'large' }
+      );
+    }
+  }, [isGoogleReady]);
 
   const handleLogin = async () => {
     if (!email || !password) {
-      console.error('Please fill in all fields.');
+      setError('Please fill in all fields.');
       return;
     }
     try {
-      const response = await LoginUser(email, password);
-      const userName = response.name;
-      const userType = response.userType;
-      if (onLoginSuccess) onLoginSuccess(userName, userType);
+      const user = await LoginUser(email, password);
+      if (onLoginSuccess) {
+        onLoginSuccess(user.name, user.userType);
+      }
       switchForm(null);
     } catch (error) {
       console.error('Login failed:', error);
       if (error.response && error.response.data) {
-        console.error(`Login failed: ${error.response.data.message}`);
+        setError(error.response.data.error || 'Login failed. Please try again.');
       } else {
-        console.error('Login failed, please try again later.');
+        setError('Login failed. Please try again later.');
       }
     }
   };
+
+  const handleGoogleSignIn = async (response) => {
+    try {
+      const user = await googleSignIn(response.credential);
+      if (onLoginSuccess) {
+        onLoginSuccess(user.name || user.displayName, user.userType);
+      }
+      switchForm(null);
+    } catch (error) {
+      console.error('Google sign-in failed:', error);
+      setError('Google sign-in failed. Please try again.');
+    }
+  };
+
   return (
     <div className={styles.container}>
       <section className={styles.headings}>
         <div className={styles.headingsContainer}>
           <h1 className={styles.header}>Log In</h1>
-          <p className={styles.name}>Welcome Back to LearningHub</p>{' '}
+          <p className={styles.name}>Welcome Back to LearningHub</p>
         </div>
         <button
           className={styles.closeFormButton}
@@ -43,7 +96,6 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
           <CloseIcon width={30} height={30} />
         </button>
       </section>
-
       <div className={styles.forms}>
         <label className={styles.formName} htmlFor='email'>
           Email
@@ -51,40 +103,54 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
         <input
           className={styles.input}
           id='email'
+          type='email'
           placeholder='Email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           aria-required='true'
-        ></input>
-
+        />
         <label className={styles.formName} htmlFor='password'>
           Password
         </label>
         <input
           className={styles.input}
           id='password'
-          placeholder='Password'
           type='password'
+          placeholder='Password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           aria-required='true'
-        ></input>
+        />
+        {error && <p className={styles.errorMessage}>{error}</p>}
         <button type='button' className={styles.button} onClick={handleLogin}>
           Log In
         </button>
-      </div>
 
+        <p className={styles.forgotPassword}>
+          <a
+            className={styles.forgotPasswordLink}
+            onClick={(e) => {
+              e.preventDefault();
+              switchForm('ForgotPassword');
+            }}
+          >
+            Forgot Password?
+          </a>
+        </p>
+
+        {isGoogleReady && <div id="googleSignInButton" className={styles.googleButton}></div>}
+      </div>
       <section className={styles.closingSection}>
         <p className={styles.content}>
-          Already have an account?{' '}
+          Don't have an account?{' '}
           <a
             className={styles.join}
             onClick={(e) => {
               e.preventDefault();
-              switchForm('Login');
+              switchForm('Register');
             }}
           >
-            Login now
+            Sign up now
           </a>
         </p>
       </section>
@@ -98,4 +164,3 @@ SignIn.propTypes = {
 };
 
 export default SignIn;
-

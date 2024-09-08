@@ -8,6 +8,7 @@ import {
   getAllUsers,
   resetPassword,
   updateUserProfile,
+  googleSignIn,
 } from '../controllers/userController.mjs';
 import { verifyToken } from '../middlewares/verifyToken.mjs';
 
@@ -239,5 +240,30 @@ router.get('/:uid/dashboard', verifyToken, getUserDashboard);
  *         description: Internal server error.
  */
 router.patch('/:uid', verifyToken, updateUserProfile);
+
+/**
+ * @swagger
+ * /api/user/google:
+ *   post:
+ *     summary: Sign in or sign up a user with Google
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               token:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: User signed in or signed up successfully with Google.
+ *       400:
+ *         description: Bad request. Invalid token.
+ *       500:
+ *         description: Internal server error.
+ */
+router.post('/google', googleSignIn);
 
 export default router;

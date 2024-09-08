@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { registerUser } from '../../services/api';
+import { useState, useEffect, useCallback } from 'react';
+import { registerUser, googleSignIn } from '../../services/api';
 import CloseIcon from '../icons/CloseIcon';
 import styles from './SignUp.module.css';
 import PropTypes from 'prop-types';
@@ -10,30 +10,88 @@ const SignUp = ({ switchForm }) => {
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState('Student');
   const [successMessage, setSuccessMessage] = useState('');
+  const [error, setError] = useState('');
+  const [showGoogleUserTypeModal, setShowGoogleUserTypeModal] = useState(false);
+  const [googleUserType, setGoogleUserType] = useState('Student');
+  const [googleCredential, setGoogleCredential] = useState(null);
+  const [isGoogleReady, setIsGoogleReady] = useState(false);
+
+  useEffect(() => {
+    const loadGoogleScript = () => {
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.defer = true;
+      script.onload = () => setIsGoogleReady(true);
+      document.body.appendChild(script);
+    };
+
+    if (!window.google) {
+      loadGoogleScript();
+    } else {
+      setIsGoogleReady(true);
+    }
+
+    return () => {
+      const script = document.querySelector('script[src="https://accounts.google.com/gsi/client"]');
+      if (script) {
+        document.body.removeChild(script);
+      }
+    };
+  }, []);
 
   const handleRegister = async () => {
     if (!name || !email || !password) {
-      setSuccessMessage('Please fill in all fields.');
+      setError('Please fill in all fields.');
       return;
     }
     try {
-      const response = await registerUser(name, email, password, userType);
+      await registerUser(name, email, password, userType);
       setSuccessMessage(`You have registered successfully, please login.`);
-      // switch to login or dashboard after successful registration
+      setError('');
       setTimeout(() => {
         switchForm('Login');
       }, 3000);
     } catch (error) {
       console.error('Registration failed:', error);
-      if (error.response && error.response.data) {
-        setSuccessMessage(
-          `Registration failed: ${error.response.data.message}`
-        );
-      } else {
-        setSuccessMessage('Registration failed, please try again later.');
-      }
+      setError(error.response?.data?.error || 'Registration failed, please try again later.');
+      setSuccessMessage('');
     }
   };
+
+  const handleGoogleSignUp = useCallback(async (response) => {
+    setGoogleCredential(response.credential);
+    setShowGoogleUserTypeModal(true);
+  }, []);
+
+  const completeGoogleSignUp = async () => {
+    try {
+      const user = await googleSignIn(googleCredential, googleUserType);
+      setSuccessMessage(`You have registered successfully with Google as a ${googleUserType}, please login.`);
+      setError('');
+      setShowGoogleUserTypeModal(false);
+      setTimeout(() => {
+        switchForm('Login');
+      }, 3000);
+    } catch (error) {
+      console.error('Google sign-up failed:', error);
+      setError('Registration with Google failed, please try again later.');
+      setSuccessMessage('');
+    }
+  };
+
+  useEffect(() => {
+    if (isGoogleReady && window.google) {
+      window.google.accounts.id.initialize({
+        client_id: import.meta.env.VITE_GOOGLE_CLIENT_ID,
+        callback: handleGoogleSignUp,
+      });
+      window.google.accounts.id.renderButton(
+        document.getElementById('googleSignUpButton'),
+        { theme: 'outline', size: 'large', text: 'signup_with' }
+      );
+    }
+  }, [isGoogleReady, handleGoogleSignUp]);
 
   return (
     <div className={styles.container}>
@@ -45,11 +103,11 @@ const SignUp = ({ switchForm }) => {
         <button
           className={styles.closeFormButton}
           onClick={() => switchForm(null)}
+          aria-label="Close sign-up form"
         >
           <CloseIcon width={30} height={30} />
         </button>
       </section>
-
       <div className={styles.forms}>
         <label className={styles.formName} htmlFor='name'>
           Name
@@ -61,8 +119,7 @@ const SignUp = ({ switchForm }) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           aria-required='true'
-        ></input>
-
+        />
         <label className={styles.formName} htmlFor='email'>
           Email
         </label>
@@ -73,8 +130,8 @@ const SignUp = ({ switchForm }) => {
           placeholder='Email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-        ></input>
-
+          aria-required='true'
+        />
         <label className={styles.formName} htmlFor='password'>
           Password
         </label>
@@ -85,7 +142,8 @@ const SignUp = ({ switchForm }) => {
           type='password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-        ></input>
+          aria-required='true'
+        />
         <label className={styles.formName} htmlFor='userType'>
           Select Role
         </label>
@@ -94,10 +152,12 @@ const SignUp = ({ switchForm }) => {
           id='userType'
           value={userType}
           onChange={(e) => setUserType(e.target.value)}
+          aria-required='true'
         >
           <option value='Student'>Student</option>
           <option value='Teacher'>Teacher</option>
         </select>
+        {error && <p className={styles.errorMessage} role="alert">{error}</p>}
         <button
           type='button'
           className={styles.registerButton}
@@ -105,25 +165,42 @@ const SignUp = ({ switchForm }) => {
         >
           Register
         </button>
+        {isGoogleReady && <div id="googleSignUpButton" className={styles.googleButton}></div>}
         {successMessage && (
-          <p className={styles.successMessage}>{successMessage}</p>
+          <p className={styles.successMessage} role="status">{successMessage}</p>
         )}
       </div>
-
       <section className={styles.closingSection}>
         <p className={styles.content}>
           Already have an account?{' '}
-          <a
+          <button
             className={styles.join}
-            onClick={(e) => {
-              e.preventDefault();
-              switchForm('Login');
-            }}
+            onClick={() => switchForm('Login')}
           >
             Login now
-          </a>
+          </button>
         </p>
       </section>
+
+      {showGoogleUserTypeModal && (
+        <div className={styles.modal} role="dialog" aria-labelledby="googleUserTypeModalTitle">
+          <div className={styles.modalContent}>
+            <h2 id="googleUserTypeModalTitle">Select Your Role</h2>
+            <select
+              value={googleUserType}
+              onChange={(e) => setGoogleUserType(e.target.value)}
+              className={styles.inputField}
+              aria-label="Select user role"
+            >
+              <option value="Student">Student</option>
+              <option value="Teacher">Teacher</option>
+            </select>
+            <button onClick={completeGoogleSignUp} className={styles.registerButton}>
+              Complete Sign Up
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
