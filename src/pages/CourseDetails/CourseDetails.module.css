@@ -101,6 +101,32 @@
   animation: spin 1s linear infinite;
   margin: 0 auto;
 }
+.backButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.backButton:hover {
+  background-color: #0056b3;
+}
+
+.courseTitle {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.courseDescription {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* Other existing styles */
 
 @keyframes spin {
   0% {

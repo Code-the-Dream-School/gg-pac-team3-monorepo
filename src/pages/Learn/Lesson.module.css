@@ -51,13 +51,11 @@
   cursor: pointer;
   font-size: 1.1rem;
   font-weight: 500;
-  color: white;
-  /* transition: background-color 0.3s ease, transform 0.3s ease; */
+  color: white;  
 }
 
 .descriptionTitle:hover {
-  background-color: #debf41;
-  /* transform: scale(1.02); */
+  background-color: #debf41; 
 }
 .highlightedWord {
   background-color: yellow; /* Highlight the currently spoken word */
@@ -98,7 +96,7 @@
   margin-top: 0.5rem;
   background-color: #fafafa;
   font-size: 1rem;
-  color: #444444;
+  color: #1c1c1c;
   line-height: 1.6;
 }
 

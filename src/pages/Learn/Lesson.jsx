@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import speakerIcon from '../../assets/images/speaker-icon-png.png';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchQuizByLessonId } from '../../services/api';
-import Video from "../../components/Video/Video.jsx";
+import Video from '../../components/Video/Video.jsx';
 
 const Lesson = ({ lesson }) => {
   const { id, title, description = {} } = lesson;
@@ -132,7 +132,7 @@ const Lesson = ({ lesson }) => {
                       src={description[key]}
                       alt={key}
                       className={styles.imageDisplay}
-                      style={{transform: `scale(${zoomLevel})` }}
+                      style={{ transform: `scale(${zoomLevel})` }}
                     />
                     <div className={styles.zoomControls}>
                       <button
