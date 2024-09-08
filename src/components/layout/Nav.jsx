@@ -19,10 +19,11 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         { id: 3, link: 'Logout' },
       ]
     : [
-        { id: 1, link: 'Login' },
-        { id: 2, link: 'Register' },
+        { id: 1, link: 'About Us' },
+        { id: 2, link: 'Login' },
+        { id: 3, link: 'Register' },
       ];
-  
+
   const switchForm = (link) => {
     switch (link) {
       case 'Register':
@@ -52,18 +53,6 @@ const Nav = ({ isLoggedIn, onLogout }) => {
   };
 
   useEffect(() => {}, [isLoggedIn]);
-
-  const navLinks = isLoggedIn
-    ? [
-        { id: 1, link: `Welcome ${userName}` },
-        { id: 2, link: 'Dashboard' },
-        { id: 3, link: 'Logout' },
-      ]
-    : [
-        { id: 1, link: 'About Us' },
-        { id: 2, link: 'Login' },
-        { id: 3, link: 'Register' },
-      ];
 
   return (
     <div className={styles.nav}>
