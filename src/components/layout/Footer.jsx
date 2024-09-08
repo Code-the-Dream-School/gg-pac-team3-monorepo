@@ -14,7 +14,7 @@ const Footer = () => {
           <a href='https://codethedream.org/'>Code the Dream</a>
         </li>
         <li className={styles.listItem}>
-          <Link>About Us</Link>
+          <Link to='/About'>About Us</Link>
         </li>
       </ul>
     </div>

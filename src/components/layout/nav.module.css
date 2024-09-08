@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0% 2.5%;
-  box-shadow: 10px 21px 25px -7px rgba(0, 0, 0, 0.5);
+  box-shadow: 10px 5px 25px -7px rgba(0, 0, 0, 0.5);
   font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-style: normal;
@@ -45,5 +45,19 @@
   .navLink {
     margin: 0px 10px;
     font-size: 1em;
+  }
+}
+
+@media (min-width: 768px) {
+  .navLink {
+    margin: 0px 10px;
+    font-size: 1.2em;
+  }
+}
+
+@media (min-width: 992px) {
+  .navLink {
+    margin: 0px 10px;
+    font-size: 1.5em;
   }
 }

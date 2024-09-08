@@ -27,11 +27,12 @@
 }
 
 .panelText > p {
-  text-align: center;
+  text-align: justify;
 }
 .mainContainer {
   display: flex;
   flex-direction: column;
+  text-align: left;
   background-color: #fdfdfd;
 }
 
@@ -332,9 +333,6 @@
   }
   .mainContainer > div > h4 {
     font-size: 1em;
-  }
-  .panelText {
-    width: 20em;
   }
   .panelText > h3 {
     font-size: 1.3em;
