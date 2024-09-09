@@ -94,7 +94,7 @@ const Learn = () => {
         <div className={styles.courseHeader}>
           {/* Back Button */}
           <button
-            className={styles.backButton} 
+            className={styles.backButton}
             onClick={() => navigate(-1)} // Navigate to previous page
           >
             ← Back
