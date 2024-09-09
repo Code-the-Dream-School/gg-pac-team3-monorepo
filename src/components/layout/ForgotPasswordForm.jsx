@@ -30,59 +30,63 @@ const ForgotPassword = ({ switchForm }) => {
   };
 
   return (
-    <div className={styles.pageContainer}>
-      <div className={styles.formContainer}>
-        <button 
-          className={styles.closeFormButton} 
-          onClick={() => switchForm(null)}
-          aria-label="Close form"
-        >
-          <CloseIcon width={30} height={30} />
-        </button>
-        <h1 className={styles.header}>Forgot Password?</h1>
-        <p className={styles.instructions}>Enter your email to reset the password</p>
-        <div>
-          {message && <p style={{ color: 'green' }}>{message}</p>}
-          {error && <p style={{ color: 'red' }}>{error}</p>}
-
-          <label className={styles.emailLabel} htmlFor="email">Email</label>
-          <input
-            id="email"
-            className={styles.emailInput}
-            placeholder="Enter your email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-
-          <button className={styles.resetButton} onClick={handleSendLink}>
-            Send Reset Link
+    <div className={styles.pageOverlay}>
+      <div className={styles.pageContainer}>
+        <div className={styles.formContainer}>
+          <button 
+            className={styles.closeFormButton} 
+            onClick={() => switchForm(null)}
+            aria-label="Close form"
+          >
+            <CloseIcon width={30} height={30} />
           </button>
+          <h1 className={styles.header}>Forgot Password?</h1>
+          <p className={styles.instructions}>Enter your email to reset the password</p>
+          <div className={styles.formContentWrapper}>
+            {message && <p className={styles.successMessage}>{message}</p>}
+            {error && <p className={styles.errorMessage}>{error}</p>}
 
-          <p className={styles.resendText}>
-            Didn't receive the email?{' '}
-            <a href="#" className={styles.resendLink} onClick={(e) => {
-              e.preventDefault();
-              handleSendLink();
-            }}>
-              Resend it
-            </a>
-          </p>
+            <label className={styles.emailLabel} htmlFor="email">Email</label>
+            <input
+              id="email"
+              className={styles.emailInput}
+              placeholder="Enter your email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-          <p className={styles.resendText}>
-            Remember your password?{' '}
-            <a
-              href="#"
-              className={styles.resendLink}
-              onClick={(e) => {
-                e.preventDefault();
-                switchForm('Login');
-              }}
-            >
-              Log In
-            </a>
-          </p>
+            <button className={styles.resetButton} onClick={handleSendLink}>
+              Send Reset Link
+            </button>
+
+            <div className={styles.centeredText}>
+              <p className={styles.resendText}>
+                Didn't receive the email?{' '}
+                <a href="#" className={styles.resendLink} onClick={(e) => {
+                  e.preventDefault();
+                  handleSendLink();
+                }}>
+                  Resend it
+                </a>
+              </p>
+
+              <p className={styles.resendText}>
+                Remember your password?{' '}
+                <a
+                  href="#"
+                  className={styles.resendLink}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    switchForm('Login');
+                  }}
+                >
+                  Log In
+                </a>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

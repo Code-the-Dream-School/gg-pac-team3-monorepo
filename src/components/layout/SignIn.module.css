@@ -1,79 +1,86 @@
+/* SignIn.module.css */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+.pageOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 1000;
+}
+
 .container {
-  position: absolute;
+  font-family: 'Roboto', sans-serif;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 25rem;
-  padding: 2.5rem;
+  width: 22rem;
+  padding: 2rem;
   background-color: #fff;
   border-radius: 0.5rem;
-  box-shadow: 0.0625rem 0rem 1.25rem rgba(0, 0, 0, 0.5);
-  z-index: 1;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.1);
+  z-index: 1001;
 }
 
 .header {
-  font-family: 'Inter', sans-serif;
   font-weight: 700;
-  font-size: 2.25rem;
-  line-height: 1.2;
-  color: #f35c3c; /* Match SignUp title color */
-  margin-bottom: 0.625rem;
-  text-align: center; /* Centered title */
+  font-size: 2rem;
+  color: #f35c3c;
+  margin-bottom: 0.5rem;
 }
 
 .name {
-  font-family: 'Inter', sans-serif;
   font-weight: 400;
-  font-size: 1.125rem;
-  line-height: 1.5;
+  font-size: 1rem;
   color: #122a50;
-  margin-bottom: 1.875rem;
-  text-align: center; /* Centered subtitle */
+  margin-bottom: 1.5rem;
 }
 
 .forms {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  border: 0.125rem solid #122a50;
-  padding: 1.5625rem;
-  border-radius: 3%;
+  gap: 1rem;
+  border: 1px solid #e0e0e0;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
 }
 
 .formName {
   font-size: 0.875rem;
   color: #333;
-  margin-bottom: -0.875rem;
-  margin-right: 90%;
-  white-space: nowrap;
+  margin-bottom: 0.25rem;
+  text-align: left;  /* Ensure left alignment */
+  align-self: flex-start;  /* Align to the start of the flex container */
 }
 
 .input {
   width: 100%;
-  padding: 0.625rem;
-  border: 0.0625rem solid #ccc;
+  padding: 0.75rem;
+  border: 1px solid #e0e0e0;
   border-radius: 0.25rem;
-  box-sizing: border-box;
   font-size: 0.875rem;
-  background-color: white;
   color: #333;
 }
 
 .button {
   width: 100%;
-  padding: 0.625rem;
+  padding: 0.75rem;
   background-color: #122a50;
   color: white;
   border: none;
   border-radius: 0.25rem;
   font-size: 1rem;
-  text-align: center; /* Center text in button */
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
 }
 
 .button:hover {
@@ -82,83 +89,38 @@
 
 .googleButton {
   width: 100%;
-  padding: 0.625rem;
-  text-align: center; /* Center text */
-  border-radius: 0.25rem;
+  padding: 0.75rem;
+  background-color: transparent;
+  color: #757575;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.googleButton:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .closeFormButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
   background: none;
   border: none;
-  position: absolute;
-  top: 20px;
-  right: 20px; /* Keep 'X' button on the right */
-}
-
-.closeFormButton:hover {
+  font-size: 1.5rem;
+  color: #757575;
   cursor: pointer;
-}
-
-.closingSection {
-  margin-top: 1.875rem;
-  width: 100%;
-  text-align: center;
-}
-
-.content {
-  margin-top: 0.9375rem;
-  font-size: 0.875rem;
-  color: #333;
-  text-decoration: underline;
-}
-
-.join {
-  color: #f35c3c;
-  text-decoration: none;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* Media Query for Responsive Design */
-@media (max-width: 768px) {
-  .container {
-    width: 90%;
-    padding: 1.5rem;
-  }
-
-  .header {
-    font-size: 1.875rem;
-  }
-
-  .name {
-    font-size: 1rem;
-    margin-bottom: 1.25rem;
-  }
-
-  .forms {
-    padding: 1rem;
-  }
-
-  .formName {
-    font-size: 0.75rem;
-  }
-
-  .input {
-    font-size: 0.8125rem;
-  }
-
-  .button {
-    font-size: 0.875rem;
-  }
-
-  .content {
-    font-size: 0.75rem;
-  }
 }
 
 .forgotPassword {
-  margin-top: 10px;
-  text-align: center; /* Centering the "Forgot Password?" text */
+  margin-top: 0.75rem;
+  text-align: center;
 }
 
 .forgotPasswordLink {
@@ -175,17 +137,47 @@
 .content {
   font-size: 0.875rem;
   color: #333;
-  text-align: center; /* Centering the "Don't have an account?" text */
-  margin-top: 10px;
+  text-align: center;
+  margin-top: 1rem;
 }
 
 .join {
   color: #f35c3c;
-  text-decoration: none; /* Removing underline initially */
+  text-decoration: none;
   font-weight: bold;
   cursor: pointer;
 }
 
 .join:hover {
-  text-decoration: underline; /* Underline only on hover */
+  text-decoration: underline;
+}
+
+.errorMessage {
+  color: #f44336;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .header {
+    font-size: 1.75rem;
+  }
+
+  .name {
+    font-size: 0.9375rem;
+  }
+
+  .forms {
+    padding: 1rem;
+  }
+
+  .input, .button, .googleButton {
+    padding: 0.625rem;
+  }
 }

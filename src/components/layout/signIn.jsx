@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LoginUser, googleSignIn } from '../../services/api';
 import CloseIcon from '../icons/CloseIcon';
 import styles from './SignIn.module.css';
@@ -9,6 +9,7 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isGoogleReady, setIsGoogleReady] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(true); 
 
   useEffect(() => {
     const loadGoogleScript = () => {
@@ -57,6 +58,7 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
       if (onLoginSuccess) {
         onLoginSuccess(user.name, user.userType);
       }
+      setIsFormVisible(false);
       switchForm(null);
     } catch (error) {
       console.error('Login failed:', error);
@@ -74,6 +76,7 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
       if (onLoginSuccess) {
         onLoginSuccess(user.name || user.displayName, user.userType);
       }
+      setIsFormVisible(false);
       switchForm(null);
     } catch (error) {
       console.error('Google sign-in failed:', error);
@@ -82,79 +85,88 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <section className={styles.headings}>
-        <div className={styles.headingsContainer}>
-          <h1 className={styles.header}>Log In</h1>
-          <p className={styles.name}>Welcome Back to LearningHub</p>
+    <>
+      {isFormVisible && (
+        <div className={styles.pageOverlay}>
+          <div className={styles.container}>
+            <section className={styles.headings}>
+              <div className={styles.headingsContainer}>
+                <h1 className={styles.header}>Log In</h1>
+                <p className={styles.name}>Welcome Back to LearningHub</p>
+              </div>
+              <button
+                className={styles.closeFormButton}
+                onClick={() => {
+                  setIsFormVisible(false);
+                  switchForm(null);
+                }}
+                aria-label='Close form'
+              >
+                <CloseIcon width={30} height={30} />
+              </button>
+            </section>
+            <div className={styles.forms}>
+              <label className={styles.formName} htmlFor='email'>
+                Email
+              </label>
+              <input
+                className={styles.input}
+                id='email'
+                type='email'
+                placeholder='Email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                aria-required='true'
+              />
+              <label className={styles.formName} htmlFor='password'>
+                Password
+              </label>
+              <input
+                className={styles.input}
+                id='password'
+                type='password'
+                placeholder='Password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                aria-required='true'
+              />
+              {error && <p className={styles.errorMessage}>{error}</p>}
+              <button type='button' className={styles.button} onClick={handleLogin}>
+                Log In
+              </button>
+
+              <p className={styles.forgotPassword}>
+                <a
+                  className={styles.forgotPasswordLink}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    switchForm('ForgotPassword');
+                  }}
+                >
+                  Forgot Password?
+                </a>
+              </p>
+
+              {isGoogleReady && <div id="googleSignInButton" className={styles.googleButton}></div>}
+            </div>
+            <section className={styles.closingSection}>
+              <p className={styles.content}>
+                Don't have an account?{' '}
+                <a
+                  className={styles.join}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    switchForm('Register');
+                  }}
+                >
+                  Sign up now
+                </a>
+              </p>
+            </section>
+          </div>
         </div>
-        <button
-          className={styles.closeFormButton}
-          onClick={() => switchForm(null)}
-          aria-label='Close form'
-        >
-          <CloseIcon width={30} height={30} />
-        </button>
-      </section>
-      <div className={styles.forms}>
-        <label className={styles.formName} htmlFor='email'>
-          Email
-        </label>
-        <input
-          className={styles.input}
-          id='email'
-          type='email'
-          placeholder='Email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          aria-required='true'
-        />
-        <label className={styles.formName} htmlFor='password'>
-          Password
-        </label>
-        <input
-          className={styles.input}
-          id='password'
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          aria-required='true'
-        />
-        {error && <p className={styles.errorMessage}>{error}</p>}
-        <button type='button' className={styles.button} onClick={handleLogin}>
-          Log In
-        </button>
-
-        <p className={styles.forgotPassword}>
-          <a
-            className={styles.forgotPasswordLink}
-            onClick={(e) => {
-              e.preventDefault();
-              switchForm('ForgotPassword');
-            }}
-          >
-            Forgot Password?
-          </a>
-        </p>
-
-        {isGoogleReady && <div id="googleSignInButton" className={styles.googleButton}></div>}
-      </div>
-      <section className={styles.closingSection}>
-        <p className={styles.content}>
-          Don't have an account?{' '}
-          <a
-            className={styles.join}
-            onClick={(e) => {
-              e.preventDefault();
-              switchForm('Register');
-            }}
-          >
-            Sign up now
-          </a>
-        </p>
-      </section>
-    </div>
+      )}
+    </>
   );
 };
 

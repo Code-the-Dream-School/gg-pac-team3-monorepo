@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { registerUser, googleSignIn } from '../../services/api';
 import CloseIcon from '../icons/CloseIcon';
 import styles from './SignUp.module.css';
@@ -15,6 +15,7 @@ const SignUp = ({ switchForm }) => {
   const [googleUserType, setGoogleUserType] = useState('Student');
   const [googleCredential, setGoogleCredential] = useState(null);
   const [isGoogleReady, setIsGoogleReady] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(true);  // New state for form visibility
 
   useEffect(() => {
     const loadGoogleScript = () => {
@@ -50,6 +51,7 @@ const SignUp = ({ switchForm }) => {
       setSuccessMessage(`You have registered successfully, please login.`);
       setError('');
       setTimeout(() => {
+        setIsFormVisible(false);
         switchForm('Login');
       }, 3000);
     } catch (error) {
@@ -71,6 +73,7 @@ const SignUp = ({ switchForm }) => {
       setError('');
       setShowGoogleUserTypeModal(false);
       setTimeout(() => {
+        setIsFormVisible(false);
         switchForm('Login');
       }, 3000);
     } catch (error) {
@@ -94,93 +97,102 @@ const SignUp = ({ switchForm }) => {
   }, [isGoogleReady, handleGoogleSignUp]);
 
   return (
-    <div className={styles.container}>
-      <section className={styles.headings}>
-        <div className={styles.headingsContainer}>
-          <h1 className={styles.header}>Sign Up</h1>
-          <p className={styles.name}>Getting started with LearnHub</p>
+    <>
+      {isFormVisible && (
+        <div className={styles.pageOverlay}>
+          <div className={styles.container}>
+            <section className={styles.headings}>
+              <div className={styles.headingsContainer}>
+                <h1 className={styles.header}>Sign Up</h1>
+                <p className={styles.name}>Getting started with LearnHub</p>
+              </div>
+              <button
+                className={styles.closeFormButton}
+                onClick={() => {
+                  setIsFormVisible(false);
+                  switchForm(null);
+                }}
+                aria-label="Close sign-up form"
+              >
+                <CloseIcon width={30} height={30} />
+              </button>
+            </section>
+            <div className={styles.forms}>
+              <label className={styles.formName} htmlFor='name'>
+                Name
+              </label>
+              <input
+                className={styles.inputField}
+                id='name'
+                placeholder='Enter Name'
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                aria-required='true'
+              />
+              <label className={styles.formName} htmlFor='email'>
+                Email
+              </label>
+              <input
+                className={styles.inputField}
+                type='email'
+                id='email'
+                placeholder='Email'
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                aria-required='true'
+              />
+              <label className={styles.formName} htmlFor='password'>
+                Password
+              </label>
+              <input
+                className={styles.inputField}
+                id='password'
+                placeholder='Password'
+                type='password'
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                aria-required='true'
+              />
+              <label className={styles.formName} htmlFor='userType'>
+                Select Role
+              </label>
+              <select
+                className={styles.inputField}
+                id='userType'
+                value={userType}
+                onChange={(e) => setUserType(e.target.value)}
+                aria-required='true'
+              >
+                <option value='Student'>Student</option>
+                <option value='Teacher'>Teacher</option>
+              </select>
+              {error && <p className={styles.errorMessage} role="alert">{error}</p>}
+              <button
+                type='button'
+                className={styles.registerButton}
+                onClick={handleRegister}
+              >
+                Register
+              </button>
+              {isGoogleReady && <div id="googleSignUpButton" className={styles.googleButton}></div>}
+              {successMessage && (
+                <p className={styles.successMessage} role="status">{successMessage}</p>
+              )}
+            </div>
+            <section className={styles.closingSection}>
+              <p className={styles.content}>
+                Already have an account?{' '}
+                <button
+                  className={styles.join}
+                  onClick={() => switchForm('Login')}
+                >
+                  Login now
+                </button>
+              </p>
+            </section>
+          </div>
         </div>
-        <button
-          className={styles.closeFormButton}
-          onClick={() => switchForm(null)}
-          aria-label="Close sign-up form"
-        >
-          <CloseIcon width={30} height={30} />
-        </button>
-      </section>
-      <div className={styles.forms}>
-        <label className={styles.formName} htmlFor='name'>
-          Name
-        </label>
-        <input
-          className={styles.inputField}
-          id='name'
-          placeholder='Enter Name'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          aria-required='true'
-        />
-        <label className={styles.formName} htmlFor='email'>
-          Email
-        </label>
-        <input
-          className={styles.inputField}
-          type='email'
-          id='email'
-          placeholder='Email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          aria-required='true'
-        />
-        <label className={styles.formName} htmlFor='password'>
-          Password
-        </label>
-        <input
-          className={styles.inputField}
-          id='password'
-          placeholder='Password'
-          type='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          aria-required='true'
-        />
-        <label className={styles.formName} htmlFor='userType'>
-          Select Role
-        </label>
-        <select
-          className={styles.inputField}
-          id='userType'
-          value={userType}
-          onChange={(e) => setUserType(e.target.value)}
-          aria-required='true'
-        >
-          <option value='Student'>Student</option>
-          <option value='Teacher'>Teacher</option>
-        </select>
-        {error && <p className={styles.errorMessage} role="alert">{error}</p>}
-        <button
-          type='button'
-          className={styles.registerButton}
-          onClick={handleRegister}
-        >
-          Register
-        </button>
-        {isGoogleReady && <div id="googleSignUpButton" className={styles.googleButton}></div>}
-        {successMessage && (
-          <p className={styles.successMessage} role="status">{successMessage}</p>
-        )}
-      </div>
-      <section className={styles.closingSection}>
-        <p className={styles.content}>
-          Already have an account?{' '}
-          <button
-            className={styles.join}
-            onClick={() => switchForm('Login')}
-          >
-            Login now
-          </button>
-        </p>
-      </section>
+      )}
 
       {showGoogleUserTypeModal && (
         <div className={styles.modal} role="dialog" aria-labelledby="googleUserTypeModalTitle">
@@ -201,7 +213,7 @@ const SignUp = ({ switchForm }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 
