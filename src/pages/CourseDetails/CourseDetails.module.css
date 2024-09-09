@@ -3,6 +3,7 @@
   padding: 1.25rem;
   margin: 1.25rem auto;
   max-width: 50rem;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
   border-radius: 0.625rem;
   box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
 }
@@ -35,14 +36,14 @@
 
 .lessonsListUl {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns */
+  grid-template-columns: 1fr 1fr; /*Two columns*/
   gap: 1.25rem; /* Space between grid items */
   list-style-type: none;
   padding: 0;
 }
 
 .lessonsItem {
-  background-color: #f6e8b6;
+  background-color: #e9ecf0;
   border: 1px solid #ddd;
   border-radius: 0.3125rem;
   padding: 0.9375rem;
@@ -56,7 +57,9 @@
   color: #333;
   margin-bottom: 0.3125rem;
 }
-
+.lessonMaterials {
+  font-size: 1.1rem;
+}
 .enrollButton {
   background-color: #007bff;
   color: white;
@@ -98,6 +101,32 @@
   animation: spin 1s linear infinite;
   margin: 0 auto;
 }
+.backButton {
+  background-color: #042d5a;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius:  0.25rem;
+  cursor: pointer;
+  margin-bottom: 1.25rem;
+}
+
+.backButton:hover {
+  background-color: #0056b3;
+}
+
+.courseTitle {
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
+}
+
+.courseDescription {
+  font-size: 1.2rem;
+  margin-bottom: 1.35rem;
+}
+
+/* Other existing styles */
 
 @keyframes spin {
   0% {

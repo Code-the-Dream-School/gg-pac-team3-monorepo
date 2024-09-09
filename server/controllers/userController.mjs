@@ -3,9 +3,11 @@ import admin from '../config/firebase.mjs';
 import axios from 'axios';
 import UsersModel from '../models/UsersModel.mjs';
 import { USERS } from './constants.mjs';
+import { OAuth2Client } from 'google-auth-library';
 
 dotenv.config();
 const db = admin.firestore();
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export const signupUser = async (req, res) => {
   const { name, email, password, userType } = req.body;
@@ -108,6 +110,64 @@ export const loginUser = async (req, res) => {
         error: 'An unexpected error occurred. Please try again later.',
       });
     }
+  }
+};
+
+export const googleSignIn = async (req, res) => {
+  const { token, userType } = req.body;
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email, name, picture } = payload;
+
+    let userRecord;
+    const profilePictureUrl = picture; 
+    
+    try {
+      userRecord = await admin.auth().getUserByEmail(email);
+    } catch (error) {
+      if (error.code === 'auth/user-not-found') {
+        userRecord = await admin.auth().createUser({
+          email,
+          name,
+          profilePictureUrl, 
+        });
+
+        await admin.firestore().collection('users').doc(userRecord.uid).set({
+          name,
+          email,
+          userType: userType,
+          profilePictureUrl, 
+        });
+      } else {
+        throw error;
+      }
+    }
+
+    // Get the user data from Firestore
+    const userDoc = await admin.firestore().collection('users').doc(userRecord.uid).get();
+    const userData = userDoc.data();
+
+    // Create a custom token
+    const customToken = await admin.auth().createCustomToken(userRecord.uid);
+
+    res.status(200).send({
+      message: 'Google sign-in successful',
+      token: customToken,
+      user: {
+        uid: userRecord.uid,
+        name: userData.name || name,
+        email: userData.email || email,
+        userType: userData.userType || userType, 
+        profilePictureUrl: userData.profilePictureUrl || profilePictureUrl, 
+      },
+    });
+  } catch (error) {
+    console.error('Error in Google sign-in:', error);
+    res.status(500).send({ error: error.message });
   }
 };
 

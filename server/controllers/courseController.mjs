@@ -8,7 +8,7 @@ import {
   LESSONS,
   USER_COURSES,
   USERS,
-  COURSE_ID, 
+  COURSE_ID,
   CREATED_BY,
 } from './constants.mjs';
 import cloudinary from '../config/cloudinary.mjs';
@@ -42,14 +42,21 @@ export const createCourse = async (req, res) => {
     courseData = await addFileToParams(file, courseData);
 
     // Create a new course
-    const courseRef = db.collection(COURSES).doc(); // Generate a new document ID
-    courseData.courseId = courseRef.id; // Assign the courseId
+    const courseRef = db.collection(COURSES).doc(); 
+    courseData.courseId = courseRef.id; 
+    courseData.teacherId = uid; 
+    courseData.createdAt = new Date(); 
+    console.log('Course Data:', courseData); 
+
+    // Add course data to Firestore
     const newCourse = new CourseModel(courseData);
     await courseRef.set(newCourse.toFirestore());
 
-    res
-      .status(201)
-      .send({ message: 'Course created successfully', courseId: courseRef.id });
+    res.status(201).json({
+      message: 'Course created successfully',
+      courseId: courseRef.id,
+      course: newCourse
+    });
   } catch (error) {
     console.error('Error creating course:', error);
     res.status(500).send({ error: error.message });
@@ -67,8 +74,8 @@ export const getTeacherData = async (req, res) => {
       return res.status(404).send({ message: 'Teacher ID not found' });
     }
 
-    const courseData = courseDoc.data(); // Get the entire document data
-    const teacherId = courseData.teacherId; // Extract the teacherId field
+    const courseData = courseDoc.data(); 
+    const teacherId = courseData.teacherId; 
 
     const userDoc = await db.collection(USERS).doc(teacherId).get();
 
@@ -76,16 +83,20 @@ export const getTeacherData = async (req, res) => {
       return res.status(404).send({ message: 'User not found' });
     }
 
-    const userData = userDoc.data(); // Get only the user data
-    const { name, email, profilePictureUrl } = userData; // Extract only the fields you need
 
-    res.status(200).send({ name, email, profilePictureUrl }); // Send only the selected fields
+    const userData = userDoc.data(); // Get only the user data
+    const { name, email, profilePictureUrl, createdAt } = userData; // Extract only the fields you need
+    const createdAtDate = createdAt ? createdAt.toDate() : null;
+
+    res
+      .status(200)
+      .send({ name, email, profilePictureUrl, createdAt: createdAtDate }); // Send only the selected fields
+
   } catch (error) {
     console.error('Error fetching course:', error);
     res.status(500).send({ error: error.message });
   }
 };
-
 
 // Fetch a specific course by ID
 export const getCourse = async (req, res) => {
@@ -108,33 +119,34 @@ export const getCourse = async (req, res) => {
 
 // Fetch courses created by a specific teacher
 export const getTeacherCourses = async (req, res) => {
-  const teacherEmail = req.user.email;
-
   try {
-    const coursesRef = db.collection(COURSES);
-    const coursesSnapshot = await coursesRef
-      .where(CREATED_BY, '==', teacherEmail)
-      .get();
+    const { uid } = req.user; 
 
-    if (coursesSnapshot.empty) {
-      return res.status(200).send([]);
+    if (!uid) {
+      return res.status(400).json({ error: 'User ID is required' });
     }
 
-    const courses = await Promise.all(
-      coursesSnapshot.docs.map(async (doc) => {
-        const courseModel = CourseModel.fromFirestore(doc.data());
-        const lessons = await getCourseLessons(doc.id, coursesRef);
-        const userCourses = await getUserCourses(courseModel.courseId);
-        return {
-          id: doc.id,
-          lessons: lessons,
-          user_courses: userCourses,
-          ...courseModel,
-        };
-      })
-    );
+    const coursesRef = db.collection(COURSES);
+    const snapshot = await coursesRef.where('teacherId', '==', uid).get(); 
 
-    res.status(200).send(courses);
+    if (snapshot.empty) {
+      return res.status(200).json([]); // Return empty array if no courses
+    }
+
+    const courses = [];
+    for (const doc of snapshot.docs) {
+      const courseModel = CourseModel.fromFirestore(doc.data()); // Convert Firestore data to model
+      const lessons = await getCourseLessons(doc.id, coursesRef); // Get lessons for this course
+      const userCourses = await getUserCourses(courseModel.courseId); // Get users enrolled in this course
+      courses.push({
+        id: doc.id,
+        lessons,
+        user_courses: userCourses,
+        ...courseModel,
+      });
+    }
+
+    res.status(200).json(courses); 
   } catch (error) {
     console.error('Error fetching teacher courses:', error);
     res.status(500).send({ error: error.message });
@@ -254,6 +266,36 @@ export const updateCourse = async (req, res) => {
   }
 };
 
+
+export const updateCourseRating = async (req, res) => {
+  const { courseId } = req.params; 
+  const { rating } = req.body;   
+  try {
+    // Reference to the course document in the courses collection
+    const courseRef = db.collection(COURSES).doc(courseId);
+    const courseDoc = await courseRef.get();
+
+    // Check if the course document exists
+    if (!courseDoc.exists) {
+      return res.status(404).send({ message: 'Course not found' });
+    }
+
+    // If "rating" field doesn't exist, create it
+    if (!Object.prototype.hasOwnProperty.call(courseDoc.data(), 'rating')) {
+      // Set the initial rating field
+      await courseRef.set({ rating: rating }, { merge: true }); // Merge ensures other fields remain unchanged
+    } else {
+      // If the rating field exists, update it
+      await courseRef.update({ rating: rating });
+    }
+
+    res.status(200).send({ message: 'Course rating updated successfully' });
+  } catch (error) {
+    console.error('Error updating course rating:', error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
 const addFileToParams = async (file, params) => {
   if (file) {
     const uploadResult = await cloudinary.uploader
@@ -290,3 +332,4 @@ export const deleteCourse = async (req, res) => {
     res.status(500).send({ error: error.message });
   }
 };
+
