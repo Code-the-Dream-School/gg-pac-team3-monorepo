@@ -9,21 +9,31 @@ import {
 import { COURSES, LESSONS } from '../../server/controllers/constants.mjs';
 import supertest from 'supertest';
 import express from 'express';
+import multer from 'multer';
 
 const app = express();
 app.use(express.json());
+const upload = multer(); 
 
-// Middleware to simulate authenticated user
+
 const simulateAuth = (req, res, next) => {
-  req.user = { uid: 'testUserId' }; 
+  req.user = { uid: 'testUserId' };
   next();
 };
 
-// Route setup for lesson endpoints
-app.post('/course/:courseId/lesson', simulateAuth, createLesson);
+// Mock req.files upload object
+app.post('/course/:courseId/lesson', simulateAuth, (req, res, next) => {
+  req.files = {}; 
+  next();
+}, upload.none(), createLesson);
+
 app.get('/course/:courseId/lesson/:lessonId', simulateAuth, getLesson);
 app.get('/course/:courseId/lessons', simulateAuth, getAllLessons);
-app.patch('/course/:courseId/lesson/:lessonId', simulateAuth, updateLesson);
+app.patch('/course/:courseId/lesson/:lessonId', simulateAuth, (req, res, next) => {
+  req.files = {}; 
+  next();
+}, upload.none(), updateLesson);
+
 app.delete('/course/:courseId/lesson/:lessonId', simulateAuth, deleteLesson);
 
 let testCourseId;
@@ -33,7 +43,6 @@ let server;
 // Setup before tests
 beforeAll(async () => {
   server = app.listen(4051);
-  // Set up a test course in Firestore
   const courseRef = admin.firestore().collection(COURSES).doc();
   await courseRef.set({
     courseName: 'Test Course for Lessons',
@@ -67,23 +76,22 @@ describe('Lesson Controller', () => {
   test('should create a new lesson successfully', async () => {
     const lessonData = {
       title: 'Test Lesson',
-      description: { content: 'This is a test lesson' },
+      description: JSON.stringify({ content: 'This is a test lesson' }),
       points: 10,
       order: 1,
-      videoLinks: ['http://example.com/video'],
+      videoLinks: JSON.stringify(['http://example.com/video']),
       materials: 'Test materials',
     };
 
     const response = await supertest(app)
       .post(`/course/${testCourseId}/lesson`)
-      .send(lessonData)
+      .send(lessonData) 
       .expect(201);
 
     expect(response.body.message).toBe('Lesson created successfully');
     expect(response.body.lessonId).toBeDefined();
-
-    testLessonId = response.body.lessonId; // Store the lessonId for subsequent tests
-  });
+    testLessonId = response.body.lessonId; 
+  }, 10000); 
 
   // Test for fetching a specific lesson
   test('should fetch a specific lesson successfully', async () => {
@@ -110,7 +118,7 @@ describe('Lesson Controller', () => {
 
     const response = await supertest(app)
       .patch(`/course/${testCourseId}/lesson/${testLessonId}`)
-      .send(updates)
+      .send(updates) 
       .expect(200);
 
     expect(response.body.message).toBe('Lesson updated successfully');

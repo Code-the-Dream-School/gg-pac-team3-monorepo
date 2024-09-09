@@ -11,24 +11,42 @@ import admin from '../config/firebase.mjs';
  */
 
 export const verifyToken = async (req, res, next) => {
-  const idToken =
-    req.headers.authorization && req.headers.authorization.split('Bearer ')[1];
+  const token = req.headers.authorization && req.headers.authorization.split('Bearer ')[1];
 
-  if (!idToken) {
+  if (!token) {
     return res.status(401).json({ error: 'No token provided' });
   }
 
   try {
-    const decodedToken = await admin.auth().verifyIdToken(idToken);
-    req.user = decodedToken; // Attach the decoded token to the request object
+    let decodedToken;
+    try {
+      // Attempt to verify the token as a Firebase ID token
+      decodedToken = await admin.auth().verifyIdToken(token);
+    } catch (idTokenError) {
+      // If verification fails, check if it's a custom token by decoding manually
+      const parts = token.split('.');
+      if (parts.length !== 3) {
+        throw new Error('Invalid token format');
+      }
+
+      const decodedPayload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
+      if (decodedPayload && decodedPayload.uid) {
+        decodedToken = { uid: decodedPayload.uid };
+      } else {
+        throw new Error('Invalid token payload');
+      }
+    }
+
+    // Attach the decoded token to the request object
+    req.user = decodedToken;
     next();
   } catch (error) {
+    console.error('Token verification error:', error.message);
+
     if (error.code === 'auth/id-token-expired') {
-      // Send a custom response or status code
-      return res.status(401).json({ message: 'TokenExpired' });
+      return res.status(401).json({ error: 'Token expired' });
     }
-    console.error('Error verifying ID token:', error);
-    res.status(400).json({ error: 'Invalid or expired token' });
+    res.status(401).json({ error: 'Invalid token' });
   }
 };
 
@@ -53,13 +71,19 @@ export const isTeacher = async (req, res, next) => {
     const userRef = admin.firestore().collection('users').doc(uid);
     const userDoc = await userRef.get();
 
-    if (!userDoc.exists || userDoc.data().userType !== 'Teacher') {
-      return res.status(403).send({ error: 'Not authorized' });
+    if (!userDoc.exists) {
+      return res.status(403).json({ error: 'User not found' });
+    }
+
+    const userData = userDoc.data();
+
+    if (!userData || userData.userType !== 'Teacher') {
+      return res.status(403).json({ error: 'Not authorized as teacher' });
     }
 
     next();
   } catch (error) {
     console.error('Error checking user type:', error);
-    res.status(500).send({ error: 'Server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };

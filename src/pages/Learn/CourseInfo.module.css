@@ -57,7 +57,7 @@
 .teacherCreatedAt {
   font-size: 0.9rem;
   color: #95a5a6;
-  font-weight: bold; /* Different font weight for createdAt */
+  font-weight: bold; 
 }
 .courseDescriptionSection {
   background-color: #fff;

@@ -13,7 +13,7 @@ export const createLesson = async (req, res) => {
   if (lessonData.description) {
     lessonData['description'] = JSON.parse(lessonData['description']);
   }
-  console.log({lessonData})
+  //console.log({lessonData})
 
   if (file) {
     lessonData = await addFileToParams(file[0], lessonData);
@@ -28,7 +28,7 @@ export const createLesson = async (req, res) => {
     lessonData['videoLinks'] = JSON.parse(lessonData['videoLinks']);
   }
 
-  console.log({lessonData});
+  //console.log({lessonData});
 
   try {
     const courseRef = db.collection(COURSES).doc(courseId);

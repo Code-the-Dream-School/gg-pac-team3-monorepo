@@ -1,16 +1,35 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { FetchSuggestedCoursesForUser } from '../../services/api';
+import {
+  FetchSuggestedCoursesForUser,
+  fetchUserEnrolledCourses,
+} from '../../services/api';
 import styles from './Courses.module.css';
 
 const Home = ({ userId, onCourseClick }) => {
   const [coursesData, setCoursesData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [enrolledCoursesData, setEnrolledCoursesData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('Ex:JavaScript');
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // State for current page
   const [selectedCategory, setSelectedCategory] = useState('All'); // State for selected category
   const [message, setMessage] = useState(''); // State for storing error/success message
   const coursesPerPage = 10; // Number of courses per page
+
+  useEffect(() => {
+    const fetchEnrolledCourses = async () => {
+      try {
+        if (userId) {
+          const enrolledCourses = await fetchUserEnrolledCourses(userId);
+          setEnrolledCoursesData(enrolledCourses);
+        }
+      } catch (error) {
+        console.error('Error fetching enrolled courses:', error);
+      }
+    };
+
+    fetchEnrolledCourses();
+  }, [userId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -187,6 +206,34 @@ const Home = ({ userId, onCourseClick }) => {
             </div>
           ))}
         </div>
+      </div>
+      <h3 className={styles.enrolledMsg}>You have enrolled in these courses</h3>
+      <div className={styles.coursesContainer}>
+        {enrolledCoursesData.map((course, index) => (
+          <div
+            key={`${course.courseID}-${index}`}
+            className={styles.courseCard}
+            onClick={() => onCourseClick(course)}
+          >
+            <h4 className={styles.enrolledmsgforDiv}>enrolled Course</h4>
+            <img
+              src={course.imageUrl}
+              alt={course.courseName}
+              className={styles.courseImage}
+            />
+            <div className={styles.courseInfo}>
+              <h3 className={styles.courseName}>{course.courseName}</h3>
+              <p className={styles.courseType}>Type: {course.courseType}</p>
+              <p className={styles.courseDuration}>
+                Duration: {course.duration}
+              </p>
+              <p className={styles.courseRating}>
+                Rating: {renderStars(course.rating)}
+              </p>
+              <p className={styles.courseDescription}>{course.description}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
