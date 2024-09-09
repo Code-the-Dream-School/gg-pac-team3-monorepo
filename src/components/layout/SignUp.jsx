@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { registerUser, googleSignIn } from '../../services/api';
+import { registerUser, googleSignUp } from '../../services/api';
 import CloseIcon from '../icons/CloseIcon';
 import styles from './SignUp.module.css';
 import PropTypes from 'prop-types';
@@ -68,7 +68,7 @@ const SignUp = ({ switchForm }) => {
 
   const completeGoogleSignUp = async () => {
     try {
-      const user = await googleSignIn(googleCredential, googleUserType);
+      const user = await googleSignUp(googleCredential, googleUserType);
       setSuccessMessage(`You have registered successfully with Google as a ${googleUserType}, please login.`);
       setError('');
       setShowGoogleUserTypeModal(false);
@@ -78,7 +78,13 @@ const SignUp = ({ switchForm }) => {
       }, 3000);
     } catch (error) {
       console.error('Google sign-up failed:', error);
-      setError('Registration with Google failed, please try again later.');
+
+      // Add specific error handling
+      if (error.response && error.response.status === 400) {
+        setError('Google account already exists. Please log in instead.');
+      } else {
+        setError('Google sign-up failed, please try again later.');
+      }
       setSuccessMessage('');
     }
   };

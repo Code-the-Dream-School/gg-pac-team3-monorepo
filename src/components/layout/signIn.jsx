@@ -61,9 +61,9 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
       setIsFormVisible(false);
       switchForm(null);
     } catch (error) {
-      console.error('Login failed:', error);
-      if (error.response && error.response.data) {
-        setError(error.response.data.error || 'Login failed. Please try again.');
+      // Handle and display backend errors
+      if (error.response && error.response.data && error.response.data.error) {
+        setError(error.response.data.error); 
       } else {
         setError('Login failed. Please try again later.');
       }
@@ -74,13 +74,19 @@ const SignIn = ({ switchForm, onLoginSuccess }) => {
     try {
       const user = await googleSignIn(response.credential);
       if (onLoginSuccess) {
-        onLoginSuccess(user.name || user.displayName, user.userType);
+        onLoginSuccess(user.name, user.userType);
       }
       setIsFormVisible(false);
       switchForm(null);
     } catch (error) {
       console.error('Google sign-in failed:', error);
-      setError('Google sign-in failed. Please try again.');
+
+      // Handle specific Google sign-in error
+      if (error.response && error.response.status === 404) {
+        setError('No account found for this Google email. Please sign up first.');
+      } else {
+        setError('Google sign-in failed. Please try again.');
+      }
     }
   };
 
