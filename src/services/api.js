@@ -31,15 +31,9 @@ export const LoginUser = async (email, password) => {
 //Function to create a account / register
 export const registerUser = async (name, email, password, userType) => {
   try {
-    const token = getAuthToken();
     const response = await axios.post(
       `${API_BASE_URL}/user`,
-      { name, email, password, userType },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      { name, email, password, userType }
     );
 
     return response.data;
@@ -48,6 +42,28 @@ export const registerUser = async (name, email, password, userType) => {
     throw error;
   }
 };
+
+export const googleSignIn = async (token, userType) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/google`, { token, userType });
+    const { token: authToken, user } = response.data;
+
+    if (user) {
+      localStorage.setItem('userId', user.uid);
+      localStorage.setItem('userName', user.name || user.displayName);
+      localStorage.setItem('userType', user.userType);
+    }
+    if (authToken) {
+      localStorage.setItem('authToken', authToken);
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Error signing in with Google:', error);
+    throw error;
+  }
+};
+
 
 //fetchQuizByLessonId
 export const fetchQuizByLessonId = async (lessonId, courseId) => {
@@ -63,7 +79,7 @@ export const fetchQuizByLessonId = async (lessonId, courseId) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error fetching courses:', error);
+    console.error('Error fetching quizzes:', error);
     throw error;
   }
 };
@@ -73,9 +89,7 @@ export const fetchCourses = async () => {
   try {
     const token = getAuthToken();
     const response = await axios.get(`${API_BASE_URL}/course/public`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
     return response.data;
   } catch (error) {
@@ -100,6 +114,7 @@ export const FetchSuggestedCoursesForUser = async (userId) => {
     );
     return response.data;
   } catch (error) {
+
     console.error('Error fetching not enrolled courses by user:', error);
     // Check for 401 Unauthorized error
     if (error.response && error.response.status === 401) {
@@ -131,6 +146,9 @@ export const fetchUserEnrolledCourses = async (userId) => {
     );
     return response.data;
   } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return [];
+    }
     console.error('Error fetching enrolled courses:', error);
     throw error;
   }
