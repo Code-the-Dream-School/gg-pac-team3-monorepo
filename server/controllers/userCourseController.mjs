@@ -65,16 +65,7 @@ export const getSuggestedCoursesForUser = async (req, res) => {
     const allCourses = [];
 
     allCoursesSnapshot.forEach((doc) => {
-      const data = doc.data();
-
-      // Validate the course data (minimal validation)
-      if (!data.courseType || typeof data.courseType !== 'string') {
-        console.warn(
-          `Skipping document with ID ${doc.id} due to invalid courseType.`
-        );
-        return; // Skip this course if it has invalid data
-      }
-
+      const data = doc.data()
       allCourses.push({ id: doc.id, ...CourseModel.fromFirestore(data) });
     });
 
@@ -121,15 +112,6 @@ export const getUserCourses = async (req, res) => {
     const courses = [];
     userCoursesSnapshot.forEach((doc) => {
       const courseData = doc.data();
-
-      // Validate course data
-      if (!courseData.courseType || typeof courseData.courseType !== 'string') {
-        console.warn(
-          `Skipping user course document with ID ${doc.id} due to invalid courseType.`
-        );
-        return;
-      }
-
       courses.push({
         id: doc.id,
         ...UserCourseModel.fromFirestore(courseData),
