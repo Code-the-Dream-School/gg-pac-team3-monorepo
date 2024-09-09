@@ -8,7 +8,7 @@ import {
   LESSONS,
   USER_COURSES,
   USERS,
-  COURSE_ID, 
+  COURSE_ID,
   CREATED_BY,
 } from './constants.mjs';
 import cloudinary from '../config/cloudinary.mjs';
@@ -83,16 +83,20 @@ export const getTeacherData = async (req, res) => {
       return res.status(404).send({ message: 'User not found' });
     }
 
-    const userData = userDoc.data(); 
-    const { name, email, profilePictureUrl } = userData; 
 
-    res.status(200).send({ name, email, profilePictureUrl }); 
+    const userData = userDoc.data(); // Get only the user data
+    const { name, email, profilePictureUrl, createdAt } = userData; // Extract only the fields you need
+    const createdAtDate = createdAt ? createdAt.toDate() : null;
+
+    res
+      .status(200)
+      .send({ name, email, profilePictureUrl, createdAt: createdAtDate }); // Send only the selected fields
+
   } catch (error) {
     console.error('Error fetching course:', error);
     res.status(500).send({ error: error.message });
   }
 };
-
 
 // Fetch a specific course by ID
 export const getCourse = async (req, res) => {
@@ -262,6 +266,52 @@ export const updateCourse = async (req, res) => {
   }
 };
 
+
+export const updateCourseRating = async (req, res) => {
+  const { courseId } = req.params; 
+  const { rating } = req.body;   
+  try {
+    // Reference to the course document in the courses collection
+    const courseRef = db.collection(COURSES).doc(courseId);
+    const courseDoc = await courseRef.get();
+
+    // Check if the course document exists
+    if (!courseDoc.exists) {
+      return res.status(404).send({ message: 'Course not found' });
+    }
+
+    // If "rating" field doesn't exist, create it
+    if (!Object.prototype.hasOwnProperty.call(courseDoc.data(), 'rating')) {
+      // Set the initial rating field
+      await courseRef.set({ rating: rating }, { merge: true }); // Merge ensures other fields remain unchanged
+    } else {
+      // If the rating field exists, update it
+      await courseRef.update({ rating: rating });
+    }
+
+    res.status(200).send({ message: 'Course rating updated successfully' });
+  } catch (error) {
+    console.error('Error updating course rating:', error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
+const addFileToParams = async (file, params) => {
+  if (file) {
+    const uploadResult = await cloudinary.uploader
+      .upload(file.path)
+      .catch((error) => {
+        console.log(error);
+      });
+
+    params.imageUrl = uploadResult.secure_url;
+    params.logoUrl = uploadResult.secure_url;
+
+    return params;
+  }
+  return params;
+};
+
 // Delete a course by ID
 export const deleteCourse = async (req, res) => {
   const { uid } = req.params;
@@ -283,19 +333,3 @@ export const deleteCourse = async (req, res) => {
   }
 };
 
-// Helper function to add file to params
-const addFileToParams = async (file, params) => {
-  if (file) {
-    const uploadResult = await cloudinary.uploader
-      .upload(file.path)
-      .catch((error) => {
-        console.log(error);
-      });
-
-    params.imageUrl = uploadResult.secure_url;
-    params.logoUrl = uploadResult.secure_url;
-
-    return params;
-  }
-  return params;
-};
