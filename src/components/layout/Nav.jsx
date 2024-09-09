@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import SignIn from './SignIn';
+import SignIn from './signIn';
 import SignUp from './SignUp';
 import styles from './Nav.module.css';
 import { useAuth } from '../../AuthContext';
