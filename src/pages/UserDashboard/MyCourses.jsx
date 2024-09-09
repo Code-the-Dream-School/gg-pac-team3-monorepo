@@ -5,13 +5,16 @@ import styles from './Courses.module.css';
 
 const MyCourses = ({ userId, onCourseClick }) => {
   const [enrolledCoursesData, setEnrolledCoursesData] = useState([]);
-
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const coursesPerPage = 10; // Number of courses per page
+  const [currentPage, setCurrentPage] = useState(1); // State for current page
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
       try {
         if (userId) {
           const enrolledCourses = await fetchUserEnrolledCourses(userId);
           setEnrolledCoursesData(enrolledCourses);
+          setFilteredCourses(enrolledCourses);
         }
       } catch (error) {
         console.error('Error fetching enrolled courses:', error);
@@ -31,31 +34,62 @@ const MyCourses = ({ userId, onCourseClick }) => {
       </span>
     ));
   };
+  // Pagination logic
+  const indexOfLastCourse = currentPage * coursesPerPage;
+  const indexOfFirstCourse = indexOfLastCourse - coursesPerPage;
+  const currentCourses = filteredCourses.slice(
+    indexOfFirstCourse,
+    indexOfLastCourse
+  );
+
+  const totalPages = Math.ceil(filteredCourses.length / coursesPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
-    <div className={styles.coursesContainer}>
-      {enrolledCoursesData.map((course, index) => (
-        <div
-          key={`${course.courseID}-${index}`}
-          className={styles.courseCard}
-          onClick={() => onCourseClick(course)}
-        >
-          <img
-            src={course.imageUrl}
-            alt={course.courseName}
-            className={styles.courseImage}
-          />
-          <div className={styles.courseInfo}>
-            <h3 className={styles.courseName}>{course.courseName}</h3>
-            <p className={styles.courseType}>Type: {course.courseType}</p>
-            <p className={styles.courseDuration}>Duration: {course.duration}</p>
-            <p className={styles.courseRating}>
-              Rating: {renderStars(course.rating)}
-            </p>
-            <p className={styles.courseDescription}>{course.description}</p>
+    <div>
+      <div className={styles.coursesContainer}>
+        {currentCourses.map((course, index) => (
+          <div
+            key={`${course.courseID}-${index}`}
+            className={styles.courseCard}
+            onClick={() => onCourseClick(course)}
+          >
+            <img
+              src={course.imageUrl}
+              alt={course.courseName}
+              className={styles.courseImage}
+            />
+            <div className={styles.courseInfo}>
+              <h3 className={styles.courseName}>{course.courseName}</h3>
+              <p className={styles.courseType}>Type: {course.courseType}</p>
+              <p className={styles.courseDuration}>
+                Duration: {course.duration}
+              </p>
+              <p className={styles.courseRating}>
+                Rating: {renderStars(course.rating)}
+              </p>
+              <p className={styles.courseDescription}>{course.description}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
+      {/* Pagination Controls */}
+      <div className={styles.pagination}>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            className={`${styles.pageButton} ${
+              currentPage === index + 1 ? styles.active : ''
+            }`}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
