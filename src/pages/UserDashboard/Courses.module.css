@@ -153,8 +153,8 @@
 }
 .errorMessage {
   color: red;
-  font-size: 16px;
-  margin-bottom: 10px;
+  font-size: 1rem;
+  margin-bottom: 0.75rem
 }
 /* Media Queries for responsiveness */
 

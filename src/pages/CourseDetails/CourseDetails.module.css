@@ -102,14 +102,14 @@
   margin: 0 auto;
 }
 .backButton {
-  background-color: #007bff;
+  background-color: #042d5a;
   color: white;
   border: none;
-  padding: 8px 16px;
-  font-size: 16px;
-  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border-radius:  0.25rem;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 1.25rem;
 }
 
 .backButton:hover {
@@ -117,13 +117,13 @@
 }
 
 .courseTitle {
-  font-size: 28px;
-  margin-bottom: 10px;
+  font-size: 1.6rem;
+  margin-bottom: 0.75rem;
 }
 
 .courseDescription {
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 1.2rem;
+  margin-bottom: 1.35rem;
 }
 
 /* Other existing styles */

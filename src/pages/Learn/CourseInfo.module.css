@@ -52,12 +52,12 @@
   font-size: 1rem;
   color: #7f8c8d;
   font-weight: bold;
-   margin-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 .teacherCreatedAt {
   font-size: 0.9rem;
   color: #95a5a6;
-  font-weight: normal; /* Different font weight for createdAt */
+  font-weight: bold; /* Different font weight for createdAt */
 }
 .courseDescriptionSection {
   background-color: #fff;

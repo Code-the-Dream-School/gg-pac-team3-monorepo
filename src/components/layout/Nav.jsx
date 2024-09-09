@@ -5,7 +5,6 @@ import SignUp from './SignUp';
 import styles from './Nav.module.css';
 import { useAuth } from '../../AuthContext';
 import logo from '../../assets/logos/blue.png';
-// import Profile from '../../pages/UserDashboard/Profile';
 import { useNavigate } from 'react-router-dom';
 
 const Nav = ({ isLoggedIn, onLogout }) => {
