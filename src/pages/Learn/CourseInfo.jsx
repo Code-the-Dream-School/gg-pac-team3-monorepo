@@ -41,7 +41,7 @@ const CourseInfo = ({ course, lessons = [], courseId }) => {
             )}
             <p className={styles.teacherName}>by {teacherInfo.name}</p>
             <p className={styles.teacherEmail}>
-              Teachers Email ID: {teacherInfo.email}
+              Teacher Email ID: {teacherInfo.email}
             </p>
             {teacherInfo.createdAt && (
               <p className={styles.teacherCreatedAt}>
