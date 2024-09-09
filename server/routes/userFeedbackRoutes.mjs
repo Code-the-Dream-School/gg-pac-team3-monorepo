@@ -1,9 +1,17 @@
 import express from 'express';
-import { AddUserFeedback } from '../controllers/UserFeedbackController.mjs';
+import {
+  AddUserFeedback,
+  getAllUserFeedbackByCourseId,
+} from '../controllers/UserFeedbackController.mjs';
 import { verifyToken } from '../middlewares/verifyToken.mjs';
 
 const router = express.Router();
 
-router.post('/AddUserFeedback', verifyToken, AddUserFeedback);
+router.post('/UserFeedback/AddUserFeedback', verifyToken, AddUserFeedback);
 
+router.get(
+  '/UserFeedback/:courseId',
+  verifyToken,
+  getAllUserFeedbackByCourseId
+);
 export default router;

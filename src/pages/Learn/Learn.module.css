@@ -158,6 +158,22 @@
   animation: spin 1s linear infinite;
   margin: 0 auto;
 }
+.backButton {
+  background-color: #042d5a;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem; 
+  font-size: 1rem; 
+  float: left;
+  border-radius: 0.25rem; 
+  cursor: pointer;
+  margin-right: 0.625rem; 
+}
+
+
+.backButton:hover {
+  background-color: #0056b3;
+}
 
 @keyframes spin {
   0% {
