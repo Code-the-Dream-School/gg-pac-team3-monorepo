@@ -22,7 +22,7 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         { id: 1, link: 'Login' },
         { id: 2, link: 'Register' },
       ];
-  
+
   const switchForm = (link) => {
     switch (link) {
       case 'Register':

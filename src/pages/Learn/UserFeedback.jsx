@@ -1,13 +1,17 @@
 import { useState } from 'react';
 import styles from './UserFeedback.module.css';
-import { addUserFeedbackToCourse } from '../../services/api';
+import {
+  addUserFeedbackToCourse,
+  FetchRatingFromUserFeedback,
+  updateCourseRating, 
+} from '../../services/api';
 
 const UserFeedback = ({ courseId }) => {
   const [rating, setRating] = useState(0);
   const [feedback, setFeedback] = useState('');
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [error, setError] = useState(null);
-  const userId = localStorage.getItem('userId');
+  const userId = localStorage.getItem('userId'); 
 
   const handleRatingChange = (e) => {
     setRating(Number(e.target.value));
@@ -26,9 +30,28 @@ const UserFeedback = ({ courseId }) => {
     }
 
     try {
-      await addUserFeedbackToCourse({ courseId, userId, rating, feedback });
+      // Submit the feedback
+      await addUserFeedbackToCourse(courseId, userId, rating, feedback);
       setSubmitSuccess(true);
       setError(null);
+
+      // Fetch updated ratings to calculate new average
+      const UserRating = await FetchRatingFromUserFeedback(courseId);
+
+      if (UserRating.length > 0) {
+        const totalRating = UserRating.reduce(
+          (sum, rating) => sum + rating.rating,
+          0
+        );
+        const averageRating = Number(
+          (totalRating / UserRating.length).toFixed(1)
+        );
+
+        // Update the course rating in the Firestore course document
+        await updateCourseRating(courseId, averageRating); 
+        setFeedback('');
+        setRating(0);
+      }
     } catch (err) {
       console.error('Error submitting feedback:', err);
       setError('Error submitting feedback. Please try again.');

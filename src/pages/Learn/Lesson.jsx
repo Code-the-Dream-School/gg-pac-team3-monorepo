@@ -4,17 +4,18 @@ import PropTypes from 'prop-types';
 import speakerIcon from '../../assets/images/speaker-icon-png.png';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { fetchQuizByLessonId } from '../../services/api';
-import Video from "../../components/Video/Video.jsx";
+import Video from '../../components/Video/Video.jsx';
 
 const Lesson = ({ lesson }) => {
-  const { id, title, description = {} } = lesson; 
+  const { id, title, description = {} } = lesson;
   const location = useLocation();
   const { courseId } = location.state || {};
   const [expandedKey, setExpandedKey] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(1);
   const [successMessage, setSuccessMessage] = useState('');
-
+  const [clickedKey, setClickedKey] = useState(null);
+  const [highlightedWordIndex, setHighlightedWordIndex] = useState(-1); // Track the word index being spoken
   const MEDIA_TYPES = {
     VIDEO: 'video',
     IMAGE: 'image',
@@ -30,6 +31,7 @@ const Lesson = ({ lesson }) => {
   }, [isSpeaking]);
 
   const navigate = useNavigate();
+
   const handleToggle = (key) => {
     setSuccessMessage('');
     setExpandedKey(expandedKey === key ? null : key); // Toggle between expanded and collapsed
@@ -41,11 +43,25 @@ const Lesson = ({ lesson }) => {
       setIsSpeaking(false);
     } else {
       const utterance = new SpeechSynthesisUtterance(text);
-      utterance.onend = () => setIsSpeaking(false);
+      const words = text.split(' '); // Split the text into individual words
+
+      utterance.onboundary = (event) => {
+        if (event.name === 'word') {
+          const wordIndex = event.charIndex / (text.length / words.length); // Calculate the current word index
+          setHighlightedWordIndex(Math.floor(wordIndex));
+        }
+      };
+
+      utterance.onend = () => {
+        setIsSpeaking(false);
+        setHighlightedWordIndex(-1); // Reset word highlight
+      };
+
       window.speechSynthesis.speak(utterance);
       setIsSpeaking(true);
     }
   };
+
   useEffect(() => {
     setSuccessMessage(''); // Reset the success message when lesson prop changes
   }, [lesson]);
@@ -74,29 +90,38 @@ const Lesson = ({ lesson }) => {
   return (
     <div className={styles.lessonContainer}>
       <h2 className={styles.learnTitle}>{title}</h2>
+      {clickedKey && (
+        <div className={styles.clickedKeyDisplay}>{clickedKey}</div>
+      )}
       <div className={styles.lessonDescription}>
         {Object.keys(description).map((key) => (
           <div key={key} className={styles.descriptionSection}>
             <div className={styles.descriptionTitleContainer}>
               <button
                 className={styles.descriptionTitle}
-                onClick={() => handleToggle(key)}
+                onClick={() => {
+                  handleToggle(key);
+                  setClickedKey(clickedKey === key ? null : key); // Toggle the clicked key
+                }}
                 aria-expanded={expandedKey === key}
               >
                 {key}
               </button>
-              {key !== MEDIA_TYPES.VIDEO &&
-                key !== MEDIA_TYPES.IMAGE &&
-                key !== MEDIA_TYPES.FILE && (
+            </div>
+            {key !== MEDIA_TYPES.VIDEO &&
+              key !== MEDIA_TYPES.IMAGE &&
+              key !== MEDIA_TYPES.FILE &&
+              clickedKey === key && (
+                <div className={styles.speakerIconContainer}>
                   <img
                     src={speakerIcon}
                     alt='Speak'
                     className={styles.speakerIcon}
                     onClick={() => handleSpeak(description[key])}
-                    title={isSpeaking ? 'Stop Speaking' : 'Speak'} // Change tooltip based on state
+                    title={isSpeaking ? 'Stop Speaking' : 'Speak'}
                   />
-                )}
-            </div>
+                </div>
+              )}
             {expandedKey === key && (
               <div className={styles.descriptionContent}>
                 {key === MEDIA_TYPES.VIDEO ? (
@@ -107,7 +132,7 @@ const Lesson = ({ lesson }) => {
                       src={description[key]}
                       alt={key}
                       className={styles.imageDisplay}
-                      style={{transform: `scale(${zoomLevel})` }}
+                      style={{ transform: `scale(${zoomLevel})` }}
                     />
                     <div className={styles.zoomControls}>
                       <button
@@ -149,7 +174,20 @@ const Lesson = ({ lesson }) => {
                     </div>
                   </>
                 ) : (
-                  <p>{description[key]}</p>
+                  <p>
+                    {description[key].split(' ').map((word, index) => (
+                      <span
+                        key={index}
+                        className={
+                          index === highlightedWordIndex
+                            ? styles.highlightedWord
+                            : ''
+                        }
+                      >
+                        {word + ' '}
+                      </span>
+                    ))}
+                  </p>
                 )}
               </div>
             )}
@@ -173,11 +211,8 @@ Lesson.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     materials: PropTypes.string,
-    description: PropTypes.objectOf(PropTypes.string), // Changed to objectOf for dynamic keys
+    description: PropTypes.objectOf(PropTypes.string),
   }).isRequired,
-  // courseName: PropTypes.string.isRequired,
-  // courseId: PropTypes.string.isRequired,
-  // lessonId: PropTypes.string.isRequired,
 };
 
 export default Lesson;
