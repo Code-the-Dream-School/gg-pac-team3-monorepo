@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { fetchUserProfile, updateProfileInfo } from '../../services/api';
 import PropTypes from 'prop-types';
+import user from '../../assets/images/user.svg';
+import picture from '../../assets/images/picture.svg';
+import email from '../../assets/images/email.svg';
+import briefcase from '../../assets/images/briefcase.svg';
 import styles from './Profile.module.css';
 
 const Profile = ({ userId }) => {
@@ -11,6 +15,11 @@ const Profile = ({ userId }) => {
     email: '',
     pictureUrl: '',
   });
+  const [canEdit, setcanEdit] = useState(false);
+
+  const toggleEdit = () => {
+    setcanEdit(!canEdit);
+  };
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -24,6 +33,7 @@ const Profile = ({ userId }) => {
             email: profile.email,
             pictureUrl: profile.profilePictureUrl,
           });
+          console.log(profile);
         }
       } catch (error) {
         console.error('Error fetching profile:', error);
@@ -61,11 +71,17 @@ const Profile = ({ userId }) => {
       }
     };
     updateProfile();
+    setcanEdit(false);
   };
 
   return (
     <div className={styles.profileContainer}>
-      <h2>Profile</h2>
+      <div className={styles.title}>
+        <h2>Profile</h2>
+        <button onClick={toggleEdit} className={styles.editButton}>
+          Edit
+        </button>
+      </div>
       {profileData && (
         <>
           <div>
@@ -81,21 +97,25 @@ const Profile = ({ userId }) => {
             onSubmit={handleForm}
           >
             <div className={styles.inputContainer}>
+              <img src={briefcase} alt='role icon' className={styles.svg} />
               <label className={styles.label}>
                 Role: {profileData.userType}
               </label>
             </div>
             <div className={styles.inputContainer}>
+              <img src={user} alt='user icon' className={styles.svg} />
               <label className={styles.label}>Name:</label>
               <input
                 className={styles.input}
                 type='text'
                 name='name'
+                readOnly={!canEdit}
                 value={updatedProfile.name}
                 onChange={handleName}
               />
             </div>
             <div className={styles.inputContainer}>
+              <img src={email} alt='email icon' className={styles.svg} />
               <label className={styles.label}>Email:</label>
               <input
                 className={styles.input}
@@ -106,18 +126,22 @@ const Profile = ({ userId }) => {
               />
             </div>
             <div className={styles.inputContainer}>
-              <label className={styles.label}>Profile Picture URL:</label>
+              <img src={picture} alt='picture icon' className={styles.svg} />
+              <label className={styles.label}>Profile URL:</label>
               <input
                 className={styles.input}
                 type='text'
                 name='pictureUrl'
+                readOnly={!canEdit}
                 value={updatedProfile.pictureUrl}
                 onChange={handleProfilePic}
               />
             </div>
-            <button className={styles.submit} type='submit'>
-              Submit
-            </button>
+            {canEdit && (
+              <button className={styles.submit} type='submit'>
+                Submit
+              </button>
+            )}
           </form>
         </>
       )}

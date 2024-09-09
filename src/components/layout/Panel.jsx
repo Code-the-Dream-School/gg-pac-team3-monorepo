@@ -2,6 +2,7 @@
 import Nav from './Nav';
 import { Outlet } from 'react-router-dom';
 import { useAuth } from '../../AuthContext';
+import Footer from './Footer';
 
 const Panel = () => {
   const { isLoggedIn, handleLogout } = useAuth();
@@ -10,6 +11,7 @@ const Panel = () => {
       <Nav isLoggedIn={isLoggedIn} onLogout={handleLogout} />
 
       <Outlet />
+      <Footer />
     </>
   );
 };

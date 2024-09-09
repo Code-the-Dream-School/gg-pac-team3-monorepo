@@ -75,14 +75,18 @@ const Home = ({ userId, onCourseClick }) => {
     ));
   };
 
-  const handleSearch = (event) => {
-    event.preventDefault();
-    const filteredCoursesList = coursesData.filter((course) =>
-      course.courseName.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredCourses(filteredCoursesList);
-    setCurrentPage(1); // Reset to first page after search
-  };
+
+  useEffect(() => {
+    if (!searchTerm) {
+      setFilteredCourses(coursesData);
+    } else {
+      const filteredCoursesList = coursesData.filter((course) =>
+        course.courseName.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+      setFilteredCourses(filteredCoursesList);
+    }
+  }, [searchTerm, coursesData]);
+
 
   const handleSearchTerm = (event) => {
     const input = event.target.value;
@@ -129,21 +133,17 @@ const Home = ({ userId, onCourseClick }) => {
       {message && <p className={styles.errorMessage}>{message}</p>}
 
       <div className={styles.searchContainer}>
-        <form
-          id='submitSearchForm'
-          onSubmit={handleSearch}
-          className={styles.form}
-        >
+        <form id='submitSearchForm' className={styles.form}>
           <h2>Search courses:</h2>
           <input
             onChange={handleSearchTerm}
+            onClick={() => {
+              setSearchTerm('');
+            }}
             value={searchTerm}
             placeholder={searchTerm}
             className={styles.searchInput}
           />
-          <button className={styles.submit} type='submit'>
-            Search
-          </button>
         </form>
       </div>
 

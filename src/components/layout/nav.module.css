@@ -5,6 +5,10 @@
   justify-content: space-between;
   align-items: center;
   padding: 0% 2.5%;
+  box-shadow: 10px 5px 25px -7px rgba(0, 0, 0, 0.5);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .navLinksList {
@@ -18,33 +22,42 @@
   margin: 0px 20px;
   font-weight: 500;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2em;
+  font-size: 1.4em;
   color: white;
+  padding: 0.3em;
 }
 
 .navLink:hover {
   cursor: pointer;
-}
-
-a {
-  font-weight: bold;
-  text-decoration: none;
-  color: #ffff;
-}
-
-.navLink.active {
   color: #f35c3c;
 
 }
 
 .logo {
-  width: 7em;
-  height: 7em;
+  width: 10em;
+  height: 10em;
 }
 
+.logo:hover {
+  cursor: pointer;
+}
 @media (max-width: 576px) {
   .navLink {
     margin: 0px 10px;
     font-size: 1em;
+  }
+}
+
+@media (min-width: 768px) {
+  .navLink {
+    margin: 0px 10px;
+    font-size: 1.2em;
+  }
+}
+
+@media (min-width: 992px) {
+  .navLink {
+    margin: 0px 10px;
+    font-size: 1.5em;
   }
 }

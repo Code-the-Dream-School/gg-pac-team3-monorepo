@@ -20,8 +20,9 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         { id: 3, link: 'Logout' },
       ]
     : [
-        { id: 1, link: 'Login' },
-        { id: 2, link: 'Register' },
+        { id: 1, link: 'About Us' },
+        { id: 2, link: 'Login' },
+        { id: 3, link: 'Register' },
       ];
 
   const switchForm = (link) => {
@@ -36,6 +37,9 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         onLogout();
         setActiveForm(null); // Close the form after logout
         navigate('/');
+        break;
+      case 'About Us':
+        navigate('/about');
         break;
       case 'Dashboard':
         if (userType === 'Student') {
@@ -65,7 +69,14 @@ const Nav = ({ isLoggedIn, onLogout }) => {
 
   return (
     <div className={styles.nav}>
-      <img src={logo} alt='Logo' className={styles.logo} />
+      <img
+        onClick={() => {
+          navigate('/');
+        }}
+        src={logo}
+        alt='Logo'
+        className={styles.logo}
+      />
       <div className={styles.navLinks}>
         {navLinks.map((navLink) => (
           <span
