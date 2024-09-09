@@ -124,21 +124,23 @@ export const googleSignIn = async (req, res) => {
     const { email, name, picture } = payload;
 
     let userRecord;
+    const profilePictureUrl = picture; 
+    
     try {
       userRecord = await admin.auth().getUserByEmail(email);
     } catch (error) {
       if (error.code === 'auth/user-not-found') {
         userRecord = await admin.auth().createUser({
           email,
-          displayName: name,
-          photoURL: picture,
+          name,
+          profilePictureUrl, 
         });
 
         await admin.firestore().collection('users').doc(userRecord.uid).set({
           name,
           email,
-          userType: userType, // Use the userType passed from the frontend
-          profilePictureUrl: picture,
+          userType: userType,
+          profilePictureUrl, 
         });
       } else {
         throw error;
@@ -159,8 +161,8 @@ export const googleSignIn = async (req, res) => {
         uid: userRecord.uid,
         name: userData.name || name,
         email: userData.email || email,
-        userType: userData.userType || userType, // Ensure userType is included
-        profilePictureUrl: userData.profilePictureUrl || picture,
+        userType: userData.userType || userType, 
+        profilePictureUrl: userData.profilePictureUrl || profilePictureUrl, 
       },
     });
   } catch (error) {
