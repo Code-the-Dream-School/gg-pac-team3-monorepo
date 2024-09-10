@@ -1,4 +1,7 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import styles from "./LessonForm.module.css";
+import SideBar from "../SideBar/SideBar.jsx";
+import {useNavigate} from "react-router-dom";
 
 const EMPTY_LESSON = {
   title: '',
@@ -15,7 +18,7 @@ const EMPTY_LESSON = {
   videoLinks: []
 }
 
-const LessonForm = ({initialData=EMPTY_LESSON, onSubmit}) => {
+const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, quizzes}) => {
   const [formData, setFormData] = useState(initialData)
   const [descriptionKeys, setDescriptionKeys] = useState({
     Intro: true,
@@ -27,7 +30,31 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit}) => {
   })
   const [addedDescriptionKeys, setAddedDescriptionKeys] = useState([])
   const [image, setImage] = useState(null)
+  const [imagePreview, setImagePreview] = useState(null)
   const [file, setFile] = useState(null)
+  const [filePreview, setFilePreview] = useState(null)
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const presentKeys =  Object.keys(initialData.description).filter((key) => {
+      return initialData.description[key] !== '' || initialData.description[key] !== undefined
+    })
+    if (!!presentKeys?.length) {
+      setAddedDescriptionKeys(presentKeys)
+      const newDescriptionKeys = {...descriptionKeys, ...presentKeys.reduce((acc, key) => {
+        acc[key] = false;
+        return acc;
+      }, {})
+      }
+      setDescriptionKeys(newDescriptionKeys)
+    }
+    if(presentKeys.includes('image')) {
+      setImagePreview(initialData.description.image)
+    }
+    if(presentKeys.includes('file')) {
+      setFilePreview(initialData.description.file)
+    }
+  }, [initialData]);
 
   const handleChangeFormData = (e) => {
     setFormData({
@@ -66,8 +93,10 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit}) => {
     if (e.target.type === 'file') {
       if (e.target.name === 'image') {
         setImage(e.target.files[0])
+        setImagePreview(URL.createObjectURL(e.target.files[0]))
       } else {
         setFile(e.target.files[0])
+        setFilePreview(URL.createObjectURL(e.target.files[0]))
       }
     }
   }
@@ -102,7 +131,7 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit}) => {
     })
   }
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
     const submitAttrs = new FormData();
 
@@ -124,23 +153,71 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit}) => {
       } else if (key === 'videoLinks') {
 
         submitAttrs.append('videoLinks', JSON.stringify(formData[key]))
-        // formData[key].forEach((link, index) => {
-        //   submitAttrs.append(`lesson[${key}][${index}]`, link)
-        // })
       } else {
         if (formData[key] === '') return;
         submitAttrs.append(key, formData[key])
       }
     })
-    onSubmit(submitAttrs)
+    const responseData = await onSubmit(submitAttrs)
+    return responseData;
   }
 
-  console.log({formData})
+  const handleSaveLesson = (e) => {
+    e.preventDefault();
+    handleFormSubmit(e);
+    navigate(redirectTo);
+  }
+
+  const handleAddQuiz = async (e) => {
+    e.preventDefault();
+    const data = await handleFormSubmit(e);
+    if (quizzes?.length) {
+      navigate(`${redirectTo}/${data.lessonId}/quiz/edit/${quizzes[0].id}`);
+      return;
+    } else {
+      navigate(`${redirectTo}/${data.lessonId}/quiz/new`);
+    }
+  }
 
   return (
-    <div>
-      <form onSubmit={handleFormSubmit}>
-        <div>
+    <div className={styles.lessonFormContainer}>
+      <SideBar />
+      <form onSubmit={handleSaveLesson} className={styles.lessonForm}>
+        <h2>{formTitle}</h2>
+        <div className={styles.lessonFormSection}>
+          <label htmlFor={"title"}>
+            Title
+          </label>
+          <input
+            className={styles.lessonFormInput}
+            type="text"
+            name="title"
+            value={formData['title']}
+            onChange={handleChangeFormData}
+          />
+        </div>
+        <div className={styles.lessonFormSection}>
+          <label htmlFor={"points"}>
+            Points
+          </label>
+          <input
+            className={styles.lessonPointsInput}
+            type="number"
+            name="points"
+            value={formData['points']}
+            onChange={handleChangeFormData} placeholder={5}
+          />
+        </div>
+        <div className={styles.lessonFormSection}>
+          <label htmlFor={"materials"}>Details</label>
+          <textarea
+            className={styles.materialsTextarea}
+            name="materials"
+            value={formData['materials']}
+            onChange={handleChangeFormData}
+          />
+        </div>
+        <div className={styles.lessonSteps}>
           {
             Object.keys(descriptionKeys).map((key) => {
               return (
@@ -149,50 +226,73 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit}) => {
             })
           }
         </div>
-        <label htmlFor={"title"}>Title</label>
-        <input type="text" name="title" value={formData['title']} onChange={handleChangeFormData}/>
-        <label htmlFor={"points"}>Points</label>
-        <input type="number" name="points" value={formData['points']} onChange={handleChangeFormData} placeholder={5}/>
-        <label htmlFor={"materials"}>Materials</label>
-        <textarea name="materials" value={formData['materials']} onChange={handleChangeFormData}/>
-        {
-          addedDescriptionKeys.map((key) => {
-            return (
-              <div key={key}>
-                <label htmlFor={`description[${key}]`}>{key}</label>
-                {
-                  key === 'image' && image && <img src={URL.createObjectURL(image)} alt="preview"/>
-                }
-                {
-                  key === 'file' && file && <a href={URL.createObjectURL(file)} download>Download file</a>
-                }
-                <input
-                  type={["file", "image"].includes(key) ? "file" : "text"}
-                  name={key}
-                  value={formData['description'][key]}
-                  onChange={handleDescriptionChange}
-                />
-                <button onClick={(e) => handleDescriptionRemove(e, key)}>Remove</button>
-              </div>
-            )
-          })
-        }
-        <div onClick={handleAddVideo}>+ video</div>
-        <div>
+        <div className={styles.lessonAddedSteps}>
           {
-            formData['videoLinks'].map((link, index) => {
+            addedDescriptionKeys.map((key) => {
+              const isFile = key === 'file' || key === 'image';
               return (
-                <div key={`videoLinks[${index}]`}>
-                  <label htmlFor={`videoLinks[${index}]`}>Video link</label>
-                  <input type="text" name={`videoLinks[${index}]`} value={link}
-                         onChange={(e) => handleVideoChange(e, index)}/>
-                  <button onClick={(e) => handleRemoveVideo(e, index)}>Remove</button>
+                <div key={key} className={styles.addedStep}>
+                  <label htmlFor={key} className={ isFile ? styles.lessonLabelFile : undefined}>
+                    {key}
+                  </label>
+                  <input
+                    className={styles.lessonFormInput}
+                    id={key}
+                    type={["file", "image"].includes(key) ? "file" : "text"}
+                    name={key}
+                    value={['image', 'file'].includes(key) ? undefined : formData['description'][key]}
+                    onChange={handleDescriptionChange}
+                    style={{display: isFile ? 'none' : 'block'}}
+                  />
+                  <div>
+                    {
+                      key === 'image' && imagePreview &&
+                      <div>
+                        <img src={imagePreview} alt="preview"/>
+                      </div>
+                    }
+                  </div>
+                  <div>
+                    {
+                      key === 'file' && filePreview && <a className={styles.downloadFileLink} href={filePreview} download>Download file</a>
+                    }
+                    <button className={styles.removeDescriptionButton} onClick={(e) => handleDescriptionRemove(e, key)}>
+                      Remove
+                    </button>
+                  </div>
                 </div>
               )
             })
           }
         </div>
-        <button type="submit">Save</button>
+        {/*<div onClick={handleAddVideo}>+ video</div>*/}
+        {/*<div>*/}
+        {/*  {*/}
+        {/*    formData['videoLinks'].map((link, index) => {*/}
+        {/*      return (*/}
+        {/*        <div key={`videoLinks[${index}]`}>*/}
+        {/*          <label htmlFor={`videoLinks[${index}]`}>Video link</label>*/}
+        {/*          <input type="text" name={`videoLinks[${index}]`} value={link}*/}
+        {/*                 onChange={(e) => handleVideoChange(e, index)}/>*/}
+        {/*          <button onClick={(e) => handleRemoveVideo(e, index)}>Remove</button>*/}
+        {/*        </div>*/}
+        {/*      )*/}
+        {/*    })*/}
+        {/*  }*/}
+        {/*</div>*/}
+      <div className={styles.quizContainer}>
+        {
+        !!quizzes?.length ? <div className={styles.quizSection}>
+          { quizzes[0]?.title }
+          <button type="button" className={styles.quizButton}
+                  onClick={handleAddQuiz}>Edit quiz</button>
+          </div> :
+          <button type="button" className={styles.quizButton} onClick={handleAddQuiz}>Add quiz</button>
+      }
+      </div>
+       <div>
+         <button type="submit" className={styles.saveLessonButton}>Save</button>
+       </div>
       </form>
     </div>
   );

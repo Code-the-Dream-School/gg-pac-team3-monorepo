@@ -36,8 +36,10 @@ const Courses = () => {
           return (
           <li key={course.id} className={styles.courseItem}>
               <img className={styles.courseLogo} src={course.imageUrl}/>
-              <div><h3>{course.courseName}</h3>
-              <p>{course.description}</p></div>
+              <div className={styles.courseDescription}>
+              <h3>{course.courseName}</h3>
+              <p>{course.description}</p>
+              </div>
           </li>
           )
         })}

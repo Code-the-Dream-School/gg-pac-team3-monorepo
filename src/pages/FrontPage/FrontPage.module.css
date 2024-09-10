@@ -62,6 +62,11 @@
 
 .courseDescription > p {
   text-align: left;
+  height: 2rem;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-left: 0.5rem;
 }
 
 .errorContainer {
