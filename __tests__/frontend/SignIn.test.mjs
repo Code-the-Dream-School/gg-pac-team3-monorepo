@@ -37,7 +37,7 @@ describe('Frontend Page Loading and SignIn', () => {
     // Wait for the modal to appear using the modal's container class
     await page.waitForSelector('._container_1oxjf_15', { visible: true });
 
-    const buttonExists = await page.$('button._button_1oxjf_73'); // Use the button class for Log In
+    const buttonExists = await page.$('button._button_1oxjf_73'); 
     if (!buttonExists) {
       console.error('Log In button not found!');
       throw new Error('Log In button not found!');
@@ -73,5 +73,5 @@ describe('Frontend Page Loading and SignIn', () => {
 
     const url = await page.url();
     expect(url).toBe('http://localhost:5173/teacher/dashboard');
-  }, 60000); // 60 seconds timeout
+  }, 60000); 
 });
