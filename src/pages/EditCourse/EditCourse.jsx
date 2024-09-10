@@ -61,7 +61,7 @@ const EditCourse = () => {
 
   return (
     <div>
-      <CourseForm initialData={course} onSubmit={handleSubmit} formTitle={"Edit your course"}/>
+      <CourseForm initialData={course} onSubmit={handleSubmit} formTitle={"Edit your course"} />
     </div>
   );
 };

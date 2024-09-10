@@ -20,6 +20,8 @@ export const createQuiz = async (req, res) => {
 
     const newQuiz = new QuizModel({
       ...quizData,
+      questions: quizData.questions || [],
+      createdAt: new Date(),
       quizId, // Set the generated ID here
     });
 
@@ -120,12 +122,17 @@ export const updateQuiz = async (req, res) => {
       .collection(QUIZZES)
       .doc(quizId);
     const quizDoc = await quizRef.get();
+    const oldQuizData = quizDoc.data()
 
     if (!quizDoc.exists) {
       return res.status(404).send({ message: 'Quiz not found' });
     }
 
-    await quizRef.update(updates);
+    console.log({updates})
+
+    await quizRef.update({
+      ...updates
+    });
     res.status(200).send({ message: 'Quiz updated successfully' });
   } catch (error) {
     console.error('Error updating quiz:', error);

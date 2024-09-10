@@ -13,7 +13,6 @@ export const createLesson = async (req, res) => {
   if (lessonData.description) {
     lessonData['description'] = JSON.parse(lessonData['description']);
   }
-  //console.log({lessonData})
 
   if (file) {
     lessonData = await addFileToParams(file[0], lessonData);
@@ -27,8 +26,6 @@ export const createLesson = async (req, res) => {
   if (lessonData['videoLinks']) {
     lessonData['videoLinks'] = JSON.parse(lessonData['videoLinks']);
   }
-
-  //console.log({lessonData});
 
   try {
     const courseRef = db.collection(COURSES).doc(courseId);
@@ -120,7 +117,25 @@ export const getAllLessons = async (req, res) => {
 // Update a lesson by ID
 export const updateLesson = async (req, res) => {
   const { courseId, lessonId } = req.params;
-  const updates = req.body;
+  let lessonData = req.body;
+  const { file, image } = req.files;
+  if (lessonData.description) {
+    lessonData['description'] = JSON.parse(lessonData['description']);
+  }
+
+  if (file) {
+    lessonData = await addFileToParams(file[0], lessonData);
+  }
+
+  if (image) {
+    lessonData = await addFileToParams(image[0], lessonData);
+  }
+
+  lessonData['points'] = parseInt(lessonData['points']);
+
+  if (lessonData['videoLinks']) {
+    lessonData['videoLinks'] = JSON.parse(lessonData['videoLinks']);
+  }
 
   try {
     const lessonRef = db
@@ -134,8 +149,19 @@ export const updateLesson = async (req, res) => {
       return res.status(404).send({ message: 'Lesson not found' });
     }
 
-    await lessonRef.update(updates);
-    res.status(200).send({ message: 'Lesson updated successfully' });
+    if (lessonData.file) {
+      delete lessonData['file']
+    }
+
+    if (lessonData.image) {
+      delete lessonData['image']
+    }
+
+    const oldDescription = lessonDoc.data().description || {};
+    lessonData.description = { ...oldDescription, ...lessonData.description };
+
+    await lessonRef.update(lessonData);
+    res.status(200).send({ message: 'Lesson updated successfully', lessonId: lessonRef.id });
   } catch (error) {
     console.error('Error updating lesson:', error);
     res.status(500).send({ error: error.message });

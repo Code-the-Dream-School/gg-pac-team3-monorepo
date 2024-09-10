@@ -201,6 +201,8 @@ router.patch(
   '/:courseId/lesson/:lessonId',
   verifyToken,
   isTeacher,
+  multer({ dest: './public/data/uploads/' })
+    .fields([{ name: 'file', maxCount: 1 }, { name: 'image', maxCount: 1 }]),
   updateLesson,
 );
 

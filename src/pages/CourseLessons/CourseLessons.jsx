@@ -46,19 +46,45 @@ const CourseLessons = () => {
       console.error(error);
     });
   }, [id]);
+
+  const handleDeleteLesson = (lessonId) => {
+    fetch(`${apiUrl}/course/${id}/lesson/${lessonId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+    }).then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Failed to delete lesson');
+        }
+      }
+    ).then(data => {
+      const updatedLessons = lessons.filter(lesson => lesson.id !== lessonId);
+      setLessons(updatedLessons);
+    }).catch(error => {
+      console.error(error);
+    })
+  }
   return (
-    <>
-      <SideBar />
     <div className={styles.courseLessonsContainer}>
-      <div className={styles.courseInfoContainer}>
-        <img src={course.logoUrl}/>
-        <h1>{course.courseName}</h1>
-        <p>{course.description}</p>
+      <SideBar />
+      <div className={styles.lessonsContainer}>
+        <div className={styles.courseInfoContainer}>
+          <div>
+            {/*<Link className={styles.courseLink} to={`/teacher/courses/edit/${course.id}`}>Edit course</Link>*/}
+            <h1>{course.courseName}</h1>
+            <p>{course.description}</p>
+          </div>
+          <img src={course.logoUrl}/>
+        </div>
+        <LessonsTable courseId={id} lessons={lessons} handleDeleteLesson={handleDeleteLesson}/>
+        <Link className={styles.addLessonLink} to={`/teacher/courses/${id}/lessons/new`}>
+          Add lesson
+        </Link>
       </div>
-      <LessonsTable courseId={id} lessons={lessons}/>
-      <Link className={styles.addLessonButton} to={`/teacher/courses/${id}/lessons/new`}>Add lesson</Link>
     </div>
-    </>
   );
 };
 

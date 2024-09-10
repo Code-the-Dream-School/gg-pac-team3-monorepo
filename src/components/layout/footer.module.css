@@ -32,15 +32,14 @@
   color: #fff;
   padding-right: 0.5em;
   padding: 1em 0.5em 1em 0;
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.2em;
+    }
+    a:hover {
+      cursor: pointer;
+      color: #f35c3c;
+    }
 }
 
-a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 1.2em;
-}
-
-a:hover {
-  cursor: pointer;
-  color: #f35c3c;
-}

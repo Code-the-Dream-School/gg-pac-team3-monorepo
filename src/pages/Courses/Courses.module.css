@@ -30,3 +30,12 @@
     border: #0f2240 solid 0.1rem;
     border-radius: 0.625rem;
 }
+
+.courseDescription {
+    display: flex;
+    flex-direction: column;
+    p {
+        height: 3.5rem;
+        overflow: hidden;
+    }
+}
