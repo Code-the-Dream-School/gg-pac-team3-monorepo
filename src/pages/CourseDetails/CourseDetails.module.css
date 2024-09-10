@@ -43,7 +43,7 @@
 }
 
 .lessonsItem {
-  background-color: #e9ecf0;
+  background-color: #fbfdff;
   border: 1px solid #ddd;
   border-radius: 0.3125rem;
   padding: 0.9375rem;
@@ -51,7 +51,9 @@
   flex-direction: column;
   justify-content: space-between;
 }
-
+.lessonsItem:hover {
+  background-color: #faf9e0;
+}
 .lessonTitle {
   font-size: 1.5rem;
   color: #333;
@@ -89,7 +91,7 @@
 }
 
 .goToCourseButton:hover {
-  background-color: #80d4ec;
+  background-color: #0056b3;
 }
 
 .loadingSpinner {

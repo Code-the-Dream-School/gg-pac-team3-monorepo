@@ -49,13 +49,14 @@
   flex-grow: 1;
   text-align: left;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1.4rem;
   font-weight: 500;
-  color: white;  
+  color: white;
 }
 
 .descriptionTitle:hover {
-  background-color: #debf41; 
+  background-color: #efd25c;
+  border-left: 0.3125rem solid #04033a;
 }
 .highlightedWord {
   background-color: yellow; /* Highlight the currently spoken word */
@@ -100,12 +101,11 @@
   line-height: 1.6;
 }
 
-
 .imageWrapper {
   position: relative;
   overflow: hidden;
   display: inline-block;
-  max-width: 100%; 
+  max-width: 100%;
 }
 
 .imageDisplay {
@@ -138,7 +138,9 @@
   cursor: pointer;
   font-size: 1rem;
   color: #333333;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .zoomButton:hover {
@@ -177,31 +179,33 @@
   display: flex;
   justify-content: left;
   align-items: center;
-  margin-top: 2rem; 
+  margin-top: 2rem;
 }
 
 .quizButton {
-  background-color: #1d3f72; 
-  border: 2px solid #0a2540; 
-  border-radius: 8px; 
-  padding: 0.5rem 1.5rem; 
-  font-size: 1rem; 
-  font-weight: 500; 
+  background-color: #1d3f72;
+  border: 2px solid #0a2540;
+  border-radius: 8px;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 500;
   color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .quizButton:hover {
-  background-color: #163b60; 
-  transform: translateY(-2px); 
+  background-color: #163b60;
+  transform: translateY(-2px);
 }
 .successMessage {
-  color: #640410;   
-  font-size: 1rem;   
-  max-width: 80%; 
-  margin-left: 1rem;   
+  color: #640410;
+  font-size: 1rem;
+  max-width: 80%;
+  margin-left: 1rem;
 }
 
 /* Responsive Design */
@@ -228,7 +232,7 @@
     height: 400px;
   }
   .quizButton {
-    padding: 0.4rem 1rem; 
+    padding: 0.4rem 1rem;
     font-size: 0.9rem;
   }
 }

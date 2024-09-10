@@ -105,7 +105,8 @@ const Lesson = ({ lesson }) => {
                 }}
                 aria-expanded={expandedKey === key}
               >
-                {key}
+                {/* {key} */}
+                {key.charAt(0).toUpperCase() + key.slice(1)}
               </button>
             </div>
             {key !== MEDIA_TYPES.VIDEO &&

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import  searchimg  from "../../../public/images/searchpng.png";
+import searchimg from '../../../public/images/searchpng.png';
 import {
   FetchSuggestedCoursesForUser,
   fetchUserEnrolledCourses,
@@ -34,10 +34,10 @@ const Home = ({ userId, onCourseClick }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {        
+      try {
         if (userId) {
-          const courses = await FetchSuggestedCoursesForUser(userId);          
-          setCoursesData(courses);         
+          const courses = await FetchSuggestedCoursesForUser(userId);
+          setCoursesData(courses);
           setFilteredCourses(courses); // Initially show all courses
         }
       } catch (error) {
@@ -64,7 +64,6 @@ const Home = ({ userId, onCourseClick }) => {
     fetchData();
   }, [userId]);
 
-  
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, index) => (
       <span
@@ -77,7 +76,6 @@ const Home = ({ userId, onCourseClick }) => {
   };
 
   useEffect(() => {
-    
     if (!searchTerm || searchTerm === 'Ex:JavaScript') {
       setFilteredCourses(coursesData);
     } else {
@@ -142,13 +140,13 @@ const Home = ({ userId, onCourseClick }) => {
     }
   };
 
-
   return (
     <div>
       {/* Display error or success message */}
       {message && <p className={styles.errorMessage}>{message}</p>}
+
       <div className={styles.filterContainer}>
-        <div className={styles.dropdownContainer}>        
+        <div className={styles.dropdownContainer}>
           <select
             id='courseType'
             value={selectedCategory}
@@ -176,6 +174,9 @@ const Home = ({ userId, onCourseClick }) => {
         </div>
       </div>
       {/* Display Courses */}
+      <h3 className={styles.enrolledMsg}>
+        Start your learning journey by enrolling in a course!
+      </h3>
       <div className={styles.coursesContainer}>
         {currentCourses.map((course, index) => (
           <div
@@ -217,7 +218,7 @@ const Home = ({ userId, onCourseClick }) => {
           </button>
         ))}
       </div>
-{/* I will remove this code later */}
+      {/* I will remove this code later */}
       {/* Categories Section */}
       {/* <div className={styles.categoriesContainer}>
         <h2>Course Type</h2>
