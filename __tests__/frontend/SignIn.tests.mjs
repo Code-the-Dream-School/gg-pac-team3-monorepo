@@ -51,11 +51,11 @@ describe('Frontend Page Loading and SignIn', () => {
     await page.click('button._button_1oxjf_73');
 
     // Wait for the login process to complete and dashboard to load
-    await page.waitForSelector('span._navLink_19plf_10', { visible: true, timeout: 10000 });
+    await page.waitForSelector('span._navLink_d286m_14', { visible: true, timeout: 10000 });
 
     // Click on the Dashboard link
     await page.evaluate(() => {
-      const dashboardLink = Array.from(document.querySelectorAll('span._navLink_19plf_10')).find(
+      const dashboardLink = Array.from(document.querySelectorAll('span._navLink_d286m_14')).find(
         el => el.textContent.trim() === 'Dashboard'
       );
       if (dashboardLink) {
