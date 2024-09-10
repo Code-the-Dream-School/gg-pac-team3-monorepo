@@ -15,7 +15,7 @@ const Home = ({ userId, onCourseClick }) => {
   const [currentPage, setCurrentPage] = useState(1); // State for current page
   const [selectedCategory, setSelectedCategory] = useState('Course Type'); // State for selected category
   const [message, setMessage] = useState(''); // State for storing error/success message
-  const coursesPerPage = 10; // Number of courses per page
+  const [coursesPerPage, setCoursesPerPage] = useState(6); 
 
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
@@ -140,6 +140,13 @@ const Home = ({ userId, onCourseClick }) => {
     }
   };
 
+  // Handle changing the number of courses per page
+  const handleChangeNoForPerPage = (event) => {
+    const selectedValue = parseInt(event.target.value);
+    setCoursesPerPage(selectedValue);
+    setCurrentPage(1); // Reset to first page when changing results per page
+  };
+
   return (
     <div>
       {/* Display error or success message */}
@@ -206,6 +213,19 @@ const Home = ({ userId, onCourseClick }) => {
 
       {/* Pagination Controls */}
       <div className={styles.pagination}>
+        <label htmlFor='resultsPerPage' className={styles.lblresultsPerPage}>Results per page:</label>
+        <select
+          id='resultsPerPage'
+          value={coursesPerPage}
+          onChange={handleChangeNoForPerPage}
+          className={styles.dropdownPerPage}
+        >
+          <option value={4}>4</option>
+          <option value={6}>6</option>
+          <option value={10}>10</option>
+          <option value={12}>12</option>
+          <option value={24}>14</option>
+        </select>
         {Array.from({ length: totalPages }, (_, index) => (
           <button
             key={index + 1}

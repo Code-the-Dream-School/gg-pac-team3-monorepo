@@ -221,7 +221,18 @@
   border: 0.1875rem solid #030929;
   width: 90%;
 }
-
+.lblresultsPerPage {
+  margin-right: 10px;
+  padding: 10px;
+  font-size: 1.4rem;
+}
+.dropdownPerPage {
+  padding: 0.3125rem;
+  font-size: 1.4rem;
+  border-radius: 0.5rem;
+  color: #01051c;
+  border: 0.1875rem solid #030929;
+}
 /* Media Queries for responsiveness */
 @media (max-width: 768px) {
   .courseCard {
