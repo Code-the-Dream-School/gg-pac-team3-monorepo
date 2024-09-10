@@ -4,20 +4,19 @@ describe('Frontend Page Loading', () => {
   let browser;
   let page;
 
-  // Start the browser before all tests
   beforeAll(async () => {
     try {
       browser = await puppeteer.launch({
-        headless: false, 
-        slowMo: 100, 
+        headless: false,
+        slowMo: 100,
       });
       page = await browser.newPage();
     } catch (error) {
-      console.error('Error setting up the browser:', error);
+      console.error('Error starting the browser:', error);
       throw error;
     }
-  });
-
+  }, 10000);
+  
   // Close the browser after all tests
   afterAll(async () => {
     try {
