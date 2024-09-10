@@ -21,10 +21,10 @@ const UserDashboard = () => {
   const navigate = useNavigate();
 
   const handleCourseClick = (course) => {
-     const isEnrolled = activeTab === MY_COURSES_TAB;
-     navigate(`/course/${course.courseName}`, {
-       state: { course, isEnrolled, activeTab },
-     });
+    const isEnrolled = activeTab === MY_COURSES_TAB;
+    navigate(`/course/${course.courseName}`, {
+      state: { course, isEnrolled, activeTab },
+    });
     // console.log('course click', course);
     // const isEnrolled = activeTab === MY_COURSES_TAB;
 
@@ -34,7 +34,6 @@ const UserDashboard = () => {
     //   state: { course, isEnrolled, activeTab }, // State is an object containing data
     // });
   };
-
 
   useEffect(() => {
     if (activeTab === HOME_TAB) {

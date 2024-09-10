@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import  searchimg  from "../../../public/images/searchpng.png";
+import searchimg from '../../../public/images/searchpng.png';
 import {
   FetchSuggestedCoursesForUser,
   fetchUserEnrolledCourses,
@@ -34,10 +34,10 @@ const Home = ({ userId, onCourseClick }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {        
+      try {
         if (userId) {
-          const courses = await FetchSuggestedCoursesForUser(userId);          
-          setCoursesData(courses);         
+          const courses = await FetchSuggestedCoursesForUser(userId);
+          setCoursesData(courses);
           setFilteredCourses(courses); // Initially show all courses
         }
       } catch (error) {
@@ -64,7 +64,6 @@ const Home = ({ userId, onCourseClick }) => {
     fetchData();
   }, [userId]);
 
-  
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, index) => (
       <span
@@ -77,7 +76,6 @@ const Home = ({ userId, onCourseClick }) => {
   };
 
   useEffect(() => {
-    
     if (!searchTerm || searchTerm === 'Ex:JavaScript') {
       setFilteredCourses(coursesData);
     } else {
@@ -141,7 +139,6 @@ const Home = ({ userId, onCourseClick }) => {
       setFilteredCourses(filteredByCategory); // Show filtered courses
     }
   };
-
 
   return (
     <div>
