@@ -217,7 +217,7 @@ const Home = ({ userId, onCourseClick }) => {
           </button>
         ))}
       </div>
-
+{/* I will remove this code later */}
       {/* Categories Section */}
       {/* <div className={styles.categoriesContainer}>
         <h2>Course Type</h2>

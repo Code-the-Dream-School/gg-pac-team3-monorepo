@@ -50,6 +50,7 @@ const MyCourses = ({ userId, onCourseClick }) => {
 
   return (
     <div>
+      <h3 className={styles.enrolledMsg}>You have enrolled in these courses</h3>
       <div className={styles.coursesContainer}>
         {currentCourses.map((course, index) => (
           <div
