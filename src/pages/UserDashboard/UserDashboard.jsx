@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import HomeIcon from '../../../public/images/HomeIcon.png';
+import CoursesIcon from '../../../public/images/CoursesIcon.png';
+import ProfileIcon from '../../../public/images/ProfileIcon.png';
 import Home from './Home';
 import MyCourses from './MyCourses';
 import Profile from './Profile';
@@ -12,20 +15,28 @@ const PROFILE_TAB = 'Profile';
 const UserDashboard = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState(
-    location.state?.activeTab || HOME_TAB,
+    location.state?.activeTab || HOME_TAB
   );
   const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
 
   const handleCourseClick = (course) => {
-    const isEnrolled = activeTab === MY_COURSES_TAB;
-    navigate(`/course/${course.courseName}`, {
-      state: { course, isEnrolled, activeTab },
-    });
+     const isEnrolled = activeTab === MY_COURSES_TAB;
+     navigate(`/course/${course.courseName}`, {
+       state: { course, isEnrolled, activeTab },
+     });
+    // console.log('course click', course);
+    // const isEnrolled = activeTab === MY_COURSES_TAB;
+
+    // // Corrected navigate call
+    // navigate(`/UserDashboard/CourseDetails/${course.courseName}`, {
+    //   replace: true, // Replace is a property, not inside another object
+    //   state: { course, isEnrolled, activeTab }, // State is an object containing data
+    // });
   };
 
+
   useEffect(() => {
-    // Update the URL based on the active tab
     if (activeTab === HOME_TAB) {
       navigate('/UserDashboard/home', { replace: true, state: { activeTab } });
     } else if (activeTab === MY_COURSES_TAB) {
@@ -43,14 +54,16 @@ const UserDashboard = () => {
 
   return (
     <div className={styles.dashboardContainer}>
-      <header className={styles.header}>
+      <aside className={styles.sidebar}>
         <button
           className={`${styles.tabButton} ${
             activeTab === HOME_TAB ? styles.activeTab : ''
           }`}
           onClick={() => setActiveTab(HOME_TAB)}
         >
+          <img className={styles.icon} src={HomeIcon} />
           {HOME_TAB}
+          {/* <HomeIcon className={styles.icon} /> {HOME_TAB} */}
         </button>
         <button
           className={`${styles.tabButton} ${
@@ -58,6 +71,7 @@ const UserDashboard = () => {
           }`}
           onClick={() => setActiveTab(MY_COURSES_TAB)}
         >
+          <img className={styles.icon} src={CoursesIcon} />
           {MY_COURSES_TAB}
         </button>
         <button
@@ -66,9 +80,10 @@ const UserDashboard = () => {
           }`}
           onClick={() => setActiveTab(PROFILE_TAB)}
         >
+          <img className={styles.icon} src={ProfileIcon} />
           {PROFILE_TAB}
         </button>
-      </header>
+      </aside>
       <main className={styles.content}>
         {activeTab === HOME_TAB && (
           <Home userId={userId} onCourseClick={handleCourseClick} />
