@@ -51,6 +51,14 @@
   color: black;
 }
 
+.courseEditLink {
+  background-color: #0f2240;
+  color: white;
+  text-decoration: none;
+  border-radius: 0.625rem;
+  padding: 0.5rem 1rem;
+}
+
 .courseLogo {
   width: 3rem;
   text-align: center;

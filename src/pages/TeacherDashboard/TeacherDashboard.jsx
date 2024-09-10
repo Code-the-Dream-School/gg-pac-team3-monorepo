@@ -6,6 +6,7 @@ import {Link, useNavigate} from "react-router-dom";
 const TeacherDashboard = () => {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const [courses, setCourses] = useState([]);
+  const [teacherName, setTeacherName] = useState('');
   const token = localStorage.getItem('authToken');
   const navigate = useNavigate();
 
@@ -74,8 +75,8 @@ const TeacherDashboard = () => {
                               to={`/teacher/courses/${course.id}/lessons`}>{course.courseName}</Link></td>
                     <td>{course.lessons.length}</td>
                     <td>{totalPoints(course.lessons)}</td>
-                    <td>{course.user_courses.length}</td>
-                    <td><Link className={styles.courseLink} to={`/teacher/courses/edit/${course.id}`}>Edit</Link></td>
+                    <td>{course.user_courses?.length}</td>
+                    <td><Link className={styles.courseEditLink} to={`/teacher/courses/edit/${course.id}`}>Edit course</Link></td>
                   </tr>
                 )
               })

@@ -69,6 +69,7 @@ const QuizForm = ({initialData = DEFAULT_QUIZ, handleSubmit}) => {
             name="title"
             value={formData.title}
             onChange={handleChangeFormData}
+            placeholder={"Enter quiz title"}
           />
         </div>
         <button className={styles.addQuestionButton} onClick={handleAddQuestion}>Add Question</button>
@@ -84,6 +85,7 @@ const QuizForm = ({initialData = DEFAULT_QUIZ, handleSubmit}) => {
                       name={`questionText-${index}`}
                       value={question.questionText}
                       onChange={(e) => handleChangeQuestion(e, index)}
+                      placeholder={"Enter your question here"}
                     />
                   </div>
                   <div className={styles.quizSection}>
@@ -94,6 +96,7 @@ const QuizForm = ({initialData = DEFAULT_QUIZ, handleSubmit}) => {
                       name={`answer-${index}`}
                       value={question.answer}
                       onChange={(e) => handleChangeQuestion(e, index)}
+                      placeholder={"Enter the correct answer here"}
                     />
                   </div>
                   <div className={styles.quizSection}>
@@ -109,6 +112,7 @@ const QuizForm = ({initialData = DEFAULT_QUIZ, handleSubmit}) => {
                             name={`option-${index}-${optionIndex}`}
                             value={option}
                             onChange={(e) => handleChangeQuestion(e, index, optionIndex)}
+                            placeholder={"Enter an answer option"}
                           />
                         </div>
                       )
