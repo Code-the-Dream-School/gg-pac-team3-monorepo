@@ -209,7 +209,7 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
           />
         </div>
         <div className={styles.lessonFormSection}>
-          <label htmlFor={"materials"}>Details</label>
+          <label htmlFor={"materials"}>Materials</label>
           <textarea
             className={styles.materialsTextarea}
             name="materials"
@@ -265,21 +265,6 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
             })
           }
         </div>
-        {/*<div onClick={handleAddVideo}>+ video</div>*/}
-        {/*<div>*/}
-        {/*  {*/}
-        {/*    formData['videoLinks'].map((link, index) => {*/}
-        {/*      return (*/}
-        {/*        <div key={`videoLinks[${index}]`}>*/}
-        {/*          <label htmlFor={`videoLinks[${index}]`}>Video link</label>*/}
-        {/*          <input type="text" name={`videoLinks[${index}]`} value={link}*/}
-        {/*                 onChange={(e) => handleVideoChange(e, index)}/>*/}
-        {/*          <button onClick={(e) => handleRemoveVideo(e, index)}>Remove</button>*/}
-        {/*        </div>*/}
-        {/*      )*/}
-        {/*    })*/}
-        {/*  }*/}
-        {/*</div>*/}
       <div className={styles.quizContainer}>
         {
         !!quizzes?.length ? <div className={styles.quizSection}>
