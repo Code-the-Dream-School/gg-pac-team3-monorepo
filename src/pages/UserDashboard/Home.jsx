@@ -147,8 +147,9 @@ const Home = ({ userId, onCourseClick }) => {
     <div>
       {/* Display error or success message */}
       {message && <p className={styles.errorMessage}>{message}</p>}
+
       <div className={styles.filterContainer}>
-        <div className={styles.dropdownContainer}>        
+        <div className={styles.dropdownContainer}>
           <select
             id='courseType'
             value={selectedCategory}
@@ -176,6 +177,9 @@ const Home = ({ userId, onCourseClick }) => {
         </div>
       </div>
       {/* Display Courses */}
+      <h3 className={styles.enrolledMsg}>
+        Start your learning journey by enrolling in a course!
+      </h3>
       <div className={styles.coursesContainer}>
         {currentCourses.map((course, index) => (
           <div
@@ -217,7 +221,7 @@ const Home = ({ userId, onCourseClick }) => {
           </button>
         ))}
       </div>
-{/* I will remove this code later */}
+      {/* I will remove this code later */}
       {/* Categories Section */}
       {/* <div className={styles.categoriesContainer}>
         <h2>Course Type</h2>

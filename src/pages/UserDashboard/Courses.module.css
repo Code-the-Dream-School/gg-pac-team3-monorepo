@@ -19,12 +19,12 @@
 }
 
 .enrolledMsg {
-  background-color: #e6e6f6;
+  background-color: #f9f9fb;
   margin: 0;
   text-align: left;
   padding: 0.5rem 1rem;
-  font-size: 1.25rem;
-  color: #0d0d0d;
+  font-size: 1.7rem;
+  color: #080000;
 }
 
 .form > h2 {
