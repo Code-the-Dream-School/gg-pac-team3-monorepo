@@ -42,20 +42,19 @@ export const createCourse = async (req, res) => {
 
     courseData = await addFileToParams(file, courseData);
 
-    // Create a new course
-    const courseRef = db.collection(COURSES).doc(); 
-    courseData.courseId = courseRef.id; 
-    courseData.teacherId = uid; 
+    // Define teacherId as req.user.uid
+    courseData.teacherId = req.user.uid; // Fix this line
+    courseData.courseId = db.collection(COURSES).doc().id; // Generate a new courseId
     courseData.createdAt = new Date(); 
-    console.log('Course Data:', courseData); 
+    //console.log('Course Data:', courseData); 
 
     // Add course data to Firestore
     const newCourse = new CourseModel(courseData);
-    await courseRef.set(newCourse.toFirestore());
+    await db.collection(COURSES).doc(courseData.courseId).set(newCourse.toFirestore());
 
     res.status(201).json({
       message: 'Course created successfully',
-      courseId: courseRef.id,
+      courseId: courseData.courseId,
       course: newCourse
     });
   } catch (error) {

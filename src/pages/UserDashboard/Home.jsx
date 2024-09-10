@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import searchimg from '../../../public/images/searchpng.png';
 import {
   FetchSuggestedCoursesForUser,
   fetchUserEnrolledCourses,
@@ -12,9 +13,9 @@ const Home = ({ userId, onCourseClick }) => {
   const [searchTerm, setSearchTerm] = useState('Ex:JavaScript');
   const [filteredCourses, setFilteredCourses] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // State for current page
-  const [selectedCategory, setSelectedCategory] = useState('All'); // State for selected category
+  const [selectedCategory, setSelectedCategory] = useState('Course Type'); // State for selected category
   const [message, setMessage] = useState(''); // State for storing error/success message
-  const coursesPerPage = 10; // Number of courses per page
+  const [coursesPerPage, setCoursesPerPage] = useState(6); 
 
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
@@ -34,7 +35,6 @@ const Home = ({ userId, onCourseClick }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('userId:', userId);
         if (userId) {
           const courses = await FetchSuggestedCoursesForUser(userId);
           setCoursesData(courses);
@@ -75,18 +75,16 @@ const Home = ({ userId, onCourseClick }) => {
     ));
   };
 
-
   useEffect(() => {
-    if (!searchTerm) {
+    if (!searchTerm || searchTerm === 'Ex:JavaScript') {
       setFilteredCourses(coursesData);
     } else {
       const filteredCoursesList = coursesData.filter((course) =>
-        course.courseName.toLowerCase().includes(searchTerm.toLowerCase()),
+        course.courseName.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredCourses(filteredCoursesList);
     }
   }, [searchTerm, coursesData]);
-
 
   const handleSearchTerm = (event) => {
     const input = event.target.value;
@@ -107,17 +105,32 @@ const Home = ({ userId, onCourseClick }) => {
     setCurrentPage(pageNumber);
   };
 
-  // Get unique course types with 'All' as default
+  // Get unique course types with 'Course Type' as default
   const courseTypes = [
-    'All',
+    'Course Type',
     ...Array.from(new Set(coursesData.map((course) => course.courseType))),
   ];
+
+  // Handle course type filtering
+  const handleCategoryChange = (event) => {
+    const category = event.target.value;
+    setSelectedCategory(category);
+    setCurrentPage(1); // Reset pagination to first page
+    if (category === 'Course Type') {
+      setFilteredCourses(coursesData);
+    } else {
+      const filteredByCategory = coursesData.filter(
+        (course) => course.courseType === category
+      );
+      setFilteredCourses(filteredByCategory);
+    }
+  };
 
   // Filter courses based on selected category
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     setCurrentPage(1); // Reset pagination to first page
-    if (category === 'All') {
+    if (category === 'Course Type') {
       setFilteredCourses(coursesData); // Show all courses
     } else {
       const filteredByCategory = coursesData.filter(
@@ -127,27 +140,50 @@ const Home = ({ userId, onCourseClick }) => {
     }
   };
 
+  // Handle changing the number of courses per page
+  const handleChangeNoForPerPage = (event) => {
+    const selectedValue = parseInt(event.target.value);
+    setCoursesPerPage(selectedValue);
+    setCurrentPage(1); // Reset to first page when changing results per page
+  };
+
   return (
     <div>
       {/* Display error or success message */}
       {message && <p className={styles.errorMessage}>{message}</p>}
 
-      <div className={styles.searchContainer}>
-        <form id='submitSearchForm' className={styles.form}>
-          <h2>Search courses:</h2>
-          <input
-            onChange={handleSearchTerm}
-            onClick={() => {
-              setSearchTerm('');
-            }}
-            value={searchTerm}
-            placeholder={searchTerm}
-            className={styles.searchInput}
-          />
-        </form>
-      </div>
+      <div className={styles.filterContainer}>
+        <div className={styles.dropdownContainer}>
+          <select
+            id='courseType'
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            className={styles.dropdown}
+          >
+            {courseTypes.map((courseType, index) => (
+              <option key={index} value={courseType}>
+                {courseType}
+              </option>
+            ))}
+          </select>
+        </div>
 
+        <div className={styles.searchContainer}>
+          <form id='submitSearchForm' className={styles.form}>
+            <input
+              onChange={handleSearchTerm}
+              onClick={() => setSearchTerm('')}
+              value={searchTerm}
+              placeholder={searchTerm}
+              className={styles.searchInput}
+            />
+          </form>
+        </div>
+      </div>
       {/* Display Courses */}
+      <h3 className={styles.enrolledMsg}>
+        Start your learning journey by enrolling in a course!
+      </h3>
       <div className={styles.coursesContainer}>
         {currentCourses.map((course, index) => (
           <div
@@ -177,6 +213,19 @@ const Home = ({ userId, onCourseClick }) => {
 
       {/* Pagination Controls */}
       <div className={styles.pagination}>
+        <label htmlFor='resultsPerPage' className={styles.lblresultsPerPage}>Results per page:</label>
+        <select
+          id='resultsPerPage'
+          value={coursesPerPage}
+          onChange={handleChangeNoForPerPage}
+          className={styles.dropdownPerPage}
+        >
+          <option value={4}>4</option>
+          <option value={6}>6</option>
+          <option value={10}>10</option>
+          <option value={12}>12</option>
+          <option value={24}>14</option>
+        </select>
         {Array.from({ length: totalPages }, (_, index) => (
           <button
             key={index + 1}
@@ -189,9 +238,9 @@ const Home = ({ userId, onCourseClick }) => {
           </button>
         ))}
       </div>
-
+      {/* I will remove this code later */}
       {/* Categories Section */}
-      <div className={styles.categoriesContainer}>
+      {/* <div className={styles.categoriesContainer}>
         <h2>Course Type</h2>
         <div className={styles.categoriesGrid}>
           {courseTypes.map((courseType, index) => (
@@ -206,7 +255,7 @@ const Home = ({ userId, onCourseClick }) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
       <h3 className={styles.enrolledMsg}>You have enrolled in these courses</h3>
       <div className={styles.coursesContainer}>
         {enrolledCoursesData.map((course, index) => (
