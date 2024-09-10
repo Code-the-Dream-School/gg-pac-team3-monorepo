@@ -19,6 +19,7 @@ db.settings({ ignoreUndefinedProperties: true });
 
 // Create a new course
 export const createCourse = async (req, res) => {
+  const { uid } = req.user;
   let courseData = req.body;
   const file = req.file;
 

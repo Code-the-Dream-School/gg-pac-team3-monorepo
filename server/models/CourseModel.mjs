@@ -12,6 +12,7 @@ class CourseModel {
     rating,
     otherInfo,
     createdBy,
+    teacherId,
     createdAt = new Date(), // Default to current date if not provided
   }) {
     // Validate types
@@ -46,6 +47,7 @@ class CourseModel {
     this.rating = rating;
     this.otherInfo = otherInfo;
     this.createdBy = createdBy;
+    this.teacherId = teacherId;
     this.createdAt = createdAt;
   }
 
@@ -61,6 +63,7 @@ class CourseModel {
       rating: this.rating,
       otherInfo: this.otherInfo,
       createdBy: this.createdBy,
+      teacherId: this.teacherId,
       createdAt: admin.firestore.Timestamp.fromDate(this.createdAt), // Convert JavaScript Date to Firestore Timestamp
     };
 
@@ -84,6 +87,7 @@ class CourseModel {
       rating: data.rating,
       otherInfo: data.otherInfo,
       createdBy: data.createdBy,
+      teacherId: data.teacherId,
       createdAt: data.createdAt.toDate(), // Convert Firestore Timestamp to JavaScript Date object
     });
   }
