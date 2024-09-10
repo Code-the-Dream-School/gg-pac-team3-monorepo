@@ -134,8 +134,22 @@ export const FetchSuggestedCoursesForUser = async (userId) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error fetching suggested courses:', error);
-    throw error;
+    console.error('Error fetching not enrolled courses by user:', error);
+    // Check for 401 Unauthorized error
+    if (error.response && error.response.status === 401) {
+      const errorMessage = error.response.data.message || 'Unauthorized access';
+
+      // Check if the token is invalid or expired
+      if (errorMessage.toLowerCase().includes('token expired')) {
+        throw new Error('Your session has expired. Please log in again.');
+      } else if (errorMessage.toLowerCase().includes('invalid token')) {
+        throw new Error('Invalid token. Please log in to continue.');
+      } else {
+        throw new Error('You are not authorized to access this resource.');
+      }
+    } else {
+      throw error;
+    }
   }
 };
 
