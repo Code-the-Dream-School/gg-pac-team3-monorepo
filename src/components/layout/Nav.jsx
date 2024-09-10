@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import SignIn from './SignIn';
+import SignIn from './signIn';  
 import SignUp from './SignUp';
-import styles from './Nav.module.css';
+import ForgotPassword from './ForgotPasswordForm';  
+import styles from './nav.module.css';
 import { useAuth } from '../../AuthContext';
 import logo from '../../assets/logos/blue.png';
 import { useNavigate } from 'react-router-dom';
@@ -14,15 +15,16 @@ const Nav = ({ isLoggedIn, onLogout }) => {
 
   const navLinks = isLoggedIn
     ? [
-        { id: 1, link: `Welcome ${userName}` },
+        { id: 1, link: `Welcome ${userName || 'User'}` },
         { id: 2, link: 'Dashboard' },
         { id: 3, link: 'Logout' },
       ]
     : [
-        { id: 1, link: 'Login' },
-        { id: 2, link: 'Register' },
+        { id: 1, link: 'About Us' },
+        { id: 2, link: 'Login' },
+        { id: 3, link: 'Register' },
       ];
-  
+
   const switchForm = (link) => {
     switch (link) {
       case 'Register':
@@ -36,6 +38,9 @@ const Nav = ({ isLoggedIn, onLogout }) => {
         setActiveForm(null); // Close the form after logout
         navigate('/');
         break;
+      case 'About Us':
+        navigate('/about');
+        break;
       case 'Dashboard':
         if (userType === 'Student') {
           navigate('/UserDashboard/home'); // Navigate to Student Dashboard
@@ -43,16 +48,35 @@ const Nav = ({ isLoggedIn, onLogout }) => {
           navigate('/teacher/dashboard'); // Navigate to Teacher Dashboard
         }
         break;
+      case 'ForgotPassword': // Trigger ForgotPassword form
+        setActiveForm('ForgotPassword');
+        break;
       default:
         setActiveForm(null);
     }
   };
 
-  useEffect(() => {}, [isLoggedIn]);
+  useEffect(() => {
+    // This effect will run when isLoggedIn changes
+    if (isLoggedIn) {
+      // Fetch the user's name from localStorage if it's not already set
+      const storedName = localStorage.getItem('userName');
+      if (storedName && !userName) {
+        handleLogin(storedName, localStorage.getItem('userType'));
+      }
+    }
+  }, [isLoggedIn, userName, handleLogin]);
 
   return (
     <div className={styles.nav}>
-      <img src={logo} alt='Logo' className={styles.logo} />
+      <img
+        onClick={() => {
+          navigate('/');
+        }}
+        src={logo}
+        alt='Logo'
+        className={styles.logo}
+      />
       <div className={styles.navLinks}>
         {navLinks.map((navLink) => (
           <span
@@ -64,16 +88,20 @@ const Nav = ({ isLoggedIn, onLogout }) => {
           </span>
         ))}
       </div>
+
+      {/* Render Active Form */}
       {activeForm === 'SignUp' && <SignUp switchForm={switchForm} />}
       {activeForm === 'SignIn' && (
         <SignIn
           switchForm={switchForm}
           onLoginSuccess={(name, type) => {
-            // Set isLoggedIn to true in the parent component
             switchForm(null); // Close the form
             handleLogin(name, type);
           }}
         />
+      )}
+      {activeForm === 'ForgotPassword' && (
+        <ForgotPassword switchForm={switchForm} />
       )}
     </div>
   );
@@ -83,4 +111,5 @@ Nav.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   onLogout: PropTypes.func.isRequired,
 };
+
 export default Nav;

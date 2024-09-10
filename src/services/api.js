@@ -1,7 +1,6 @@
 import axios from 'axios';
 const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
-
 const getAuthToken = () => {
   return localStorage.getItem('authToken');
 };
@@ -32,20 +31,58 @@ export const LoginUser = async (email, password) => {
 //Function to create a account / register
 export const registerUser = async (name, email, password, userType) => {
   try {
-    const token = getAuthToken();
     const response = await axios.post(
       `${API_BASE_URL}/user`,
-      { name, email, password, userType },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
+      { name, email, password, userType }
     );
 
     return response.data;
   } catch (error) {
     console.error('Error registering user:', error);
+    throw error;
+  }
+};
+
+// Google Sign-In
+export const googleSignIn = async (token) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/google/signin`, { token });
+    const { token: authToken, user } = response.data;
+
+    if (user) {
+      localStorage.setItem('userId', user.uid);
+      localStorage.setItem('userName', user.name); 
+      localStorage.setItem('userType', user.userType);
+    }
+    if (authToken) {
+      localStorage.setItem('authToken', authToken);
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Error signing in with Google:', error);
+    throw error;
+  }
+};
+
+// Google Sign-Up
+export const googleSignUp = async (token, userType) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/google/signup`, { token, userType });
+    const { token: authToken, user } = response.data;
+
+    if (user) {
+      localStorage.setItem('userId', user.uid);
+      localStorage.setItem('userName', user.name);  
+      localStorage.setItem('userType', user.userType);
+    }
+    if (authToken) {
+      localStorage.setItem('authToken', authToken);
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Error signing up with Google:', error);
     throw error;
   }
 };
@@ -64,7 +101,7 @@ export const fetchQuizByLessonId = async (lessonId, courseId) => {
     );
     return response.data;
   } catch (error) {
-    console.error('Error fetching courses:', error);
+    console.error('Error fetching quizzes:', error);
     throw error;
   }
 };
@@ -74,9 +111,7 @@ export const fetchCourses = async () => {
   try {
     const token = getAuthToken();
     const response = await axios.get(`${API_BASE_URL}/course/public`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
     });
     return response.data;
   } catch (error) {
@@ -100,7 +135,21 @@ export const FetchSuggestedCoursesForUser = async (userId) => {
     return response.data;
   } catch (error) {
     console.error('Error fetching not enrolled courses by user:', error);
-    throw error;
+    // Check for 401 Unauthorized error
+    if (error.response && error.response.status === 401) {
+      const errorMessage = error.response.data.message || 'Unauthorized access';
+
+      // Check if the token is invalid or expired
+      if (errorMessage.toLowerCase().includes('token expired')) {
+        throw new Error('Your session has expired. Please log in again.');
+      } else if (errorMessage.toLowerCase().includes('invalid token')) {
+        throw new Error('Invalid token. Please log in to continue.');
+      } else {
+        throw new Error('You are not authorized to access this resource.');
+      }
+    } else {
+      throw error;
+    }
   }
 };
 
@@ -118,6 +167,9 @@ export const fetchUserEnrolledCourses = async (userId) => {
     );
     return response.data;
   } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return [];
+    }
     console.error('Error fetching enrolled courses:', error);
     throw error;
   }
@@ -142,7 +194,6 @@ export const fetchCourseByCourseId = async (courseId) => {
 //Function to fetch Teacher data by using course ID from user_course table
 export const fetchTeacherDataByCourseId = async (courseId) => {
   try {
-    // console.log('courseId:api file:', courseId);
     const token = getAuthToken();
     const response = await axios.get(
       `${API_BASE_URL}/course/${courseId}/getTeacherData`,
@@ -159,18 +210,58 @@ export const fetchTeacherDataByCourseId = async (courseId) => {
   }
 };
 
+//function to fetch user feedback - rating
+export const FetchRatingFromUserFeedback = async (courseId) => {
+  try {
+    const token = getAuthToken();
+    const response = await axios.get(
+      `${API_BASE_URL}/user/UserFeedback/${courseId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user feedback:', error);
+    throw error;
+  }
+};
+
+//function to update course rating
+export const updateCourseRating = async (courseId, rating) => {
+  try {
+    const token = getAuthToken();
+    const response = await axios.patch(
+      `${API_BASE_URL}/course/updateCourseRating/${courseId}`,
+      { rating },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error updating course rating:', error);
+    throw new Error('Could not update course rating');
+  }
+};
+
 //function to add user Feedback To Course addFeedbackToCourse
 export const addUserFeedbackToCourse = async (
   courseId,
-  rating,
   userId,
+  rating,
   feedback
 ) => {
   try {
     const token = getAuthToken();
-   
+
     const response = await axios.post(
-      `${API_BASE_URL}/user/AddUserFeedback`,
+      `${API_BASE_URL}/user/UserFeedback/AddUserFeedback`,
       { courseId, rating, userId, feedback },
       {
         headers: {
@@ -184,7 +275,8 @@ export const addUserFeedbackToCourse = async (
     throw error;
   }
 };
-//Function to fetch list of course lessons  using the courseId
+
+//Function to fetch list of course lessons using the courseId
 export const fetchCourseLessons = async (courseId) => {
   try {
     const token = getAuthToken();
@@ -222,7 +314,7 @@ export const fetchUserProfile = async (userId) => {
   }
 };
 
-//Function to assing selected course to user using userId and courseId
+//Function to assign selected course to user using userId and courseId
 export const AddUserCourse = async (userId, courseId, role) => {
   try {
     const token = getAuthToken();
@@ -257,9 +349,7 @@ export const updateProfileInfo = async (userId, updatedProfile) => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-
-      },
-
+      }
     );
     return response.data; // Return the updated profile data
   } catch (error) {

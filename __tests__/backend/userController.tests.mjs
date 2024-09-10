@@ -46,6 +46,9 @@ describe('User Controller', () => {
                 console.error(`Failed to delete user or Firestore document with UID: ${userId}`, error);
             }
         }
+
+        // Ensure Firebase Admin SDK is properly terminated
+        await admin.firestore().terminate();
     }, 30000); 
 
     // Test user signup functionality

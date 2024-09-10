@@ -92,6 +92,13 @@ const Learn = () => {
     <div className={styles.learnContainer}>
       <>
         <div className={styles.courseHeader}>
+          {/* Back Button */}
+          <button
+            className={styles.backButton}
+            onClick={() => navigate(-1)} // Navigate to previous page
+          >
+            ← Back
+          </button>
           <h3>{course?.courseName || 'Course'}</h3>
         </div>
         <div className={styles.learnContent}>

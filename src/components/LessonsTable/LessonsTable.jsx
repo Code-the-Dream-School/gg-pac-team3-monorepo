@@ -1,4 +1,4 @@
-import {Link, useParams} from "react-router-dom";
+import {Link} from "react-router-dom";
 import styles from './LessonsTable.module.css';
 
 const LessonsTable = ({courseId, lessons = [], handleDeleteLesson}) => {

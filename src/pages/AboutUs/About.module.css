@@ -1,0 +1,60 @@
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  padding: 2em 1em 1em 2em;
+}
+
+.textContainer > h1 {
+  font-family: 'Lilita One', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #f35c3c;
+}
+
+.textContainer > p {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.cardsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  padding-left: 1em;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: #122a50 0.15em solid;
+  border-radius: 0.1em;
+  border-width: 0.12em;
+  box-shadow:
+    #122a50 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  transition: transform 0.2s ease-in-out;
+  margin: 1em;
+  padding: 1em;
+}
+.card > h1 {
+  color: #f35c3c;
+}
+.userIcon {
+  width: 5em;
+  height: 5em;
+}

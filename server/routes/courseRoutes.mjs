@@ -7,6 +7,7 @@ import {
   updateCourse,
   getTeacherData,
   deleteCourse,
+  updateCourseRating,
 } from '../controllers/courseController.mjs';
 import { verifyToken, isTeacher } from '../middlewares/verifyToken.mjs';
 import multer from 'multer';
@@ -212,6 +213,7 @@ router.patch(
   updateCourse
 );
 
+router.patch('/updateCourseRating/:courseId', verifyToken, updateCourseRating);
 /**
  * @swagger
  * /api/course/{uid}:
@@ -238,7 +240,6 @@ router.patch(
  *         description: Internal server error.
  */
 router.delete('/:uid', verifyToken, isTeacher, deleteCourse);
-
 
 router.get('/:uid/getTeacherData', verifyToken, getTeacherData);
 export default router;

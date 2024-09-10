@@ -1,72 +1,191 @@
-.panel {
-  width: 100%;
-  height: 20em;
-}
-
 .panelContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 22em;
+  box-shadow:
+    #f3c414 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  transition: transform 0.2s ease-in-out;
   position: relative;
+  background-color: #f3c414;
 }
 .panelText {
-  position: absolute;
-  top: 5em;
-  right: 5em;
-  width: 25em;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
+.panelText > h3 {
+  font-family: 'Lilita One', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #f35c3c;
+  font-size: 3em;
+  padding: 0.5em;
+}
+
+.panelText > p {
+  text-align: justify;
+}
 .mainContainer {
   display: flex;
   flex-direction: column;
+  text-align: left;
+  background-color: #fdfdfd;
 }
 
-.mainContainer > h3 {
-  font-size: 1.5em;
-  padding: 1em;
-  letter-spacing: 0.1em;
+.mainText {
+  text-align: left;
+  padding: 3em 5em 1em 7em;
 }
+
+.mainText > h3 {
+  font-family: 'Lilita One', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.7em;
+  color: #122a50;
+}
+
+.mainText > p {
+  font-size: 1.5em;
+  padding: 0.5em;
+}
+
+.mainText > h4 {
+  color: #837a7a;
+  padding: 0.5em;
+  font-size: 1.5em;
+}
+
 .coursesContainer {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  background-color: white;
 }
 
 .courseContainer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding: 1em;
   margin: 1em;
+  width: 30em;
+  height: 30em;
   border: #122a50 0.15em solid;
-  border-radius: 1em;
-  align-content: center;
+  border-radius: 0.1em;
+  border-width: 0.12em;
+  justify-content: center;
+  align-items: center;
   box-shadow:
     #122a50 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  transition: transform 0.2s ease-in-out;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.courseContainer:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    #122a50 0px 4px 8px 0px,
+    rgba(60, 64, 67, 0.25) 0px 4px 10px 4px;
+}
+
+.ratingDurationContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 0.5em;
+}
+
+.ratingDuration {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0.5em 0;
 }
 
 .courseLogo {
-  padding: 1em;
-  width: 6rem;
-  height: 5rem;
+  width: 15em;
+  height: 15em;
+  border-bottom: solid #122a50;
 }
-.courseDescritpion {
+
+.svg {
+  margin: 0.2em;
+  width: 1em;
+  height: 1em;
+}
+
+.courseDescription {
   display: flex;
   flex-direction: column;
+  padding: 1em 0;
+  text-align: left;
 }
 
 .courseDescription > h1 {
   color: #f35c3c;
-  font-weight: bolder;
   text-align: left;
+  padding: 0.5em;
 }
 
-.courseDescription > p {
+.courseDescription > div > p {
   text-align: left;
   height: 2rem;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   margin-left: 0.5rem;
+}
+.advertisementContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 2em;
+  align-items: center;
+  box-shadow:
+    #122a50 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  transition: transform 0.2s ease-in-out;
+  background-color: #f5f5f5;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.advertisementCards {
+  display: flex;
+  flex-direction: row;
+}
+.advertisementCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1em;
+}
+
+.advertisementCard > p {
+  padding: 1em;
+  font-size: 1.2em;
+}
+
+.advertisementContainer > h1 {
+  color: #f35c3c;
+  padding: 0.5em;
+}
+.border {
+  border: solid;
+  border-radius: 12em;
+  padding: 1.5em;
+  color: #f35c3c;
+}
+.svgBig {
+  width: 9em;
+  height: 8em;
 }
 
 .errorContainer {
@@ -203,19 +322,54 @@
     width: 15em;
     left: 8em;
   }
+  .courseContainer {
+    width: 15em;
+    height: 20em;
+  }
+  .courseDescription {
+    padding: 0em;
+  }
 }
 
 /* Small Devices */
-@media (min-width: 576px) {
-  h1,
-  h3 {
+@media (max-width: 576px) {
+  h1 {
+    font-size: 1.2em;
+  }
+  .mainContainer > div > h4 {
     font-size: 1em;
   }
-  .panelText {
-    position: absolute;
-    top: 3em;
+  .panelText > h3 {
+    font-size: 1.3em;
+  }
+  .courseContainer {
     width: 15em;
-    left: 15em;
+    height: 25em;
+    align-items: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .courseLogo {
+    width: 10em;
+    height: 10em;
+  }
+  .courseDescription {
+    padding: 0em;
+  }
+
+  .courseDescription > div > p {
+    padding-left: 0.5em;
+  }
+  .advertisementContainer {
+    padding: 0em;
+  }
+  .advertisementCards {
+    flex-direction: column;
+  }
+  .svgBig {
+    width: 5em;
+    height: 5em;
   }
 }
 
@@ -227,11 +381,30 @@
   h3 {
     font-size: 1.2em;
   }
-  .panelText {
-    position: absolute;
-    top: 3em;
-    width: 20em;
-    left: 20em;
+  p {
+    padding-left: 0.5em;
+  }
+  .courseContainer {
+    width: 15em;
+    height: 28em;
+    align-items: center;
+  }
+
+  .courseLogo {
+    width: 10em;
+    height: 10em;
+  }
+
+  .courseDescription {
+    padding: 0em;
+  }
+
+  .advertisementContainer {
+    padding: 0.5em;
+  }
+  .svgBig {
+    width: 5em;
+    height: 5em;
   }
 }
 
@@ -243,37 +416,41 @@
   h3 {
     font-size: 1.2em;
   }
-  .panelText {
-    position: absolute;
-    top: 5em;
-    width: 30em;
-    left: 30em;
+  p {
+    padding-left: 0.5em;
+  }
+  .courseContainer {
+    width: 15em;
+    height: 28em;
+    padding: 0.5em;
+    align-items: center;
+  }
+  .mainText {
+    padding: 2em 1em 2em 7em;
   }
 }
 
 /* Extra Large Devices */
-@media (min-width:1200px){
-    h1 {
-    font-size: 2em;
-  }
-  h3 {
-    font-size: 1.5em;
-  }
+@media (min-width: 1200px) {
   p {
-    font-size: 1.5em;
+    font-size: 1.2em;
+    padding-left: 0.5em;
   }
-  .panelText {
-    position: absolute;
-    top: 5em;
-    width: 40em;
-    left: 30em;
+  .courseContainer {
+    width: 15em;
+    height: 28em;
+    padding: 0.5em;
+    align-items: center;
+  }
+  .mainText {
+    padding: 4em 0 2em 5em;
   }
 }
 
 /* Extra Extra Large Devices */
 @media (min-width: 1400px) {
   h1 {
-    font-size: 2em;
+    font-size: 1.7em;
   }
   h3 {
     font-size: 1.5em;
@@ -281,10 +458,21 @@
   p {
     font-size: 1.5em;
   }
-  .panelText {
-    position: absolute;
-    top: 5em;
-    width: 40em;
-    left: 35em;
+  .courseContainer {
+    width: 20em;
+    height: 33em;
+    padding: 0.2em;
+    align-items: center;
+  }
+
+  .courseDescription {
+    padding-left: 0.5em;
+  }
+  .courseLogo {
+    width: 12em;
+    height: 12em;
+  }
+  .mainText {
+    padding: 4em 0 2em 11em;
   }
 }

@@ -3,9 +3,11 @@ import admin from '../config/firebase.mjs';
 import axios from 'axios';
 import UsersModel from '../models/UsersModel.mjs';
 import { USERS } from './constants.mjs';
+import { OAuth2Client } from 'google-auth-library';
 
 dotenv.config();
 const db = admin.firestore();
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 export const signupUser = async (req, res) => {
   const { name, email, password, userType } = req.body;
@@ -22,8 +24,7 @@ export const signupUser = async (req, res) => {
       userType,
     });
 
-    const defaultprofilePictureUrl =
-      'gs://learninghub-ggpacteam3.appspot.com/images/userProfileImage.jpg';
+    const defaultprofilePictureUrl = '/images/userProfileImage.jpg';
 
     const user = new UsersModel({
       name,
@@ -111,6 +112,113 @@ export const loginUser = async (req, res) => {
     }
   }
 };
+
+export const googleSignIn = async (req, res) => {
+  const { token } = req.body;
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email, name, picture } = payload;
+
+    let userRecord;
+
+    try {
+      userRecord = await admin.auth().getUserByEmail(email);
+    } catch (error) {
+      if (error.code === 'auth/user-not-found') {
+        // If the user is not found in Firebase Auth, ask them to sign up
+        return res.status(404).send({
+          error: 'You are not signed up yet. Please sign up first.',
+        });
+      } else {
+        throw error;
+      }
+    }
+
+    // Get the user data from Firestore
+    const userDoc = await admin.firestore().collection('users').doc(userRecord.uid).get();
+    const userData = userDoc.data();
+
+    // Create a Firebase custom token
+    const customToken = await admin.auth().createCustomToken(userRecord.uid);
+
+    res.status(200).send({
+      message: 'Google sign-in successful',
+      token: customToken,
+      user: {
+        uid: userRecord.uid,
+        name: userData.name || name,
+        email: userData.email || email,
+        userType: userData.userType,
+        profilePictureUrl: userData.profilePictureUrl || picture,
+      },
+    });
+  } catch (error) {
+    console.error('Error in Google sign-in:', error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
+export const googleSignUp = async (req, res) => {
+  const { token, userType } = req.body;
+  try {
+    // Verify the Google ID token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+    const payload = ticket.getPayload();
+    const { email, name, picture } = payload;
+
+    let userRecord;
+
+    try {
+      // Check if the user already exists in Firebase Authentication
+      userRecord = await admin.auth().getUserByEmail(email);
+      return res.status(400).send({
+        error: 'User already exists. Please sign in instead.',
+      });
+    } catch (error) {
+      if (error.code === 'auth/user-not-found') {
+        // Create a new user in Firebase Authentication
+        userRecord = await admin.auth().createUser({
+          email,
+          name,
+          picture,
+        });
+
+        // Add the user data to Firestore
+        await admin.firestore().collection('users').doc(userRecord.uid).set({
+          name,
+          email,
+          userType,
+          profilePictureUrl: picture,
+        });
+
+        // Send success response
+        return res.status(201).send({
+          message: 'Google sign-up successful',
+          user: {
+            uid: userRecord.uid,
+            name,
+            email,
+            userType,
+            profilePictureUrl: picture,
+          },
+        });
+      } else {
+        throw error;
+      }
+    }
+  } catch (error) {
+    console.error('Error in Google sign-up:', error);
+    res.status(500).send({ error: error.message });
+  }
+};
+
 
 export const getUser = async (req, res) => {
   const { uid } = req.params;

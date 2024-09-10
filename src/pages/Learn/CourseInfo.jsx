@@ -41,8 +41,14 @@ const CourseInfo = ({ course, lessons = [], courseId }) => {
             )}
             <p className={styles.teacherName}>by {teacherInfo.name}</p>
             <p className={styles.teacherEmail}>
-              Teachers Email ID: {teacherInfo.email}
+              Teacher Email ID: {teacherInfo.email}
             </p>
+            {teacherInfo.createdAt && (
+              <p className={styles.teacherCreatedAt}>
+                This course was created on:{' '}
+                {new Date(teacherInfo.createdAt).toLocaleDateString()}
+              </p>
+            )}
           </div>
         )}
         <h2>About this course</h2>
