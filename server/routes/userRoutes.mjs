@@ -9,6 +9,7 @@ import {
   resetPassword,
   updateUserProfile,
   googleSignIn,
+  googleSignUp,
 } from '../controllers/userController.mjs';
 import { verifyToken } from '../middlewares/verifyToken.mjs';
 
@@ -243,9 +244,9 @@ router.patch('/:uid', verifyToken, updateUserProfile);
 
 /**
  * @swagger
- * /api/user/google:
+ * /api/user/google/signin:
  *   post:
- *     summary: Sign in or sign up a user with Google
+ *     summary: Sign in a user with Google
  *     tags: [Users]
  *     requestBody:
  *       required: true
@@ -258,12 +259,40 @@ router.patch('/:uid', verifyToken, updateUserProfile);
  *                 type: string
  *     responses:
  *       200:
- *         description: User signed in or signed up successfully with Google.
- *       400:
- *         description: Bad request. Invalid token.
+ *         description: User signed in successfully with Google.
+ *       404:
+ *         description: User not found, sign up required.
  *       500:
  *         description: Internal server error.
  */
-router.post('/google', googleSignIn);
+router.post('/google/signin', googleSignIn);
+
+/**
+ * @swagger
+ * /api/user/google/signup:
+ *   post:
+ *     summary: Sign up a user with Google
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               token:
+ *                 type: string
+ *               userType:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: User signed up successfully with Google.
+ *       400:
+ *         description: User already exists. Please sign in instead.
+ *       500:
+ *         description: Internal server error.
+ */
+router.post('/google/signup', googleSignUp); 
+
 
 export default router;

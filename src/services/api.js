@@ -43,14 +43,15 @@ export const registerUser = async (name, email, password, userType) => {
   }
 };
 
-export const googleSignIn = async (token, userType) => {
+// Google Sign-In
+export const googleSignIn = async (token) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/user/google`, { token, userType });
+    const response = await axios.post(`${API_BASE_URL}/user/google/signin`, { token });
     const { token: authToken, user } = response.data;
 
     if (user) {
       localStorage.setItem('userId', user.uid);
-      localStorage.setItem('userName', user.name || user.displayName);
+      localStorage.setItem('userName', user.name); 
       localStorage.setItem('userType', user.userType);
     }
     if (authToken) {
@@ -64,6 +65,27 @@ export const googleSignIn = async (token, userType) => {
   }
 };
 
+// Google Sign-Up
+export const googleSignUp = async (token, userType) => {
+  try {
+    const response = await axios.post(`${API_BASE_URL}/user/google/signup`, { token, userType });
+    const { token: authToken, user } = response.data;
+
+    if (user) {
+      localStorage.setItem('userId', user.uid);
+      localStorage.setItem('userName', user.name);  
+      localStorage.setItem('userType', user.userType);
+    }
+    if (authToken) {
+      localStorage.setItem('authToken', authToken);
+    }
+
+    return user;
+  } catch (error) {
+    console.error('Error signing up with Google:', error);
+    throw error;
+  }
+};
 
 //fetchQuizByLessonId
 export const fetchQuizByLessonId = async (lessonId, courseId) => {
@@ -102,8 +124,6 @@ export const fetchCourses = async () => {
 export const FetchSuggestedCoursesForUser = async (userId) => {
   try {
     const token = getAuthToken();
-    console.log('get token inside api:', token);
-    console.log('userId inside api:', userId);
     const response = await axios.get(
       `${API_BASE_URL}/user/${userId}/course/SuggestedCourses`,
       {
@@ -114,7 +134,6 @@ export const FetchSuggestedCoursesForUser = async (userId) => {
     );
     return response.data;
   } catch (error) {
-
     console.error('Error fetching not enrolled courses by user:', error);
     // Check for 401 Unauthorized error
     if (error.response && error.response.status === 401) {
@@ -128,6 +147,8 @@ export const FetchSuggestedCoursesForUser = async (userId) => {
       } else {
         throw new Error('You are not authorized to access this resource.');
       }
+    } else {
+      throw error;
     }
   }
 };
@@ -204,10 +225,7 @@ export const FetchRatingFromUserFeedback = async (courseId) => {
 
     return response.data;
   } catch (error) {
-    console.error('Error fetching user feedback:', error.message);
-    if (error.response) {
-      console.error('Error response:', error.response.data);
-    }
+    console.error('Error fetching user feedback:', error);
     throw error;
   }
 };
@@ -258,7 +276,7 @@ export const addUserFeedbackToCourse = async (
   }
 };
 
-//Function to fetch list of course lessons  using the courseId
+//Function to fetch list of course lessons using the courseId
 export const fetchCourseLessons = async (courseId) => {
   try {
     const token = getAuthToken();
@@ -296,7 +314,7 @@ export const fetchUserProfile = async (userId) => {
   }
 };
 
-//Function to assing selected course to user using userId and courseId
+//Function to assign selected course to user using userId and courseId
 export const AddUserCourse = async (userId, courseId, role) => {
   try {
     const token = getAuthToken();
