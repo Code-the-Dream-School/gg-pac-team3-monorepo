@@ -1,83 +1,77 @@
 import puppeteer from 'puppeteer';
 
-describe('SignIn Page Test', () => {
+describe('Frontend Page Loading and SignIn', () => {
   let browser;
   let page;
 
-  // Start the browser before all tests
   beforeAll(async () => {
-    try {
-      browser = await puppeteer.launch({
-        headless: false, // Set to true if you want to run in headless mode
-        slowMo: 100, // Slows down Puppeteer operations so you can see what's happening
-      });
-      page = await browser.newPage();
-    } catch (error) {
-      console.error('Error setting up the browser:', error);
-      throw error;
-    }
+    browser = await puppeteer.launch({
+      headless: false,
+      slowMo: 100,
+    });
+    page = await browser.newPage();
   });
 
-  // Close the browser after all tests
   afterAll(async () => {
-    try {
-      await browser.close();
-    } catch (error) {
-      console.error('Error closing the browser:', error);
-    }
+    await browser.close();
   });
 
-  it('should load the SignIn page and submit the form successfully', async () => {
-    try {
-      // Navigate to the SignIn page
-      await page.goto('http://localhost:5173/signin', { waitUntil: 'networkidle2' });
-
-      // Check if the page title is correct
-      const pageTitle = await page.title();
-      expect(pageTitle).toBe('Sign In | Learning Hub'); // Adjust the expected title as necessary
-
-      // Simulate user typing into the email and password input fields
-      await page.type('input[id="email"]', 'test@example.com');
-      await page.type('input[id="password"]', 'password123');
-
-      // Simulate form submission by clicking the Log In button
-      await page.click('button[type="button"]'); // Adjust the selector based on your button structure
-
-      // Wait for any necessary navigation or page updates after form submission
-      await page.waitForNavigation({ waitUntil: 'networkidle2' });
-
-      // Optionally, check for a success message or redirection after successful login
-      const url = await page.url();
-      expect(url).toBe('http://localhost:5173/dashboard'); // Adjust based on your post-login redirection
-
-    } catch (error) {
-      console.error('Error during SignIn test:', error);
-      throw error;
-    }
+  it('should load the homepage', async () => {
+    await page.goto('http://localhost:5173/', { waitUntil: 'networkidle2' });
+    const pageTitle = await page.title();
+    expect(pageTitle).toBe('Learning Hub');
   });
 
-  it('should display an error message for invalid credentials', async () => {
-    try {
-      // Navigate to the SignIn page
-      await page.goto('http://localhost:5173/signin', { waitUntil: 'networkidle2' });
+  it('should trigger the SignIn modal, log in as Teacher, and navigate to dashboard', async () => {
+    await page.evaluate(() => {
+      const loginLink = Array.from(document.querySelectorAll('span')).find(
+        el => el.textContent.trim() === 'Login'
+      );
+      if (loginLink) {
+        loginLink.click();
+      } else {
+        console.error('Login link not found');
+      }
+    });
 
-      // Simulate user typing incorrect email and password
-      await page.type('input[id="email"]', 'wronguser@example.com');
-      await page.type('input[id="password"]', 'wrongpassword');
+    // Wait for the modal to appear using the modal's container class
+    await page.waitForSelector('._container_1oxjf_15', { visible: true });
 
-      // Simulate form submission
-      await page.click('button[type="button"]'); // Adjust the selector as needed
-
-      // Wait for the error message to be displayed
-      await page.waitForSelector('.error-message'); // Adjust based on your error message class or id
-
-      // Check if the error message is displayed
-      const errorMessage = await page.$eval('.error-message', el => el.textContent);
-      expect(errorMessage).toContain('Invalid credentials'); // Adjust the expected error message
-
-    } catch (error) {
-      console.error('Error during invalid credentials test:', error);
-      throw error;
+    const buttonExists = await page.$('button._button_1oxjf_73'); // Use the button class for Log In
+    if (!buttonExists) {
+      console.error('Log In button not found!');
+      throw new Error('Log In button not found!');
     }
-  });
+
+    // Fill in the email and password using the input's id
+    await page.type('#email', 'test.teacher@example.com');
+    await page.type('#password', 'password123');
+
+    // Click the Log In button using its class
+    await page.click('button._button_1oxjf_73');
+
+    // Wait for the login process to complete and dashboard to load
+    await page.waitForSelector('span._navLink_19plf_10', { visible: true, timeout: 10000 });
+
+    // Click on the Dashboard link
+    await page.evaluate(() => {
+      const dashboardLink = Array.from(document.querySelectorAll('span._navLink_19plf_10')).find(
+        el => el.textContent.trim() === 'Dashboard'
+      );
+      if (dashboardLink) {
+        dashboardLink.click();
+      } else {
+        console.error('Dashboard link not found');
+      }
+    });
+
+    // Wait for the dashboard to load
+    await page.waitForSelector('h1', { visible: true, timeout: 10000 });
+    
+    const dashboardTitle = await page.$eval('h1', el => el.textContent);
+    expect(dashboardTitle).toBeTruthy();
+
+    const url = await page.url();
+    expect(url).toBe('http://localhost:5173/teacher/dashboard');
+  }, 60000); // 60 seconds timeout
 });

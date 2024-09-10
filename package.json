@@ -14,8 +14,8 @@
 		"express-favicon": "^2.0.4",
 		"firebase": "^10.12.4",
 		"firebase-admin": "^12.3.0",
-		"jest-mock": "^29.7.0",
 		"google-auth-library": "^9.14.1",
+		"jest-mock": "^29.7.0",
 		"jsonwebtoken": "^9.0.2",
 		"jwt-decode": "^4.0.0",
 		"mongoose": "^7.0.1",
@@ -56,7 +56,7 @@
 		"lint": "eslint . --ext .js,.jsx,.mjs",
 		"prettier": "prettier . --write",
 		"test": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --runInBand\"",
-        "test:backend": "jest --runInBand --testPathPattern=__tests__/backend",
-        "test:frontend": "jest --runInBand --testPathPattern=__tests__/frontend"
+		"test:backend": "jest --runInBand --testPathPattern=__tests__/backend",
+		"test:frontend": "jest --runInBand --testPathPattern=__tests__/frontend"
 	}
 }
