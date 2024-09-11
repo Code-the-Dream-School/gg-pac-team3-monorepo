@@ -33,6 +33,7 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
   const [imagePreview, setImagePreview] = useState(null)
   const [file, setFile] = useState(null)
   const [filePreview, setFilePreview] = useState(null)
+  const [titleError, setTitleError] = useState('')
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,11 +57,23 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
     }
   }, [initialData]);
 
+  const validateTitle = (title) => {
+    if (!title.trim()) {
+      setTitleError('Title is required');
+      return false;
+    }
+    setTitleError('');
+    return true;
+  };
+
   const handleChangeFormData = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
+    if (e.target.name === 'title') {
+      validateTitle(e.target.value)
+    }
   }
 
   const handleDescriptionAdd = (descriptionKey) => {
@@ -133,6 +146,9 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    if (!validateTitle(formData.title)) {
+      return;
+    }
     const submitAttrs = new FormData();
 
     Object.keys(formData).forEach((key) => {
@@ -164,6 +180,9 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
 
   const handleSaveLesson = (e) => {
     e.preventDefault();
+    if (!validateTitle(formData.title)) {
+      return;
+    }
     handleFormSubmit(e);
     navigate(redirectTo);
   }
@@ -195,6 +214,9 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
             value={formData['title']}
             onChange={handleChangeFormData}
           />
+          <div className={styles.errorContainer}>
+            {titleError && <span>{titleError}</span>}
+          </div>
         </div>
         <div className={styles.lessonFormSection}>
           <label htmlFor={"points"}>
@@ -209,7 +231,7 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
           />
         </div>
         <div className={styles.lessonFormSection}>
-          <label htmlFor={"materials"}>Details</label>
+          <label htmlFor={"materials"}>Materials</label>
           <textarea
             className={styles.materialsTextarea}
             name="materials"
@@ -221,7 +243,11 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
           {
             Object.keys(descriptionKeys).map((key) => {
               return (
-                descriptionKeys[key] && <div key={key} onClick={() => handleDescriptionAdd(key)}>+ {key}</div>
+                descriptionKeys[key] && <div className={styles.materialItem} key={key} onClick={() =>
+                  handleDescriptionAdd(key)}>
+                  +&nbsp;
+                  <div className={styles.item}> {key}</div>
+                </div>
               )
             })
           }
@@ -265,25 +291,24 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
             })
           }
         </div>
-        {/*<div onClick={handleAddVideo}>+ video</div>*/}
-        {/*<div>*/}
-        {/*  {*/}
-        {/*    formData['videoLinks'].map((link, index) => {*/}
-        {/*      return (*/}
-        {/*        <div key={`videoLinks[${index}]`}>*/}
-        {/*          <label htmlFor={`videoLinks[${index}]`}>Video link</label>*/}
-        {/*          <input type="text" name={`videoLinks[${index}]`} value={link}*/}
-        {/*                 onChange={(e) => handleVideoChange(e, index)}/>*/}
-        {/*          <button onClick={(e) => handleRemoveVideo(e, index)}>Remove</button>*/}
-        {/*        </div>*/}
-        {/*      )*/}
-        {/*    })*/}
-        {/*  }*/}
-        {/*</div>*/}
       <div className={styles.quizContainer}>
         {
         !!quizzes?.length ? <div className={styles.quizSection}>
-          { quizzes[0]?.title }
+            <div className={styles.quizTitle}>{ quizzes[0]?.title }</div>
+              {
+              quizzes[0]?.questions?.map ((question, index) => {
+                return (
+                  <div key={index} className={styles.quizBody}>
+                    <div className={styles.quizQuestionText}>
+                      Question: {question.questionText}
+                    </div>
+                    <div className={styles.quizQuestionText}>
+                      Answer: {question.answer}
+                    </div>
+                  </div>
+                )
+              })
+            }
           <button type="button" className={styles.quizButton}
                   onClick={handleAddQuiz}>Edit quiz</button>
           </div> :

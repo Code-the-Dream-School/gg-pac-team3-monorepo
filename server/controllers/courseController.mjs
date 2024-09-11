@@ -137,7 +137,7 @@ export const getTeacherCourses = async (req, res) => {
     for (const doc of snapshot.docs) {
       const courseModel = CourseModel.fromFirestore(doc.data()); // Convert Firestore data to model
       const lessons = await getCourseLessons(doc.id, coursesRef); // Get lessons for this course
-      const userCourses = await getUserCourses(courseModel.courseId); // Get users enrolled in this course
+      const userCourses = await getUserCourses(doc.id); // Get users enrolled in this course
       courses.push({
         id: doc.id,
         lessons,

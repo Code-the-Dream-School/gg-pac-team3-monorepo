@@ -1,4 +1,5 @@
 .lessonTable {
+  font-family: 'Roboto', sans-serif;
   display: inline-table;
   border-collapse: collapse;
   border-top: black solid 2px;
@@ -37,18 +38,15 @@
   background-color: #f3c414;
   border: #0f2240 solid 0.1rem;
   border-radius: 0.625rem;
-  padding: 0.6rem 1.5rem;
+  padding: 0.5rem 1.5rem;
 }
 
 .deleteLessonButton {
     background-color: #F3C414;
     color: black;
     font-family: inherit;
-    font-weight: bold;
     font-size: 1rem;
     border: #0f2240 solid 0.1rem;
     border-radius: 0.625rem;
-    width: 5rem;
-    height: 2.5rem;
-    margin: 0.625rem;
+    padding: 0.5rem 1rem;
 }

@@ -21,7 +21,6 @@ class CourseModel {
 
     if (typeof courseName !== 'string') throw new Error('Invalid courseName');
     if (typeof description !== 'string') throw new Error('Invalid description');
-    if (typeof imageUrl !== 'string') throw new Error('Invalid imageUrl');
     if (typeof createdBy !== 'string') throw new Error('Invalid createdBy');
     if (!(createdAt instanceof Date)) throw new Error('Invalid createdAt');
 
@@ -29,6 +28,8 @@ class CourseModel {
 
     if (courseType && typeof courseType !== 'string')
       throw new Error('Invalid courseType');
+    if (imageUrl && typeof imageUrl !== 'string')
+      throw new Error('Invalid imageUrl');
     if (logoUrl && typeof logoUrl !== 'string')
       throw new Error('Invalid logoUrl');
     if (duration && typeof duration !== 'string')
@@ -82,7 +83,7 @@ class CourseModel {
       courseType: data.courseType,
       description: data.description,
       imageUrl: data.imageUrl,
-      logoUrl: data.logoUrl,
+      logoUrl: data.logoUrl || '/images/CoursesIcon.png',
       duration: data.duration,
       rating: data.rating,
       otherInfo: data.otherInfo,

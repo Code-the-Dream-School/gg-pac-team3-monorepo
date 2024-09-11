@@ -7,7 +7,7 @@ const SideBar = () => {
 
   return (
     <nav className={styles.sideBarContainer}>
-      <Link className={styles.newCourseLink} to={"/teacher/courses/new"}>New Course</Link>
+      <Link className={styles.newCourseLink} to={"/teacher/courses/new"}>+ New Course</Link>
       <SideBarItems/>
     </nav>
   );

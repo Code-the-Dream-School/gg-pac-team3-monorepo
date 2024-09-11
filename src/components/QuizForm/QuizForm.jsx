@@ -61,14 +61,15 @@ const QuizForm = ({initialData = DEFAULT_QUIZ, handleSubmit}) => {
     <div className={styles.quizFormContainer}>
       <SideBar />
       <form className={styles.quizForm} onSubmit={(e) => handleSubmit(e, formData)}>
-        <div>
-          <label htmlFor={"title"}>Quiz title</label>
+        <div className={styles.quizSection}>
+          <label className={styles.titleLabel} htmlFor={"title"}>Quiz title</label>
           <input
-            className={styles.quizTitleInput}
+            className={styles.quizFormInput}
             type="text"
             name="title"
             value={formData.title}
             onChange={handleChangeFormData}
+            placeholder={"Enter quiz title"}
           />
         </div>
         <button className={styles.addQuestionButton} onClick={handleAddQuestion}>Add Question</button>
@@ -76,50 +77,56 @@ const QuizForm = ({initialData = DEFAULT_QUIZ, handleSubmit}) => {
             formData.questions?.map((question, index) => {
               return (
                 <div key={`question-${index}`} className={styles.questionsContainer}>
-                  <div className={styles.quizSection}>
-                    <label htmlFor={`questionText-${index}`}>Question</label>
+                  <div className={styles.quizQuestionSection}>
+                    <label className={styles.questionAnswerLabel} htmlFor={`questionText-${index}`}>Question</label>
                     <input
-                      className={styles.questionInput}
+                      className={styles.quizFormInput}
                       type="text"
                       name={`questionText-${index}`}
                       value={question.questionText}
                       onChange={(e) => handleChangeQuestion(e, index)}
+                      placeholder={"Enter your question here"}
                     />
                   </div>
                   <div className={styles.quizSection}>
-                    <label htmlFor={`answer-${index}`}>Answer</label>
+                    <label className={styles.questionAnswerLabel} htmlFor={`answer-${index}`}>Answer</label>
                     <input
-                      className={styles.answerInput}
+                      className={styles.quizFormInput}
                       type="text"
                       name={`answer-${index}`}
                       value={question.answer}
                       onChange={(e) => handleChangeQuestion(e, index)}
+                      placeholder={"Enter the correct answer here"}
                     />
                   </div>
-                  <div className={styles.quizSection}>
-                  <button className={styles.addAnswerOption} onClick={(e) => handleAddAnswerOption(e, index)}>Add answer option</button>
+                  {/*<div className={styles.answerOptionContainer}>*/}
                     {
-                    question.options.map((option, optionIndex) => {
-                      return (
-                        <div key={optionIndex}>
-                          <label htmlFor={`option-${index}-${optionIndex}`}>Option</label>
-                          <input
-                            className={styles.optionInput}
-                            type="text"
-                            name={`option-${index}-${optionIndex}`}
-                            value={option}
-                            onChange={(e) => handleChangeQuestion(e, index, optionIndex)}
-                          />
-                        </div>
-                      )
-                    })
-                  }
-                  </div>
+                      question.options.map((option, optionIndex) => {
+                        return (
+                          <div key={optionIndex} className={styles.quizSection}>
+                            <label htmlFor={`option-${index}-${optionIndex}`}>Option</label>
+                            <input
+                              className={styles.quizFormInput}
+                              type="text"
+                              name={`option-${index}-${optionIndex}`}
+                              value={option}
+                              onChange={(e) => handleChangeQuestion(e, index, optionIndex)}
+                              placeholder={"Enter an answer option"}
+                            />
+                          </div>
+                        )
+                      })
+                    }
+                    <button className={styles.addAnswerOption} onClick={(e) =>
+                      handleAddAnswerOption(e, index)}>
+                      Add answer option
+                    </button>
+                  {/*</div>*/}
                 </div>
               )
             })
           }
-        <button className={styles.submitButton} type="submit">Save</button>
+       <div><button className={styles.submitButton} type="submit">Save Quiz</button></div>
       </form>
     </div>
   );

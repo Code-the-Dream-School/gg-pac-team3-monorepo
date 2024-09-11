@@ -2,13 +2,16 @@ import { useState, useEffect } from 'react';
 import SideBar from "../SideBar/SideBar.jsx";
 import styles from './CourseForm.module.css';
 
+const DEFAULT_LOGO_URL = '/images/CoursesIcon.png';
+
 const CourseForm = ({ initialData = {}, onSubmit, formTitle }) => {
   const [courseName, setCourseName] = useState(initialData.name || '');
   const [courseType, setCourseType] = useState(initialData.type || '');
   const [description, setDescription] = useState(initialData.description || '');
   const [duration, setDuration] = useState(initialData.duration || '');
   const [logo, setLogo] = useState(null);
-  const [logoPreview, setLogoPreview] = useState(initialData.logoUrl || null);
+  const [logoPreview, setLogoPreview] = useState(initialData.logoUrl || DEFAULT_LOGO_URL);
+  const [errors, setErrors] = useState(null);
 
     useEffect(() => {
       if (initialData.courseName) setCourseName(initialData.courseName);
@@ -16,9 +19,18 @@ const CourseForm = ({ initialData = {}, onSubmit, formTitle }) => {
       if (initialData.description) setDescription(initialData.description);
       if (initialData.duration) setDuration(initialData.duration);
       if (initialData.logoUrl) {
-        setLogoPreview(initialData.logoUrl);
+        setLogoPreview(initialData.logoUrl || DEFAULT_LOGO_URL);
       }
     }, [initialData]);
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!courseName.trim()) newErrors.courseName = 'Please enter course name';
+    if (!courseType.trim()) newErrors.courseType = 'Please enter course type';
+    if (!description.trim()) newErrors.description = 'Please enter course description';
+    if (!duration.trim()) newErrors.duration = 'Please enter course duration';
+    return newErrors;
+  };
 
     const handleNameChange = (e) => {
       setCourseName(e.target.value);
@@ -38,12 +50,22 @@ const CourseForm = ({ initialData = {}, onSubmit, formTitle }) => {
 
     const handleLogoUpload = (e) => {
       const file = e.target.files[0];
+      if (file) {
       setLogo(file);
       setLogoPreview(URL.createObjectURL(file));
+      } else {
+        setLogo(null);
+        setLogoPreview(DEFAULT_LOGO_URL);
+      }
     };
 
     const handleSubmit = (e) => {
       e.preventDefault();
+      const formErrors = validateForm();
+      if (Object.keys(formErrors).length > 0) {
+        setErrors(formErrors);
+        return;
+      }
       onSubmit({courseName, courseType, description, logo, duration});
     };
 
@@ -62,6 +84,9 @@ const CourseForm = ({ initialData = {}, onSubmit, formTitle }) => {
                   onChange={handleNameChange}
                   placeholder="Enter text here"
                 />
+                <div className={styles.errorContainer}>
+                  {errors?.courseName && <span>{errors.courseName}</span>}
+                </div>
               </div>
 
               <div className={styles.formSection}>
@@ -73,14 +98,19 @@ const CourseForm = ({ initialData = {}, onSubmit, formTitle }) => {
                   onChange={handleTypeChange}
                   placeholder="Enter text here"
                 />
+                <div className={styles.errorContainer}>
+                  {errors?.courseType && <span>{errors.courseType}</span>}
+                </div>
               </div>
 
               <div className={styles.formSection}>
                 <label className={styles.logoUploadLabel} htmlFor="logoUpload">Upload logo</label>
                   {logoPreview && (
                 <div>
-                  <img src={logoPreview} alt="Course Logo"
-                    style={{width: '100px', height: '100px', objectFit: 'cover', marginBottom: '10px'}}/>
+                  <img
+                    src={logoPreview}
+                    alt="Course Logo"
+                    style={{width: '100px', height: '100px', objectFit: 'cover', margin: '10px'}}/>
                 </div>
                   )}
                 <input
@@ -91,29 +121,35 @@ const CourseForm = ({ initialData = {}, onSubmit, formTitle }) => {
                 />
               </div>
 
-              <div className={styles.formSection}>
-                <label htmlFor="description">Course description</label>
-                <textarea
-                  className={styles.textarea}
-                  id="description"
-                  value={description}
-                  onChange={handleDescriptionChange}
-                  placeholder="Enter text here"
-                />
+            <div className={styles.formSection}>
+              <label htmlFor="description">Course description</label>
+              <textarea
+                className={styles.textarea}
+                id="description"
+                value={description}
+                onChange={handleDescriptionChange}
+                placeholder="Enter text here"
+              />
+              <div className={styles.errorContainer}>
+                {errors?.description && <span>{errors.description}</span>}
               </div>
+            </div>
 
-              <div className={styles.formSection}>
-                <label htmlFor="duration">Duration</label>
-                <input
-                  className={styles.courseFormInput}
+            <div className={styles.formSection}>
+              <label htmlFor="duration">Duration</label>
+              <input
+                className={styles.courseFormInput}
                   type="text"
                   id="duration"
                   value={duration}
                   onChange={handleDurationChange}
                   placeholder="Enter text here"
                 />
+                <div className={styles.errorContainer}>
+                {errors?.duration && <span>{errors.duration}</span>}
+                </div>
               </div>
-              <button type="submit" className={styles.saveFormButton}>Save</button>
+              <button type="submit" className={styles.saveFormButton}>Save course</button>
           </form>
       </div>
     );

@@ -74,15 +74,15 @@ const TeacherDashboard = () => {
                               to={`/teacher/courses/${course.id}/lessons`}>{course.courseName}</Link></td>
                     <td>{course.lessons.length}</td>
                     <td>{totalPoints(course.lessons)}</td>
-                    <td>{course.user_courses.length}</td>
-                    <td><Link className={styles.courseLink} to={`/teacher/courses/edit/${course.id}`}>Edit</Link></td>
+                    <td>{course.user_courses?.length}</td>
+                    <td><Link className={styles.courseEditLink} to={`/teacher/courses/edit/${course.id}`}>Edit course</Link></td>
                   </tr>
                 )
               })
           }
           </tbody>
         </table>
-        <Link className={styles.newCourseLink} to={"/teacher/courses/new"}>New Course</Link>
+        <Link className={styles.newCourseLink} to={"/teacher/courses/new"}>+ New Course</Link>
       </div>
     </div>
   )

@@ -72,6 +72,28 @@
     padding: 0.5rem;
 }
 
+.lessonSteps {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    margin: 1rem;
+}
+
+.materialItem {
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    border: #0f2240 solid 0.1rem;
+    border-radius: 0.625rem;
+    width: 6rem;
+    padding: 0.5rem;
+}
+
+.item::first-letter {
+    text-transform: capitalize;
+}
+
 .lessonAddedSteps {
     display: flex;
     flex-direction: column;
@@ -85,8 +107,9 @@
 .removeDescriptionButton {
     background-color: transparent;
     color: black;
-    border: none;
+    border: #0f2240 solid 0.1rem;
     border-radius: 0.625rem;
+    padding: 0.3rem 0.5rem;
     margin: 1rem;
     cursor: pointer;
 }
@@ -104,14 +127,35 @@
     border-bottom: lightgrey solid 0.063rem;
     display: flex;
     flex-direction: column;
-    margin: 1rem;
+    width: 40rem;
+    align-items: start;
+    margin: 0 1rem;
 }
 
 .quizSection {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: start;
     margin: 1rem;
+}
+
+.quizTitle {
+    margin: 1rem;
+    font-weight: bold;
+}
+
+.quizBody {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 38rem;
+    margin: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: lightgrey solid 0.063rem;
+}
+
+.quizQuestionText {
+    margin: 0.5rem 0;
 }
 
 .quizButton {
@@ -134,4 +178,9 @@
     height: 2.5rem;
     margin: 1rem;
     cursor: pointer;
+}
+
+.errorContainer {
+    color: red;
+    font-size: 0.8rem;
 }

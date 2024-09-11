@@ -1,4 +1,5 @@
 .teacherDashboardContainer {
+  font-family: 'Roboto', sans-serif;
   display: flex;
   flex-direction: row;
 }
@@ -49,6 +50,14 @@
 .courseLink {
   text-decoration: none;
   color: black;
+}
+
+.courseEditLink {
+  background-color: #0f2240;
+  color: white;
+  text-decoration: none;
+  border-radius: 0.625rem;
+  padding: 0.5rem 1rem;
 }
 
 .courseLogo {
