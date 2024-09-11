@@ -57,7 +57,7 @@
 		"dev:client": "vite",
 		"build:client": "vite build",
 		"preview:client": "vite preview",
-		"start": "NODE_ENV=production node server/server.mjs",
+		"start": "NODE_ENV=production concurrently \"npm run start:server\" \"npm run start:client\"",
 		"lint": "eslint . --ext .js,.jsx,.mjs",
 		"prettier": "prettier . --write",
 		"test": "concurrently \"npm run dev\" \"wait-on http://localhost:5173 && node --experimental-vm-modules node_modules/jest/bin/jest.js --watchAll --runInBand\"",
