@@ -74,6 +74,14 @@ app.use('/api/course', lessonRoutes);
 app.use('/api/course', quizRoutes);
 app.use('/api', userCourseRoutes);
 
+// Log all registered routes to check for issues
+app._router.stack.forEach(function(r) {
+  if (r.route && r.route.path) {
+    console.log(`Registered route: ${r.route.path}`);
+  }
+});
+
+
 // Serve static files from the React app build directory in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../dist')));
