@@ -80,7 +80,7 @@ const CourseForm = ({ initialData = {}, onSubmit, formTitle }) => {
                   {logoPreview && (
                 <div>
                   <img src={logoPreview} alt="Course Logo"
-                    style={{width: '100px', height: '100px', objectFit: 'cover', marginBottom: '10px'}}/>
+                    style={{width: '100px', height: '100px', objectFit: 'cover', margin: '10px'}}/>
                 </div>
                   )}
                 <input

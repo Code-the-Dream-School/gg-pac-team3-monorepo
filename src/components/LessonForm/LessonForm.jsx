@@ -221,7 +221,11 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
           {
             Object.keys(descriptionKeys).map((key) => {
               return (
-                descriptionKeys[key] && <div key={key} onClick={() => handleDescriptionAdd(key)}>+ {key}</div>
+                descriptionKeys[key] && <div className={styles.materialItem} key={key} onClick={() =>
+                  handleDescriptionAdd(key)}>
+                  +&nbsp;
+                  <div className={styles.item}> {key}</div>
+                </div>
               )
             })
           }
@@ -268,7 +272,21 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
       <div className={styles.quizContainer}>
         {
         !!quizzes?.length ? <div className={styles.quizSection}>
-          { quizzes[0]?.title }
+            <div className={styles.quizTitle}>{ quizzes[0]?.title }</div>
+              {
+              quizzes[0]?.questions?.map ((question, index) => {
+                return (
+                  <div key={index} className={styles.quizBody}>
+                    <div className={styles.quizQuestionText}>
+                      Question: {question.questionText}
+                    </div>
+                    <div className={styles.quizQuestionText}>
+                      Answer: {question.answer}
+                    </div>
+                  </div>
+                )
+              })
+            }
           <button type="button" className={styles.quizButton}
                   onClick={handleAddQuiz}>Edit quiz</button>
           </div> :
