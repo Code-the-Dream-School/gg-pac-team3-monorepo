@@ -33,7 +33,6 @@ const Profile = ({ userId }) => {
             email: profile.email,
             pictureUrl: profile.profilePictureUrl,
           });
-          console.log(profile);
         }
       } catch (error) {
         console.error('Error fetching profile:', error);
