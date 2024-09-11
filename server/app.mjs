@@ -74,17 +74,4 @@ app.use('/api/course', lessonRoutes);
 app.use('/api/course', quizRoutes);
 app.use('/api', userCourseRoutes);
 
-// Serve static files from the React app build directory in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../dist')));
-
-  // Handle React routing, return all requests to React app
-  app.get('*', (req, res, next) => {
-    if (req.url.startsWith('/api')) {
-      return next();
-    }
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
-  });
-}
-
 export default app;
