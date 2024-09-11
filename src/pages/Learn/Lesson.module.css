@@ -59,7 +59,7 @@
   border-left: 0.3125rem solid #04033a;
 }
 .highlightedWord {
-  background-color: yellow; /* Highlight the currently spoken word */
+  background-color: rgb(188, 212, 249); /* Highlight the currently spoken word */
 }
 .clickedKeyDisplay {
   position: absolute;

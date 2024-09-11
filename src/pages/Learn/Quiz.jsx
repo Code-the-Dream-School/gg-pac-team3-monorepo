@@ -113,6 +113,7 @@ const Quiz = () => {
         >
           Submit
         </button>
+
         {result && (
           <div className={styles.result}>
             <p>Correct: {result.correct}</p>
@@ -127,14 +128,15 @@ const Quiz = () => {
             </button>
           </div>
         )}
+        <button
+          type='button'
+          className={styles.submitButton}
+          onClick={handleGoBack}
+        >
+          Go back to Lesson
+        </button>
       </form>
-      <button
-        type='button'
-        className={styles.goBackButton}
-        onClick={handleGoBack}
-      >
-        Go back to Lesson
-      </button>
+     
     </div>
   );
 };
