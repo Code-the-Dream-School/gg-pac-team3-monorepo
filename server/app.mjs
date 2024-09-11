@@ -4,6 +4,8 @@ import favicon from 'express-favicon';
 import logger from 'morgan';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 import userRoutes from './routes/userRoutes.mjs';
 import courseRoutes from './routes/courseRoutes.mjs';
@@ -12,6 +14,9 @@ import lessonRoutes from './routes/lessonRoutes.mjs';
 import quizRoutes from './routes/quizRoutes.mjs';
 import userCourseRoutes from './routes/userCourseRoutes.mjs';
 import UserFeedback from './routes/userFeedbackRoutes.mjs';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -34,7 +39,9 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: 'http://localhost:8000',
+        url: process.env.NODE_ENV === 'production' 
+          ? 'https://learninghub-iu98.onrender.com' 
+          : 'http://localhost:8000',
       },
     ],
     components: {
@@ -52,7 +59,6 @@ const swaggerOptions = {
       },
     ],
   },
-
   apis: ['./server/routes/*.mjs'],
 };
 
@@ -67,5 +73,18 @@ app.use('/api/course', courseRoutes);
 app.use('/api/course', lessonRoutes);
 app.use('/api/course', quizRoutes);
 app.use('/api', userCourseRoutes);
+
+// Serve static files from the React app build directory in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../dist')));
+
+  // Handle React routing, return all requests to React app
+  app.get('*', (req, res, next) => {
+    if (req.url.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
+  });
+}
 
 export default app;
