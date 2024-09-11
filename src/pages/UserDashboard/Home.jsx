@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate, useLocation } from 'react-router-dom';
 import searchimg from '../../../public/images/searchpng.png';
 import {
   FetchSuggestedCoursesForUser,
@@ -8,6 +9,8 @@ import {
 import styles from './Courses.module.css';
 
 const Home = ({ userId, onCourseClick }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [coursesData, setCoursesData] = useState([]);
   const [enrolledCoursesData, setEnrolledCoursesData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('Ex:JavaScript');
@@ -49,15 +52,24 @@ const Home = ({ userId, onCourseClick }) => {
             error.response.data.message || 'Unauthorized access';
           if (errorMessage.toLowerCase().includes('token expired')) {
             setMessage('Your session has expired. Please log in again.');
+            localStorage.setItem('isLoggedIn', 'false');
+            navigate('/');
           } else if (errorMessage.toLowerCase().includes('invalid token')) {
             setMessage('Invalid token. Please log in to continue.');
+            localStorage.setItem('isLoggedIn', 'false');
+            navigate('/');
           } else {
             setMessage('You are not authorized to access this resource.');
+            localStorage.setItem('isLoggedIn', 'false');
+            navigate('/');
           }
         } else {
+          localStorage.setItem('isLoggedIn', 'false');
+           navigate('/');
           setMessage(
             'An error occurred while fetching courses. Please try again later.'
           );
+         
         }
       }
     };

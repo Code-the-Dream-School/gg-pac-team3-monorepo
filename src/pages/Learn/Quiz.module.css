@@ -1,7 +1,5 @@
-/* Quiz.module.css */
-
 .quizContainer {
-  margin: 2rem auto;
+ margin: 2rem auto;
   padding: 2rem;
   background-color: #fdfdfd;
   border-radius: 12px;
@@ -17,48 +15,46 @@
   color: #2c3e50;
   text-align: center;
 }
-
 .quizForm {
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
+  text-align: left; 
 }
-
 .question {
   margin-bottom: 2rem;
   padding: 1rem;
-  background-color: #fcfcf5;
+  background-color: #fefefc;
   border-radius: 8px;
   color: rgb(12, 12, 12);
   border: 1px solid #e1e4e8;
 }
 
 .questionText {
-  font-size: 1.5rem;
+ font-size: 1.5rem;
   font-weight: 500;
   margin-bottom: 1rem;
   color: rgb(10, 10, 10);
 }
 
-.option {
-  display: block;
-  margin-bottom: 0.75rem;
-  font-size: 1.2rem;
-  color: rgb(9, 9, 9);
-  cursor: pointer;
-  padding-left: 1.5rem;
-  position: relative;
-}
-
-.option input {
-  position: absolute;
-  left: 0;
-  top: 0.25rem;
-  margin: 0;
-  width: 1.2rem;
-  height: 1.2rem;
-}
-
 .submitButton {
+  padding: 0.85rem 2rem; /* Slightly larger button */
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #122a50;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  align-self: center;
+  margin-top: 2rem;
+}
+
+.submitButton:hover {
+  background-color: #27ae60;
+  transform: translateY(-2px);
+}
+.retryButton {
   padding: 0.75rem 1.5rem;
   font-size: 1.2rem;
   font-weight: 600;
@@ -68,15 +64,12 @@
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  align-self: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
-
-.submitButton:hover {
-  background-color: #2980b9;
+.retryButton:hover {
+  background-color: #27ae60;
   transform: translateY(-2px);
 }
-
 .result {
   margin-top: 2rem;
   padding: 1.5rem;
@@ -92,44 +85,46 @@
   color: #2c3e50;
   margin: 0.5rem 0;
 }
-
-.retryButton {
-  padding: 0.75rem 1.5rem;
+.option {
+  display: block;
+  margin-bottom: 0.75rem;  
   font-size: 1.2rem;
-  font-weight: 600;
-  color: #ffffff;
-  background-color: #122a50;
-  border: none;
-  border-radius: 6px;
+  color: rgb(9, 9, 9);
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  padding-left: 2rem; 
+  position: relative;
+}
+
+.option input {
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  margin: 0;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+/* .goBackButton {
+  padding: 0.85rem 2rem; 
   margin-top: 1rem;
-}
-
-.retryButton:hover {
-  background-color: #27ae60;
-  transform: translateY(-2px);
-}
-.goBackButton {
-  padding: 0.75rem 1.5rem;
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 0.9rem; 
+  font-weight: 500; 
   color: #ffffff;
-  background-color: #122a50;
+  background-color: #0577d4; 
   border: none;
-  border-radius: 6px;
+  border-radius: 8px; 
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  align-self: center;
-  margin-top: 2rem;
-}
+  transition: background-color 0.3s ease, transform 0.2s ease; 
+} */
 
-.goBackButton:hover {
-  background-color: #7f8c8d;
+/* .goBackButton:hover {
+  background-color: #0d47a1; 
   transform: translateY(-2px);
-}
+} */
 
-
+/* .backButton {
+  display: flex; 
+  justify-content: flex-start; 
+} */
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
   .quizContainer {

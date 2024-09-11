@@ -61,7 +61,7 @@ const CourseDetails = () => {
   };
 
   if (loading) {
-    return <div className={styles.loadingSpinner}>Loading lesson data...</div>;
+    return <div className={styles.loadingSpinner}></div>;
   }
   if (error) {
     return <div>{error}</div>;
@@ -76,13 +76,17 @@ const CourseDetails = () => {
       >
         ← Back
       </button>
-
+      <img
+        src={course.imageUrl}
+        alt={course.courseName}
+        className={styles.courseImage}
+      />
       <h1 className={styles.courseTitle}>{course.courseName}</h1>
       <p className={styles.courseDescription}>{course.description}</p>
 
-      <h2 className={styles.lessonsHeading}> Lessons </h2>
+      {/* <h2 className={styles.lessonsHeading}> Lessons </h2> */}
       <h3>
-        In the {course.courseName} course, we have {lessons.length} lessons.
+        We have {lessons.length} lessons.
         Here is a brief overview of each lesson:
       </h3>
 

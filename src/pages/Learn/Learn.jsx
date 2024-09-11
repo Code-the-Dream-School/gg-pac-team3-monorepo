@@ -81,7 +81,7 @@ const Learn = () => {
   };
 
   if (loading) {
-    return <div className={styles.loadingSpinner}>Loading course data...</div>;
+    return <div className={styles.loadingSpinner}></div>;
   }
 
   if (error) {
