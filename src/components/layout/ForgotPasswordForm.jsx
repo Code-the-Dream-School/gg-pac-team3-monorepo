@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios'; 
-import styles from './ForgotPasswordForm.module.css'; 
+import styles from './ForgotPassWordForm.module.css'; 
 import CloseIcon from '../icons/CloseIcon';
 import PropTypes from 'prop-types';
 
