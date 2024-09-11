@@ -33,6 +33,7 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
   const [imagePreview, setImagePreview] = useState(null)
   const [file, setFile] = useState(null)
   const [filePreview, setFilePreview] = useState(null)
+  const [titleError, setTitleError] = useState('')
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,11 +57,23 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
     }
   }, [initialData]);
 
+  const validateTitle = (title) => {
+    if (!title.trim()) {
+      setTitleError('Title is required');
+      return false;
+    }
+    setTitleError('');
+    return true;
+  };
+
   const handleChangeFormData = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
+    if (e.target.name === 'title') {
+      validateTitle(e.target.value)
+    }
   }
 
   const handleDescriptionAdd = (descriptionKey) => {
@@ -133,6 +146,9 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    if (!validateTitle(formData.title)) {
+      return;
+    }
     const submitAttrs = new FormData();
 
     Object.keys(formData).forEach((key) => {
@@ -164,6 +180,9 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
 
   const handleSaveLesson = (e) => {
     e.preventDefault();
+    if (!validateTitle(formData.title)) {
+      return;
+    }
     handleFormSubmit(e);
     navigate(redirectTo);
   }
@@ -195,6 +214,9 @@ const LessonForm = ({initialData=EMPTY_LESSON, onSubmit, formTitle, redirectTo, 
             value={formData['title']}
             onChange={handleChangeFormData}
           />
+          <div className={styles.errorContainer}>
+            {titleError && <span>{titleError}</span>}
+          </div>
         </div>
         <div className={styles.lessonFormSection}>
           <label htmlFor={"points"}>

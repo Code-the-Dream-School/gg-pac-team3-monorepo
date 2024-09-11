@@ -107,8 +107,9 @@
 .removeDescriptionButton {
     background-color: transparent;
     color: black;
-    border: none;
+    border: #0f2240 solid 0.1rem;
     border-radius: 0.625rem;
+    padding: 0.3rem 0.5rem;
     margin: 1rem;
     cursor: pointer;
 }
@@ -177,4 +178,9 @@
     height: 2.5rem;
     margin: 1rem;
     cursor: pointer;
+}
+
+.errorContainer {
+    color: red;
+    font-size: 0.8rem;
 }

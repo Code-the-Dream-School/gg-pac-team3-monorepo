@@ -6,7 +6,6 @@ import {Link, useNavigate} from "react-router-dom";
 const TeacherDashboard = () => {
   const baseUrl = import.meta.env.VITE_API_BASE_URL;
   const [courses, setCourses] = useState([]);
-  const [teacherName, setTeacherName] = useState('');
   const token = localStorage.getItem('authToken');
   const navigate = useNavigate();
 
@@ -83,7 +82,7 @@ const TeacherDashboard = () => {
           }
           </tbody>
         </table>
-        <Link className={styles.newCourseLink} to={"/teacher/courses/new"}>New Course</Link>
+        <Link className={styles.newCourseLink} to={"/teacher/courses/new"}>+ New Course</Link>
       </div>
     </div>
   )

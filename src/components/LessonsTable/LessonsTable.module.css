@@ -1,4 +1,5 @@
 .lessonTable {
+  font-family: 'Roboto', sans-serif;
   display: inline-table;
   border-collapse: collapse;
   border-top: black solid 2px;
