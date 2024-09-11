@@ -233,6 +233,7 @@
   color: #01051c;
   border: 0.1875rem solid #030929;
 }
+
 /* Media Queries for responsiveness */
 @media (max-width: 768px) {
   .courseCard {

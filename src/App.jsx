@@ -3,7 +3,7 @@ import { AuthProvider } from './AuthContext';
 import Panel from './components/layout/Panel';
 import Courses from './pages/Courses/Courses';
 import TeacherDashboard from './pages/TeacherDashboard/TeacherDashboard';
-import FrontPage from './pages/frontPage/FrontPage';
+import FrontPage from './pages/FrontPage/FrontPage';
 import AboutUs from './pages/AboutUs/AboutUs.jsx';
 import CourseDetails from './pages/CourseDetails/CourseDetails';
 import UserDashboard from './pages/UserDashboard/UserDashboard';

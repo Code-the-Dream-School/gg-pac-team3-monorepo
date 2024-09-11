@@ -1,5 +1,5 @@
 import admin from '../config/firebase.mjs';
-import UserCourseModel from '../models/userCourseModel.mjs';
+import UserCourseModel from '../models/UserCourseModel.mjs';
 import { USER_COURSES, COURSES } from './constants.mjs';
 import CourseModel from '../models/CourseModel.mjs';
 const db = admin.firestore();
