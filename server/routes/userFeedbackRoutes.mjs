@@ -2,7 +2,7 @@ import express from 'express';
 import {
   AddUserFeedback,
   getAllUserFeedbackByCourseId,
-} from '../controllers/UserFeedbackController.mjs';
+} from '../controllers/userFeedbackController.mjs';
 import { verifyToken } from '../middlewares/verifyToken.mjs';
 
 const router = express.Router();
