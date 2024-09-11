@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { registerUser, googleSignUp } from '../../services/api';
 import CloseIcon from '../icons/CloseIcon';
-import styles from './SignUp.module.css';
+import styles from './Signup.module.css';
 import PropTypes from 'prop-types';
 
 const SignUp = ({ switchForm }) => {
