@@ -97,9 +97,8 @@ const Profile = ({ userId }) => {
           >
             <div className={styles.inputContainer}>
               <img src={briefcase} alt='role icon' className={styles.svg} />
-              <label className={styles.label}>
-                Role: {profileData.userType}
-              </label>
+              <label className={styles.label}>Role:</label>
+              <p>{profileData.userType}</p>
             </div>
             <div className={styles.inputContainer}>
               <img src={user} alt='user icon' className={styles.svg} />
