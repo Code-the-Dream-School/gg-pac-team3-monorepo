@@ -66,7 +66,6 @@ const swaggerSpec = swaggerJsdoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
-app.use('/', mainRouter);
 app.use('/api/user', userRoutes);
 app.use('/api/user/UserFeedback', UserFeedback);
 app.use('/api/course', courseRoutes);
