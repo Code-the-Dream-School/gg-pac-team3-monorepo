@@ -79,7 +79,7 @@ const publicPath = path.join(__dirname, 'public');
 
 // Serve the React app for all routes not starting with /api
 app.get(/^\/(?!api).*/, (req, res) => {
-  res.sendFile(path.join(publicPath, 'index.html'));
+  res.sendFile(path.join(publicPath, 'public','index.html'));
 });
 
 export default app;
