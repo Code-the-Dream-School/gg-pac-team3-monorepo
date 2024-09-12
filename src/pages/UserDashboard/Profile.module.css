@@ -64,6 +64,10 @@
   align-items: center;
 }
 
+.inputContainer > p {
+  padding-left: 3em;
+}
+
 .svg {
   width: 1em;
   height: 1em;
@@ -72,6 +76,7 @@
   padding: 0.5em;
   border-radius: 0.5em;
   border-width: 0.1em;
+  margin-left: auto;
 }
 
 .label {

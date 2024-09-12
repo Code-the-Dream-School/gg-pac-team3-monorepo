@@ -1,5 +1,8 @@
 import styles from './About.module.css';
 import user from '../../assets/images/user.svg';
+import Edith from '../../assets/images/edith.png';
+import Sonali from '../../assets/images/sonaliPhoto.jpg';
+import Laura from '../../assets/images/laura.png';
 const AboutUs = () => {
   return (
     <>
@@ -25,12 +28,12 @@ const AboutUs = () => {
           </div>
           <div className={styles.cardsContainer}>
             <div className={styles.card}>
-              <img src={user} alt='User Icon' className={styles.userIcon} />
+              <img src={Edith} alt='User Icon' className={styles.userIcon} />
               <h1>Edith</h1>
               <p>Back End Developer</p>
             </div>
             <div className={styles.card}>
-              <img src={user} alt='User Icon' className={styles.userIcon} />
+              <img src={Sonali} alt='User Icon' className={styles.userIcon} />
               <h1>Sonali</h1>
               <p> Back End Developer</p>
             </div>
@@ -40,7 +43,7 @@ const AboutUs = () => {
               <p>Front End Developer</p>
             </div>
             <div className={styles.card}>
-              <img src={user} alt='User Icon' className={styles.userIcon} />
+              <img src={Laura} alt='User Icon' className={styles.userIcon} />
               <h1>Laura</h1>
               <p>Front End Developer</p>
             </div>
@@ -64,6 +67,11 @@ const AboutUs = () => {
             <div className={styles.card}>
               <img src={user} alt='User Icon' className={styles.userIcon} />
               <h1>Mattew</h1>
+              <p>Software Developer</p>
+            </div>
+            <div className={styles.card}>
+              <img src={user} alt='User Icon' className={styles.userIcon} />
+              <h1>Alejandro</h1>
               <p>Software Developer</p>
             </div>
           </div>
