@@ -25,7 +25,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(logger('dev'));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public'))); // Make sure to serve static files correctly
 app.use(favicon(new URL('./public/favicon.ico', import.meta.url).pathname));
 
 // Swagger Setup
@@ -73,8 +73,12 @@ app.use('/api/course', lessonRoutes);
 app.use('/api/course', quizRoutes);
 app.use('/api', userCourseRoutes);
 
+// Path to the public directory
+const publicPath = path.join(__dirname, 'public');
+
+// Serve the React app for all routes not starting with /api
 app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(publicPath, 'index.html'));
-})
+});
 
 export default app;
