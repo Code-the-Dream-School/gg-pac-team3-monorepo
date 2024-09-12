@@ -74,4 +74,8 @@ app.use('/api/course', lessonRoutes);
 app.use('/api/course', quizRoutes);
 app.use('/api', userCourseRoutes);
 
+app.get(/^\/(?!api).*/, (req, res) => {
+  res.sendFile(path.join(publicPath, 'index.html'));
+})
+
 export default app;
