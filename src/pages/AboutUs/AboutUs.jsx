@@ -3,6 +3,7 @@ import user from '../../assets/images/user.svg';
 import Edith from '../../assets/images/edith.png';
 import Sonali from '../../assets/images/sonaliPhoto.jpg';
 import Laura from '../../assets/images/laura.png';
+import Olga from '../../assets/images/Olga.jpg';
 const AboutUs = () => {
   return (
     <>
@@ -38,7 +39,7 @@ const AboutUs = () => {
               <p> Back End Developer</p>
             </div>
             <div className={styles.card}>
-              <img src={user} alt='User Icon' className={styles.userIcon} />
+              <img src={Olga} alt='User Icon' className={styles.userIcon} />
               <h1>Olga</h1>
               <p>Front End Developer</p>
             </div>
